@@ -13,10 +13,11 @@ const EditForm = () => {
 
     const [editData, setEditData] = useState({
         title: '',
+        series: '',
         author: '', // Keep as string during editing
         genres: '', // Keep as string during editing
-        publication_year: '',
-        page_count: '',
+        publicationYear: '',
+        pageCount: '',
         status: '',
     });
 
@@ -44,10 +45,11 @@ const EditForm = () => {
         if (book) {
             setEditData({
                 title: book.title,
+                series: book.series,
                 author: book.author.join('; '), // Convert array to string for editing
                 genres: book.genres.join('; '), // Convert array to string for editing
-                publication_year: book.publication_year,
-                page_count: book.page_count,
+                publicationYear: book.publicationYear,
+                pageCount: book.pageCount,
                 status: book.status,
             });
         }
@@ -70,10 +72,28 @@ const EditForm = () => {
 
     // Validate form completeness
     const validateForm = (data) => {
-        const allFieldsFilled = Object.values(data).every(
-            (field) => (Array.isArray(field) ? field.length > 0 : field !== '')
-        );
-        setIsFormValid(allFieldsFilled);
+        // const allFieldsFilled = Object.values(data).every(
+        //     (field) => (Array.isArray(field) ? field.length > 0 : field !== '')
+        // );
+        // setIsFormValid(allFieldsFilled);
+        const requiredFields = [
+            'title',
+            'author',
+            'genres',
+            'publicationYear',
+            'pageCount',
+            'status'
+        ];
+
+        const allRequiredFilled = requiredFields.every((key) => {
+            const field = data[key];
+            if (Array.isArray(field)) {
+                return field.length > 0;
+            }
+            return field !== '';
+        });
+
+        setIsFormValid(allRequiredFilled);
     };
 
     // Handle form submission
@@ -113,22 +133,28 @@ const EditForm = () => {
             <h1 className="display-1">Edit Book</h1>
             <form className="row g-3 m-3" onSubmit={handleSubmit}>
                 <div className="col-md-6">
-                    <label className="form-label" htmlFor="title">
-                        Title:
-                    </label>
-                    <input
+                    <label className="form-label" htmlFor="title">Title:</label>
+                    <input 
+                        type="text" 
+                        className="form-control" 
+                        id="title" 
+                        value={editData.title} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                </div>
+                <div className='col-md-6'>
+                    <label className="form-label" htmlFor="series">Series</label>
+                    <input 
                         type="text"
                         className="form-control"
-                        id="title"
-                        value={editData.title}
+                        id="series"
+                        value={editData.series}
                         onChange={handleChange}
-                        required
                     />
                 </div>
                 <div className="col-md-6">
-                    <label htmlFor="author" className="form-label">
-                        Author(s):
-                    </label>
+                    <label htmlFor="author" className="form-label"> Author(s): </label>
                     <input
                         type="text"
                         className="form-control"
@@ -152,27 +178,27 @@ const EditForm = () => {
                     />
                 </div>
                 <div className="col-md-6">
-                    <label className="form-label" htmlFor="publication_year">
+                    <label className="form-label" htmlFor="publicationYear">
                         Publication Year:
                     </label>
                     <input
                         type="number"
                         className="form-control"
-                        id="publication_year"
-                        value={editData.publication_year}
+                        id="publicationYear"
+                        value={editData.publicationYear}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="col-md-6">
-                    <label className="form-label" htmlFor="page_count">
+                    <label className="form-label" htmlFor="pageCount">
                         Page Count:
                     </label>
                     <input
                         type="number"
                         className="form-control"
-                        id="page_count"
-                        value={editData.page_count}
+                        id="pageCount"
+                        value={editData.pageCount}
                         onChange={handleChange}
                         required
                     />

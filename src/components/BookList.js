@@ -16,7 +16,7 @@ const BookList = () => {
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [bookCounts, setBookCounts] = useState({
         read: 0,
-        want_to_read: 0,
+        unread: 0,
         currently_reading: 0
     });
 
@@ -49,16 +49,16 @@ const BookList = () => {
                 sortedBooks = [...filteredBooks].sort((a, b) => b.title.localeCompare(a.title));
                 break;
             case 'year-asc':
-                sortedBooks = [...filteredBooks].sort((a, b) => a.publication_year - b.publication_year);
+                sortedBooks = [...filteredBooks].sort((a, b) => a.publicationYear - b.publicationYear);
                 break;
             case 'year-desc':
-                sortedBooks = [...filteredBooks].sort((a, b) => b.publication_year - a.publication_year);
+                sortedBooks = [...filteredBooks].sort((a, b) => b.publicationYear - a.publicationYear);
                 break;
             case 'page-asc':
-                sortedBooks = [...filteredBooks].sort((a, b) => a.page_count - b.page_count);
+                sortedBooks = [...filteredBooks].sort((a, b) => a.pageCount - b.pageCount);
                 break;
             case 'page-desc':
-                sortedBooks = [...filteredBooks].sort((a, b) => b.page_count - a.page_count);
+                sortedBooks = [...filteredBooks].sort((a, b) => b.pageCount - a.pageCount);
                 break;
             default:
                 sortedBooks = filteredBooks;
@@ -141,7 +141,7 @@ useEffect(() => {
                 <h4>Status Summary</h4>
                 <ul>
                     <li>Read: {bookCounts.read}</li>
-                    <li>Want to Read: {bookCounts.want_to_read}</li>
+                    <li>Unread: {bookCounts.unread}</li>
                     <li>Currently Reading: {bookCounts.currently_reading}</li>
                 </ul>
             </div>
@@ -150,6 +150,7 @@ useEffect(() => {
                     <thead className='table-secondary'>
                         <tr>
                             <th>Title</th>
+                            <th>Series</th>
                             <th>Author</th>
                             <th>Genres</th>
                             <th>Year</th>
@@ -166,10 +167,11 @@ useEffect(() => {
                                     style={{ cursor: 'pointer' }}
                                 >
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.title, searchQuery) }}></td>
+                                    <td>{book.series}</td>
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.author.join(', '), searchQuery) }}></td>
                                     <td className='text-capitalize'>{book.genres.join(', ')}</td>
-                                    <td>{book.publication_year}</td>
-                                    <td>{book.page_count}</td>
+                                    <td>{book.publicationYear}</td>
+                                    <td>{book.pageCount}</td>
                                     <td className='text-capitalize'>{book.status}</td>
                                 </tr>
                             )
@@ -181,9 +183,9 @@ useEffect(() => {
                             )
                         }
                     </tbody>
-                    <tfoot>
+                    {/* <tfoot>
                         Total
-                    </tfoot>
+                    </tfoot> */}
                 </table>                
             </div>
         </div>

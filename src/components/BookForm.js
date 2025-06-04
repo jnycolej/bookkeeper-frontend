@@ -7,10 +7,11 @@ const BookForm = () => {
     //Structure of book data entry
     const [formData, setFormData] = useState({
         title: '',
+        series: '',
         author: '', // Keep as string during editing
         genres: '', // Keep as string during editing
-        publication_year: '',
-        page_count: '',
+        publicationYear: '',
+        pageCount: '',
         status: '',
     });
 
@@ -39,10 +40,28 @@ const BookForm = () => {
 
     // Validate form completeness
     const validateForm = (data) => {
-        const allFieldsFilled = Object.values(data).every(
-            (field) => (Array.isArray(field) ? field.length > 0 : field !== '')
-        );
-        setIsFormValid(allFieldsFilled);
+        // const allFieldsFilled = Object.values(data).every(
+        //     (field) => (Array.isArray(field) ? field.length > 0 : field !== '')
+        // );
+        // setIsFormValid(allFieldsFilled);
+        const requiredFields = [
+            'title',
+            'author',
+            'genres',
+            'publicationYear',
+            'pageCount',
+            'status'
+        ];
+
+        const allRequiredFilled = requiredFields.every((key) => {
+            const field = data[key];
+            if (Array.isArray(field)) {
+                return field.length > 0;
+            }
+            return field !== '';
+        });
+
+        setIsFormValid(allRequiredFilled);
     };
 
     // Handle form submission
@@ -65,10 +84,11 @@ const BookForm = () => {
                 // Reset form fields after submission
                 setFormData({
                     title: '',
+                    series: '',
                     author: '',
                     genres: '',
-                    publication_year: '',
-                    page_count: '',
+                    publicationYear: '',
+                    pageCount: '',
                     status: '',
                 });
                 setIsFormValid(false);
@@ -96,6 +116,17 @@ const BookForm = () => {
                         onChange={handleChange}
                         placeholder="Book Title"
                         required
+                    />
+                </div>
+                <div className="col-md-6">
+                    <label htmlFor="series" className="form-label">Series:</label>
+                    <input
+                        type="text"
+                        className='form-control'
+                        id="series"
+                        value={formData.series}
+                        onChange={handleChange}
+                        placeholder='Series Name (If N/A leave blank)'
                     />
                 </div>
                 <div className="col-md-6">
@@ -127,27 +158,27 @@ const BookForm = () => {
                     />
                 </div>
                 <div className="col-md-6">
-                    <label className="form-label" htmlFor="publication_year">
+                    <label className="form-label" htmlFor="publicationYear">
                         Publication Year:
                     </label>
                     <input
                         type="number"
                         className="form-control"
-                        id="publication_year"
-                        value={formData.publication_year}
+                        id="publicationYear"
+                        value={formData.publicationYear}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="col-md-6">
-                    <label className="form-label" htmlFor="page_count">
+                    <label className="form-label" htmlFor="pageCount">
                         Page Count:
                     </label>
                     <input
                         type="number"
                         className="form-control"
-                        id="page_count"
-                        value={formData.page_count}
+                        id="pageCount"
+                        value={formData.pageCount}
                         onChange={handleChange}
                         required
                     />
@@ -173,14 +204,14 @@ const BookForm = () => {
                             <input
                                 className="form-check-input"
                                 type="radio"
-                                id="want_to_read"
+                                id="unread"
                                 name="status"
-                                value="want_to_read"
-                                checked={formData.status === 'want_to_read'}
+                                value="unread"
+                                checked={formData.status === 'unread'}
                                 onChange={handleRadioChange}
                             />
-                            <label className="form-check-label" htmlFor="want_to_read">
-                                Want To Read
+                            <label className="form-check-label" htmlFor="unread">
+                                Unread
                             </label>
                         </div>
                         <div className="form-check form-check-inline">
@@ -193,25 +224,13 @@ const BookForm = () => {
                                 checked={formData.status === 'currently_reading'}
                                 onChange={handleRadioChange}
                             />
-                            <label
-                                className="form-check-label"
-                                htmlFor="currentlyReading"
-                            >
-                                Currently Reading
-                            </label>
+                            <label className="form-check-label" htmlFor="currentlyReading">Currently Reading</label>
                         </div>
                     </div>
                 </fieldset>
                 <div className="col-12">
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={!isFormValid}
-                    >
-                        Add Book
-                    </button>
+                    <button type="submit" className="btn btn-primary" disabled={!isFormValid}>Add Book</button>
                     <button className='btn btn-lg btn-outline-secondary' onClick={() => navigate('/')}>Return</button>                
-
                 </div>
             </form>
         </div>
