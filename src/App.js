@@ -1,12 +1,15 @@
 // Root component
 
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ProtectedRoute } from './ProtectedRoute';
 import HomePage from './pages/HomePage';
 import BookDetails from './pages/BookDetails';
 import BookForm from './components/BookForm';
 import BookList from './components/BookList';
 import EditForm from './components/EditForm';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 // Create a router using createBrowserRouter and set up the routes to pages and components
 const router = createBrowserRouter(
@@ -16,6 +19,8 @@ const router = createBrowserRouter(
         { path: "/bookform", element: <BookForm />, },
         { path: "/book/:id", element: <BookDetails />, },
         { path: "/book/:id/edit", element: <EditForm />,},
+        { path: "/login", element: <LoginPage />},
+        { path: "/register", element: <RegisterPage />,},
     ], 
     {
         future: {
