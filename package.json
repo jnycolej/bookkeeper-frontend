@@ -2,6 +2,7 @@
   "name": "bookkeeper-frontend",
   "version": "1.0.0",
   "description": "Frontend for the BookKeeper app",
+  "proxy": "http://backend:5000",
   "main": "src/index.js",
   "scripts": {
     "start": "react-scripts start",
