@@ -63,7 +63,7 @@ const BookDetails = () => {
             </div>
             <div className=' d-flex m-2'>
                 <button className='btn btn-lg btn-primary' onClick={() => navigation(`/book/${book._id}/edit`)}>Edit Book</button>
-                <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/')}>Return</button>                
+                <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
             </div>
 
         </div>

@@ -6,6 +6,7 @@ import axios from 'axios';
 import GenreFilter from './GenreFilter';
 import SearchBar from './SearchBar';
 import SortButton from './SortButton';
+import NavBar from './NavBar';
 import '../assets/bookkeeper.css';
 
 
@@ -22,15 +23,32 @@ const BookList = () => {
 
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     //Fetch books from the backend API
+    //     axios
+    //         .get(`${process.env.REACT_APP_API_URL}/books`)
+    //         .then(response => {
+    //             setBooks(response.data);
+    //             setFilteredBooks(response.data);
+    //         })
+    //         .catch(error => console.error("Error fetching books:", error))
+    // }, []);
+
+    // const logoutUser = () => {
+    //     localStorage.removeItem('jwtToken');
+    //     delete axios.defaults.headers.common['Authorization'];
+    //     navigate('/login');
+    // };
+
     useEffect(() => {
-        //Fetch books from the backend API
-        axios
-            .get(`${process.env.REACT_APP_API_URL}/books`)
-            .then(response => {
-                setBooks(response.data);
-                setFilteredBooks(response.data);
-            })
-            .catch(error => console.error("Error fetching books:", error))
+        axios.get('/books')
+            .then(res => setBooks(res.data))
+            .catch(err => {
+                if (err.response?.status === 401) {
+                    // Token expires or invalid -> force log out
+                    logoutUser();
+                }
+            });
     }, []);
 
     const handleSort = (sortType) => {
@@ -130,6 +148,7 @@ useEffect(() => {
     return (
         <div className='m-3 bodycolor'>
             <h1 className='display-1 text-center'>BookKeeper</h1>
+            <NavBar />
             <h3 className='display-6 mb-3'>My Reading List</h3>
             <div className='d-flex flex-wrap align-items-center gap-3'>
                 <button type="button" className="btn btn-lg btn-outline-secondary common-height" onClick={() => navigate('/bookform')}>Add Book</button>

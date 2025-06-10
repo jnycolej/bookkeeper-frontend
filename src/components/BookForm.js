@@ -21,21 +21,26 @@ const BookForm = () => {
     // Handle input changes
     const handleChange = (e) => {
         const { id, value } = e.target;
+        const updated = {...formData, [id]: value};
+        // // Update the field as plain text
+        // setFormData({ ...formData, [id]: value });
 
-        // Update the field as plain text
-        setFormData({ ...formData, [id]: value });
-
-        // Validate the form
-        validateForm({ ...formData, [id]: value });
+        // // Validate the form
+        // validateForm({ ...formData, [id]: value });
+        setFormData(updated);
+        validateForm(updated);
     };
 
     // Handle radio button changes
     const handleRadioChange = (e) => {
         const { value } = e.target;
-        setFormData({ ...formData, status: value });
+        const updated = {...formData, status: value};
+        setFormData(updated);
+        validateForm(updated);
+        // setFormData({ ...formData, status: value });
 
-        // Validate the form
-        validateForm({ ...formData, status: value });
+        // // Validate the form
+        // validateForm({ ...formData, status: value });
     };
 
     // Validate form completeness
@@ -77,7 +82,8 @@ const BookForm = () => {
 
         // Post the data to the backend
         axios
-            .post(`${process.env.REACT_APP_API_URL}/books`, submissionData)
+            // .post(`${process.env.REACT_APP_API_URL}/books`, submissionData)
+            .post('/books', submissionData)
             .then((response) => {
                 console.log('Book added successfully:', response.data);
 
@@ -94,9 +100,11 @@ const BookForm = () => {
                 setIsFormValid(false);
 
                 //Goes back to homepage
-                navigate('/');
+                navigate('/home');
             })
-            .catch((error) => console.error('Error adding book:', error));
+            .catch((error) => {
+                console.error('Error adding book:', error);
+            });
     };
 
     return (
@@ -230,7 +238,7 @@ const BookForm = () => {
                 </fieldset>
                 <div className="col-12">
                     <button type="submit" className="btn btn-primary" disabled={!isFormValid}>Add Book</button>
-                    <button className='btn btn-lg btn-outline-secondary' onClick={() => navigate('/')}>Return</button>                
+                    <button className='btn btn-lg btn-outline-secondary' onClick={() => navigate('/home')}>Return</button>                
                 </div>
             </form>
         </div>
