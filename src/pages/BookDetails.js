@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 const BookDetails = () => {
     const { id } = useParams();
     const [book, setBook] = useState(null);
+    const [bookImage, setBookImage] = useState(null);
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
     const navigation = useNavigate();
@@ -16,9 +18,12 @@ const BookDetails = () => {
         //Fetch book details from the backend API
         const fetchBookDetails = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/books/${id}`);
+                const response = await axios.get(`api/books/${id}`);
                 setBook(response.data);
                 setLoading(false);
+
+                const coverUrl = `https://covers.openlibrary.org/b/isbn/${book.isbn13 || book.isbn10}-M.jpg`;
+                setBookImage(coverUrl);
             } catch (err) {
                 setError('Failed to fetch book details');
                 setLoading(false);
@@ -42,6 +47,7 @@ const BookDetails = () => {
 
     return (
         <div className="container mt-5">
+            <img src={bookImage} alt="Book Cover" width="500" height="600"></img>
             <h1 className='display-4'>{book.title}</h1>
             <p className='lead'>By {book.author.join(', ')}</p>
             <hr />
@@ -70,4 +76,7 @@ const BookDetails = () => {
     );
 };
 
-export default BookDetails;
+// export default BookDetails;
+export default withAuthenticationRequired(BookDetails, {
+    onRedirecting: () => <div>Loading...</div>
+});

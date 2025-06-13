@@ -1,5 +1,6 @@
 import React from "react";
 import LoginButton from '../components/LoginButton';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 const LoginPage = () => {
     return (
