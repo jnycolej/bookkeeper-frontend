@@ -1,10 +1,27 @@
-// Handles API calls for book-related actions
+// frontend/src/services/bookService.js
 
-import axios from 'axios';
+import api from './api';  // your axios instance with baseURL set
 
-const API_URL = process.env.REACT_APP_API_URL;
+// Fetch all books
+export const getBooks = token =>
+  api
+    .get('/', { headers: { Authorization: `Bearer ${token}` } })
+    .then(res => res.data);
 
-export const getBooks = async () => {
-    const response = await axios.get(`${API_URL}/books`);
-    return response.data;
-};
+// Fetch distinct genres
+export const getGenres = token =>
+  api
+    .get('/genres', { headers: { Authorization: `Bearer ${token}` } })
+    .then(res => res.data);
+
+// Fetch counts by status
+export const getBookCounts = token =>
+  api
+    .get('/count', { headers: { Authorization: `Bearer ${token}` } })
+    .then(res => res.data);
+
+// Add a new book
+export const addBook = (bookData, token) =>
+  api
+    .post('/', bookData, { headers: { Authorization: `Bearer ${token}` } })
+    .then(res => res.data);
