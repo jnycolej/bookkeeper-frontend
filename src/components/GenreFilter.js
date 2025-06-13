@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import api from '../services/api';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const GenreFilter = ({ handleFilter }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
+    const {getAccessTokenSilently} = useAuth0();
 
-    // Fetch unique genres from the database
     useEffect(() => {
-        const fetchGenres = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/books/genres`);
-                setGenres(response.data);
-            } catch (error) {
-                console.error('Error fetching genres:', error);
-                setGenres([]);
-            }
-        };
-        fetchGenres();
-    }, []);
+    const fetchGenres = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const { data } = await api.get('/genres', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setGenres(data);
+      } catch (error) {
+        console.error('Error fetching genres:', error);
+        setGenres([]);
+      }
+    };
+    fetchGenres();
+  }, [getAccessTokenSilently]);
 
     // Handle checkbox changes
     const handleCheckboxChange = (genre) => {

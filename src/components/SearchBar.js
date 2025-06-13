@@ -2,6 +2,8 @@
 
 import React, { useMemo } from 'react';
 import { debounce } from 'lodash';
+import api from '../services/api';
+
 
 const SearchBar = ({searchQuery, setSearchQuery}) => {
     const handleInputChange = (e) => {

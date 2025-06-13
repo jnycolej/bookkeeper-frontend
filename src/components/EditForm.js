@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
+
 
 const EditForm = () => {
     const { id } = useParams();
@@ -19,16 +21,22 @@ const EditForm = () => {
         publicationYear: '',
         pageCount: '',
         status: '',
+        format: '',
+        rating: '',
+        dateAdded: '',
+        dateFinished: '',
+        isbn10: '',
+        isbn13: '',
     });
 
     const [isFormValid, setIsFormValid] = useState(false);
 
-    //Fetch book etails when the component mounts
+    //Fetch book details when the component mounts
     useEffect(() => {
         //Fetch book details from the backend API
         const fetchBookDetails = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/books/${id}`);
+                const response = await axios.get(`/api/books/${id}`);
                 setBook(response.data);
                 setLoading(false);
             } catch (err) {
@@ -51,6 +59,12 @@ const EditForm = () => {
                 publicationYear: book.publicationYear,
                 pageCount: book.pageCount,
                 status: book.status,
+                format: book.format,
+                rating: book.rating,
+                dateAdded: book.dateAdded,
+                dateFinished: book.dateFinished,
+                isbn10: book.isbn10,
+                isbn13: book.isbn13,
             });
         }
     }, [book]);
@@ -109,7 +123,7 @@ const EditForm = () => {
 
         // Post the data to the backend
         axios
-            .put(`${process.env.REACT_APP_API_URL}/books/${id}`, submissionData)
+            .put(`api/books/${id}`, submissionData)
             .then((response) => {
                 console.log('Book updated successfully:', response.data);
 

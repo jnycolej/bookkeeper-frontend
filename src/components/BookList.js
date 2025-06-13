@@ -3,53 +3,44 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import GenreFilter from './GenreFilter';
 import SearchBar from './SearchBar';
 import SortButton from './SortButton';
 import NavBar from './NavBar';
+import api from '../services/api';
+import  { getBooks } from '../services/bookService';
 import '../assets/bookkeeper.css';
 
 
+
 const BookList = () => {
-    const [books, setBooks] = useState([]);
-    const [filteredBooks, setFilteredBooks] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedGenres, setSelectedGenres] = useState([]);
+    const { getAccessTokenSilently } = useAuth0();
+    const [books, setBooks] = useState([]);     //Keeps track of books
+    const [filteredBooks, setFilteredBooks] = useState([]);     //tracks the list of books after filtering
+    const [searchQuery, setSearchQuery] = useState('');     //holds the search
+    const [selectedGenres, setSelectedGenres] = useState([]);   //tracks the genres selected in the filtering
+    
+    //tracks the books read
     const [bookCounts, setBookCounts] = useState({
         read: 0,
         unread: 0,
-        currently_reading: 0
+        currentlyReading: 0
     });
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     //Fetch books from the backend API
-    //     axios
-    //         .get(`${process.env.REACT_APP_API_URL}/books`)
-    //         .then(response => {
-    //             setBooks(response.data);
-    //             setFilteredBooks(response.data);
-    //         })
-    //         .catch(error => console.error("Error fetching books:", error))
-    // }, []);
+  useEffect(() => {
+    const fetchBooks = async () => {
+      // 1) fetch the JWT
+      const token = await getAccessTokenSilently();
+      // 2) hand it to your service
+      const data  = await getBooks(token);
+      setBooks(data);
+    };
+    fetchBooks();
+  }, [getAccessTokenSilently]);
 
-    // const logoutUser = () => {
-    //     localStorage.removeItem('jwtToken');
-    //     delete axios.defaults.headers.common['Authorization'];
-    //     navigate('/login');
-    // };
-
-    useEffect(() => {
-        axios.get('/books')
-            .then(res => setBooks(res.data))
-            .catch(err => {
-                if (err.response?.status === 401) {
-                    // Token expires or invalid -> force log out
-                    logoutUser();
-                }
-            });
-    }, []);
 
     const handleSort = (sortType) => {
         let sortedBooks;
@@ -138,12 +129,20 @@ useEffect(() => {
 }, [books, selectedGenres, searchQuery]);
 
 useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/books/count`)
-        .then(response => {
-            setBookCounts(response.data);
-        })
-        .catch(error => console.error("Error fetching book counts:", error));
-}, []);
+  const fetchCounts = async () => {
+    try {
+      const token = await getAccessTokenSilently();
+      const { data } = await api.get('/count', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setBookCounts(data);
+    } catch (err) {
+      console.error('Error fetching book counts:', err);
+    }
+  };
+  fetchCounts();
+}, [getAccessTokenSilently]);
+
 
     return (
         <div className='m-3 bodycolor'>
