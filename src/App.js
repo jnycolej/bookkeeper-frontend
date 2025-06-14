@@ -7,7 +7,8 @@ import BookDetails from './pages/BookDetails';
 import BookForm from './components/BookForm';
 import BookList from './components/BookList';
 import EditForm from './components/EditForm';
-import Profile from './components/Profile';
+import Profile from './pages/Profile';
+import ProfileForm from './components/ProfileForm';
 
 
 // Create a router using createBrowserRouter and set up the routes to pages and components
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
         { path: "/book/:id", element: <BookDetails />, },
         { path: "/book/:id/edit", element: <EditForm />,},
         { path: "/profile", element: <Profile />,},
+        { path: "/profileform", element: <ProfileForm />,},
     ], 
     {
         future: {
