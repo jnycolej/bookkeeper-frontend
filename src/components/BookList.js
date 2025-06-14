@@ -25,7 +25,9 @@ const BookList = () => {
     const [bookCounts, setBookCounts] = useState({
         read: 0,
         unread: 0,
-        currentlyReading: 0
+        currentlyReading: 0,
+        want: 0,
+        owned: 0,
     });
 
     const navigate = useNavigate();
@@ -155,12 +157,14 @@ useEffect(() => {
                 <GenreFilter handleFilter={handleFilter} />
                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
             </div>
-            <div>
-                <h4>Status Summary</h4>
-                <ul>
-                    <li>Read: {bookCounts.read}</li>
-                    <li>Unread: {bookCounts.unread}</li>
-                    <li>Currently Reading: {bookCounts.currently_reading}</li>
+            <div className="d-flex align-items-center flex-wrap">
+                <h4 className="me-3">Status Summary</h4>
+                <ul className="list-group list-group-horizontal-sm mb-0">
+                    <li className="list-group-item">Read: {bookCounts.read}</li>
+                    <li className="list-group-item">Unread: {bookCounts.unread}</li>
+                    <li className="list-group-item">Currently Reading: {bookCounts.currentlyReading}</li>
+                    <li className="list-group-item">Want: {bookCounts.want}</li>
+                    <li className="list-group-item">Owned: {bookCounts.owned}</li>
                 </ul>
             </div>
             <div className='table-responsive mt-5' style={{ maxHeight: '500px', overflow: 'auto'}}>

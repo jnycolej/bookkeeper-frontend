@@ -123,36 +123,6 @@ const BookForm = () => {
         } catch (err) {
             console.error('Error adding book:', err);
         }
-        // Post the data to the backend
-        // axios
-        //     .post('/api/books', submissionData)
-        //     .then((response) => {
-        //         console.log('Book added successfully:', response.data);
-
-        //         // Reset form fields after submission
-        //         setFormData({
-        //             title: '',
-        //             series: '',
-        //             author: '',
-        //             genres: '',
-        //             publicationYear: '',
-        //             pageCount: '',
-        //             status: '',
-        //             format: '',
-        //             rating: '',
-        //             dateAdded: '',
-        //             dateFinished: '',
-        //             isbn10: '',
-        //             isbn13: '',    
-        //         });
-        //         setIsFormValid(false);
-
-        //         //Goes back to homepage
-        //         navigate('/home');
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error adding book:', error);
-        //     });
     };
 
     return (

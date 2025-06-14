@@ -12,7 +12,7 @@ const GenreFilter = ({ handleFilter }) => {
     const fetchGenres = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const { data } = await api.get('/genres', {
+        const { data } = await api.get('books/genres', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setGenres(data);

@@ -5,7 +5,7 @@ import api from './api';  // your axios instance with baseURL set
 // Fetch all books
 export const getBooks = token =>
   api
-    .get('/', { headers: { Authorization: `Bearer ${token}` } })
+    .get('/books', { headers: { Authorization: `Bearer ${token}` } })
     .then(res => res.data);
 
 // Fetch distinct genres
@@ -23,5 +23,5 @@ export const getBookCounts = token =>
 // Add a new book
 export const addBook = (bookData, token) =>
   api
-    .post('/', bookData, { headers: { Authorization: `Bearer ${token}` } })
+    .post('/books', bookData, { headers: { Authorization: `Bearer ${token}` } })
     .then(res => res.data);
