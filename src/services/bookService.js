@@ -17,7 +17,7 @@ export const getGenres = token =>
 // Fetch counts by status
 export const getBookCounts = token =>
   api
-    .get('/count', { headers: { Authorization: `Bearer ${token}` } })
+    .get('/books/count', { headers: { Authorization: `Bearer ${token}` } })
     .then(res => res.data);
 
 // Add a new book

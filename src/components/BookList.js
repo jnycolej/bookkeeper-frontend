@@ -9,7 +9,7 @@ import SearchBar from './SearchBar';
 import SortButton from './SortButton';
 import NavBar from './NavBar';
 import api from '../services/api';
-import  { getBooks } from '../services/bookService';
+import  { getBooks, getBookCounts } from '../services/bookService';
 import '../assets/bookkeeper.css';
 
 
@@ -130,21 +130,25 @@ useEffect(() => {
     setFilteredBooks(filtered);
 }, [books, selectedGenres, searchQuery]);
 
-useEffect(() => {
-  const fetchCounts = async () => {
-    try {
-      const token = await getAccessTokenSilently();
-      const { data } = await api.get('/count', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setBookCounts(data);
-    } catch (err) {
-      console.error('Error fetching book counts:', err);
-    }
-  };
-  fetchCounts();
-}, [getAccessTokenSilently]);
+    useEffect(() => {
+        const fetchCounts = async () => {
+            try {
+                const token = await getAccessTokenSilently();
+                const data = await getBookCounts(token);
+                console.log('count payload:', data);
 
+                setBookCounts({
+                    read: data.read || 0,
+                    currentlyReading: data.currentlyReading || 0,
+                    want: data.want || 0,
+                    owned: data.owned || 0,
+                });
+            } catch (err) {
+                console.error('Error fetching book counts:', err);
+            }
+        };
+        fetchCounts();
+    }, [getAccessTokenSilently]);
 
     return (
         <div className='m-3 bodycolor'>
