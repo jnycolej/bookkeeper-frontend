@@ -24,7 +24,6 @@ const BookList = () => {
     //tracks the books read
     const [bookCounts, setBookCounts] = useState({
         read: 0,
-        unread: 0,
         currentlyReading: 0,
         want: 0,
         owned: 0,
@@ -34,9 +33,7 @@ const BookList = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      // 1) fetch the JWT
       const token = await getAccessTokenSilently();
-      // 2) hand it to your service
       const data  = await getBooks(token);
       setBooks(data);
     };
@@ -189,7 +186,7 @@ useEffect(() => {
                             filteredBooks.map(book => (
                                 <tr
                                     key={book._id}
-                                    onClick={() => navigate(`/book/${book._id}`)}
+                                    onClick={() => navigate(`/books/${book._id}`)}
                                     style={{ cursor: 'pointer' }}
                                 >
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.title, searchQuery) }}></td>
