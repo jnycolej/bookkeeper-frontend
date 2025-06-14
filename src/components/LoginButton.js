@@ -6,7 +6,7 @@ import api from '../services/api';
 const LoginButton = () => {
     const  { loginWithRedirect } = useAuth0();
 
-    return <button className="btn btn-primary w-50" onClick={() => loginWithRedirect()}>Log In</button>
+    return <button className="btn btn-primary" onClick={() => loginWithRedirect()}>Log In</button>
 };
 
 export default LoginButton;
