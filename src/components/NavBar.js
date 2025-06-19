@@ -5,7 +5,7 @@ import LoginButton from './LoginButton';
 import Profile from "../pages/Profile";
 import { Navigate, useNavigate } from "react-router";
 import api from '../services/api';
-
+import BookKeeperLogo from '../assets/BookKeeperLogo.png';
 
 export default function NavBar() {
     const LogoutButton = () => {
@@ -19,11 +19,16 @@ export default function NavBar() {
     };
     const navigate = useNavigate();
     return (
-        <nav className="">
-            <button onClick={() => navigate('/home')} className="btn btn-primary">Home</button>
-            <LoginButton/>
-            <LogoutButton />
-            <button className="btn btn-primary" onClick={() => navigate('/profile')}>Profile</button>
-        </nav>
+        <div>
+            <nav className="d-flex flex-wrap gap-3">
+                <a href="/home"><img className="logo w-100" src={BookKeeperLogo}/></a>
+                <button onClick={() => navigate('/home')} className="btn btn-primary">Home</button>
+                <LoginButton/>
+                <LogoutButton />
+                <button type="button" className="btn common-height" onClick={() => navigate('/bookform')}>Add Book</button>
+                <button className="btn" onClick={() => navigate('/profile')}>Profile</button>
+            </nav>            
+        </div>
+
     );
 }

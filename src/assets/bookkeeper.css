@@ -1,3 +1,23 @@
 .bodycolor {
     background-color: #fcfcfc;
 }
+
+.logo {
+    width:fit-content;
+}
+
+.majorbutton {
+    background-color: #5a2530;
+}
+
+.secondarybutton {
+    border-color: #742435;
+    border-width: 5px;
+    border-radius: 5px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}

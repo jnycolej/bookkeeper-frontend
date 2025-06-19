@@ -26,3 +26,9 @@ export const addBook = (bookData, token) =>
     .post('/books', bookData, { headers: { Authorization: `Bearer ${token}` } })
     .then(res => res.data);
 
+export const deleteBook = (bookId, token) =>
+  api
+    .delete(`/books/${bookId}`, {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(res => res.data);

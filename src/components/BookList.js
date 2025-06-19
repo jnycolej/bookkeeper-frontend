@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import GenreFilter from './GenreFilter';
+import StatusFilter from './StatusFilter';
 import SearchBar from './SearchBar';
 import SortButton from './SortButton';
 import NavBar from './NavBar';
@@ -20,7 +21,7 @@ const BookList = () => {
     const [filteredBooks, setFilteredBooks] = useState([]);     //tracks the list of books after filtering
     const [searchQuery, setSearchQuery] = useState('');     //holds the search
     const [selectedGenres, setSelectedGenres] = useState([]);   //tracks the genres selected in the filtering
-    
+    const [selectedStatuses, setSelectedStatuses] = useState([]); //tracks the statuses selected in the filtering
     //tracks the books read
     const [bookCounts, setBookCounts] = useState({
         read: 0,
@@ -89,6 +90,10 @@ const BookList = () => {
             setSelectedGenres(selectedGenres);
         }
     };
+
+    const handleStatusFilter = () => {
+
+    };
     
 // Function to highlight search matches
 const highlightText = (text, query) => {
@@ -113,14 +118,16 @@ useEffect(() => {
         );
     }
 
+    // Filter by status if any are selected
+    
+
     // Filter by search query
     if (searchQuery.trim() !== '') {
         const lowerCaseQuery = searchQuery.toLowerCase();
         filtered = filtered.filter((book) =>
             book.title.toLowerCase().includes(lowerCaseQuery) ||
-            book.author.some((author) =>
-                author.toLowerCase().includes(lowerCaseQuery)
-            )
+            book.author.some((author) => author.toLowerCase().includes(lowerCaseQuery) ) || 
+            book.series?.toLowerCase().includes(lowerCaseQuery)
         );
     }
 
@@ -149,27 +156,27 @@ useEffect(() => {
 
     return (
         <div className='m-3 bodycolor'>
-            <h1 className='display-1 text-center'>BookKeeper</h1>
             <NavBar />
-            <h3 className='display-6 mb-3'>My Reading List</h3>
+            <h3 className='display-6 align-items-center mb-3'>My Reading List</h3>
             <div className='d-flex flex-wrap align-items-center gap-3'>
-                <button type="button" className="btn btn-lg btn-outline-secondary common-height" onClick={() => navigate('/bookform')}>Add Book</button>
+                <button type="button" className="btn common-height" onClick={() => navigate('/bookform')}>Add Book</button>
                 <SortButton handleSort={handleSort} />
                 <GenreFilter handleFilter={handleFilter} />
+                <StatusFilter handleFilter={handleStatusFilter} />
                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
             </div>
             <div className="d-flex align-items-center flex-wrap">
-                <h4 className="me-3">Status Summary</h4>
+                <h4 className="me-3">Status Summary: </h4>
                 <ul className="list-group list-group-horizontal-sm mb-0">
                     <li className="list-group-item">Read: {bookCounts.read}</li>
-                    <li className="list-group-item">Unread: {bookCounts.unread}</li>
                     <li className="list-group-item">Currently Reading: {bookCounts.currentlyReading}</li>
                     <li className="list-group-item">Want: {bookCounts.want}</li>
                     <li className="list-group-item">Owned: {bookCounts.owned}</li>
+                    <li className='list-group-item'>Total: {bookCounts.read + bookCounts.currentlyReading + bookCounts.want + bookCounts.owned}</li>
                 </ul>
             </div>
             <div className='table-responsive mt-5' style={{ maxHeight: '500px', overflow: 'auto'}}>
-                <table className="table table-dark table-striped">
+                <table className="table table-striped">
                     <thead className='table-secondary'>
                         <tr>
                             <th>Title</th>
@@ -190,7 +197,7 @@ useEffect(() => {
                                     style={{ cursor: 'pointer' }}
                                 >
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.title, searchQuery) }}></td>
-                                    <td>{book.series}</td>
+                                    <td dangerouslySetInnerHTML={{ __html:highlightText(book.series || '', searchQuery)}}></td>
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.author.join(', '), searchQuery) }}></td>
                                     <td className='text-capitalize'>{book.genres.join(', ')}</td>
                                     <td>{book.publicationYear}</td>

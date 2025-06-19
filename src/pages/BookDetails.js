@@ -5,6 +5,8 @@ import { useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 import api from '../services/api';
+import NavBar from '../components/NavBar';
+import { deleteBook } from '../services/bookService';
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -18,16 +20,15 @@ const BookDetails = () => {
 
     const navigation = useNavigate();
 
+    const handleDelete = () => {
+        
+    }
     useEffect(() => {
         //Fetch book details from the backend API
         setLoading(true);
         const fetchBookDetails = async () => {
             try {
                 const token = await getAccessTokenSilently();
-                // const response = await axios.get(
-                //     `/api/books/${id}`,
-                //     { headers: { Authorization: `Bearer ${token}`}}
-                // );
                 const response = await api.get(
                    `/books/${id}`,
                    { headers: { Authorization: `Bearer ${token}` } }
@@ -62,8 +63,10 @@ const BookDetails = () => {
 
     return (
         <div className="container mt-5">
-            <img src={bookImage} alt="Book Cover" width="50" height="60"></img>
-            <h1 className='display-4'>{book.title}</h1>
+            <NavBar />
+            <h1 className='display-2'>{book.title}</h1>
+            <h3 className='display-6'>{book.series}</h3>
+            <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
             <p className='lead'>By {
                 Array.isArray(book.author)
                     ? book.author.join(', ')
@@ -73,8 +76,8 @@ const BookDetails = () => {
             <hr />
             <div>
                 <h4>Genres</h4>
-                <p>{Array.isArray(book.genres)
-                        ? book.genres.join(', ')
+                <p className='text-capitalize'>{Array.isArray(book.genres)
+                        ? book.genres.join(' | ')
                         : book.genre
                     }
                 </p>
@@ -89,10 +92,17 @@ const BookDetails = () => {
             </div>
             <div>
                 <h4>Status</h4>
-                <p>{book.status}</p>
+                <p className='text-capitalize'>{book.status}</p>
+            </div>
+            <div>
+                <h4>Format</h4>
+                <p className='text-capitalize'>{book.format}</p>
+            </div>
+            <div>
+                <h4>Page Count</h4>
+                <p>{book.pageCount}</p>
             </div>
             <div className=' d-flex m-2'>
-                <button className='btn btn-lg btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
                 <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
             </div>
         </div>

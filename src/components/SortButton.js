@@ -5,7 +5,7 @@ const SortButton = ({ handleSort }) => {
     return (
         <div className="dropdown">
             <button 
-                className="btn btn-lg w-100 btn-secondary dropdown-toggle" 
+                className="btn w-100 btn-secondary dropdown-toggle" 
                 type="button" 
                 id="sortDropdown" 
                 data-bs-toggle="dropdown"

@@ -3,11 +3,14 @@ import axios from 'axios';
 import api from '../services/api';
 import { useAuth0 } from '@auth0/auth0-react';
 
+
+//Used to display the unique genres as they are entered into the database
 const GenreFilter = ({ handleFilter }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const {getAccessTokenSilently} = useAuth0();
 
+    //Collects all the unqiue genres
     useEffect(() => {
     const fetchGenres = async () => {
       try {
@@ -39,14 +42,14 @@ const GenreFilter = ({ handleFilter }) => {
     return (
         <div className='dropdown'>
             <button
-                className='btn btn-lg btn-secondary dropdown-toggle'
+                className='btn btn-secondary dropdown-toggle'
                 type='button'
                 id='genreDropdown'
                 data-bs-toggle='dropdown'
                 aria-expanded='false'
                 >Genre Filter
             </button>
-            <div className='dropdown-menu p-3' aria-labelledby='genreDropdown'>
+            <div className='dropdown-menu scrollable-menu p-3' aria-labelledby='genreDropdown'>
                 {genres.map((genre) => (
                     <div className='form-check' key={genre}>
                         <input

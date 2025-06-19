@@ -1,284 +1,336 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import api from '../services/api';
+import NavBar from '../components/NavBar';
 
+export default function EditForm() {
+  const { id } = useParams();
+  const { getAccessTokenSilently } = useAuth0();
+  const navigate = useNavigate();
 
-const EditForm = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const [editData, setEditData] = useState({
+    title: '',
+    series: '',
+    author: '',
+    genres: '',
+    publicationYear: '',
+    pageCount: '',
+    status: '',
+    format: '',
+    rating: '',
+    dateAdded: '',
+    isbn10: '',
+    isbn13: '',
+  });
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error,   setError]   = useState(null);
 
-    const [book, setBook] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  // helper to format ISO → YYYY-MM-DD
+  const toInputDate = iso => {
+    if (!iso) return '';
+    return new Date(iso).toISOString().slice(0, 10);
+  };
 
-    const [editData, setEditData] = useState({
-        title: '',
-        series: '',
-        author: '', // Keep as string during editing
-        genres: '', // Keep as string during editing
-        publicationYear: '',
-        pageCount: '',
-        status: '',
-        format: '',
-        rating: '',
-        dateAdded: '',
-        dateFinished: '',
-        isbn10: '',
-        isbn13: '',
-    });
-
-    const [isFormValid, setIsFormValid] = useState(false);
-
-    //Fetch book details when the component mounts
-    useEffect(() => {
-        //Fetch book details from the backend API
-        const fetchBookDetails = async () => {
-            try {
-                const response = await axios.get(`/api/books/${id}`);
-                setBook(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError('Failed to fetch book details');
-                setLoading(false);
-            }
-        };
-
-        fetchBookDetails();
-    }, [id]);
-
-    // Set the form state when book details are fetched
-    useEffect(() => {
-        if (book) {
-            setEditData({
-                title: book.title,
-                series: book.series,
-                author: book.author.join('; '), // Convert array to string for editing
-                genres: book.genres.join('; '), // Convert array to string for editing
-                publicationYear: book.publicationYear,
-                pageCount: book.pageCount,
-                status: book.status,
-                format: book.format,
-                rating: book.rating,
-                dateAdded: book.dateAdded,
-                dateFinished: book.dateFinished,
-                isbn10: book.isbn10,
-                isbn13: book.isbn13,
-            });
-        }
-    }, [book]);
-
-    // Handle input changes
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        // Update the field as plain text
-        setEditData({ ...editData, [id]: value });
-        validateForm({ ...editData, [id]: value });
-    };
-
-    // Handle radio button changes
-    const handleRadioChange = (e) => {
-        const { value } = e.target;
-        setEditData({ ...editData, status: value });
-        validateForm({ ...editData, status: value });
-    };
-
-    // Validate form completeness
-    const validateForm = (data) => {
-        // const allFieldsFilled = Object.values(data).every(
-        //     (field) => (Array.isArray(field) ? field.length > 0 : field !== '')
-        // );
-        // setIsFormValid(allFieldsFilled);
-        const requiredFields = [
-            'title',
-            'author',
-            'genres',
-            'publicationYear',
-            'pageCount',
-            'status'
-        ];
-
-        const allRequiredFilled = requiredFields.every((key) => {
-            const field = data[key];
-            if (Array.isArray(field)) {
-                return field.length > 0;
-            }
-            return field !== '';
+  // 1) Load existing book & initialize form
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const token = await getAccessTokenSilently();
+        const { data } = await api.get(`/books/${id}`, {
+          headers: { Authorization: `Bearer ${token}` }
         });
 
-        setIsFormValid(allRequiredFilled);
+        setEditData({
+          title:           data.title,
+          series:          data.series || '',
+          author:          (data.author || []).join('; '),
+          genres:          (data.genres || []).join('; '),
+          publicationYear: data.publicationYear || '',
+          pageCount:       data.pageCount || '',
+          status:          data.status || 'want',
+          format:          data.format || '',
+          rating:          data.rating || '',
+          isbn10:          data.isbn10 || '',
+          isbn13:          data.isbn13 || '',
+          dateAdded:       toInputDate(data.dateAdded),
+        });
+
+        // Pre-validate so Save is enabled if everything is already present
+        validateForm({
+          title:           data.title,
+          author:          (data.author || []).join('; '),
+          genres:          (data.genres || []).join('; '),
+          publicationYear: data.publicationYear,
+          pageCount:       data.pageCount,
+          status:          data.status,
+        });
+      } catch (e) {
+        console.error(e);
+        setError('Failed to load book');
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [id, getAccessTokenSilently]);
+
+  // 2) Validation: always returns true/false
+  const validateForm = data => {
+    const required = [
+      'title','author','genres','publicationYear','pageCount','status'
+    ];
+    const ok = required.every(key => {
+      const v = data[key];
+      return Array.isArray(v)
+        ? v.length > 0
+        : v !== '';
+    });
+    setIsFormValid(ok);
+  };
+
+  // 3) Handlers
+  const handleChange = e => {
+    const { id, value } = e.target;
+    const upd = { ...editData, [id]: value };
+    setEditData(upd);
+    validateForm(upd);
+  };
+  const handleRadioChange = e => {
+    const { name, value } = e.target;
+    const upd = { ...editData, [name]: value };
+    setEditData(upd);
+    validateForm(upd);
+  };
+
+  // 4) Submit: normalize blanks → null
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const payload = {
+      title:           editData.title,
+      series:          editData.series.trim() || null,
+      author:          editData.author.split(';').map(a=>a.trim()),
+      genres:          editData.genres.split(';').map(g=>g.trim()),
+      publicationYear: Number(editData.publicationYear),
+      pageCount:       Number(editData.pageCount),
+      status:          editData.status,
+      format:          editData.format || null,
+      isbn10:          editData.isbn10.trim() || null,
+      isbn13:          editData.isbn13.trim() || null,
+      rating:          editData.rating ? Number(editData.rating) : null,
+      ...(editData.dateAdded
+         ? { dateAdded: new Date(editData.dateAdded) }
+         : {}),
     };
 
-    // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // Transform author and genres into arrays during submission
-        const submissionData = {
-            ...editData,
-            author: editData.author.split(';').map((a) => a.trim()), // Split by semicolon and trim spaces
-            genres: editData.genres.split(';').map((g) => g.trim()), // Split by semicolon and trim spaces
-        };
-
-        // Post the data to the backend
-        axios
-            .put(`api/books/${id}`, submissionData)
-            .then((response) => {
-                console.log('Book updated successfully:', response.data);
-
-                //Goes back to homepage
-                navigate(`/book/${book._id}`);
-            })
-            .catch((error) => console.error('Error updating book:', error));
-    };
-
-    //Render loading, error, or form based on state
-    if (loading) {
-        return <div className='text-center mt-5'>Loading...</div>
+    try {
+      const token = await getAccessTokenSilently();
+      await api.put(`/books/${id}`, payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      navigate(`/books/${id}`);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to update book');
     }
+  };
 
-    if (error) {
-        return <div className='text-center text-danger mt-5'>{error}</div>
-    }
+  if (loading) return <div className="text-center mt-5">Loading…</div>;
+  if (error)   return <div className="text-center text-danger mt-5">{error}</div>;
 
-    return (
-        <div>
-            <h1 className="display-1">Edit Book</h1>
-            <form className="row g-3 m-3" onSubmit={handleSubmit}>
-                <div className="col-md-6">
-                    <label className="form-label" htmlFor="title">Title:</label>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="title" 
-                        value={editData.title} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </div>
-                <div className='col-md-6'>
-                    <label className="form-label" htmlFor="series">Series</label>
-                    <input 
-                        type="text"
-                        className="form-control"
-                        id="series"
-                        value={editData.series}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label htmlFor="author" className="form-label"> Author(s): </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="author"
-                        value={editData.author} // Store as string during editing
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="col-12">
-                    <label className="form-label" htmlFor="genres">
-                        Genre(s):
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="genres"
-                        value={editData.genres} // Store as string during editing
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label" htmlFor="publicationYear">
-                        Publication Year:
-                    </label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="publicationYear"
-                        value={editData.publicationYear}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="col-md-6">
-                    <label className="form-label" htmlFor="pageCount">
-                        Page Count:
-                    </label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        id="pageCount"
-                        value={editData.pageCount}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <fieldset className="row col-12">
-                    <legend>Status:</legend>
-                    <div className="col-sm-10">
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                id="read"
-                                name="status"
-                                value="read"
-                                checked={editData.status === 'read'}
-                                onChange={handleRadioChange}
-                            />
-                            <label className="form-check-label" htmlFor="read">
-                                Read
-                            </label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                id="unread"
-                                name="status"
-                                value="unread"
-                                checked={editData.status === 'unread'}
-                                onChange={handleRadioChange}
-                            />
-                            <label className="form-check-label" htmlFor="unread">
-                                Unread
-                            </label>
-                        </div>
-                        <div className="form-check form-check-inline">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                id="currentlyReading"
-                                name="status"
-                                value="currentlyreading"
-                                checked={editData.status === 'currentlyreading'}
-                                onChange={handleRadioChange}
-                            />
-                            <label
-                                className="form-check-label"
-                                htmlFor="currentlyReading"
-                            >
-                                Currently Reading
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-                <div className="col-12">
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={!isFormValid}
-                    >
-                        Edit Book
-                    </button>
-                </div>
-            </form>
+  return (
+    <div>
+      <NavBar />
+      <h1 className="display-1">Edit Book</h1>
+      <form className="row g-3 m-3" onSubmit={handleSubmit}>
+        {/* Title */}
+        <div className="col-md-6">
+          <label htmlFor="title" className="form-label">Title:</label>
+          <input
+            id="title"
+            type="text"
+            className="form-control"
+            value={editData.title}
+            onChange={handleChange}
+            required
+          />
         </div>
-    );
-};
 
-export default EditForm;
+        {/* Series */}
+        <div className="col-md-6">
+          <label htmlFor="series" className="form-label">Series:</label>
+          <input
+            id="series"
+            type="text"
+            className="form-control"
+            value={editData.series}
+            onChange={handleChange}
+            placeholder="(optional)"
+          />
+        </div>
+
+        {/* Author(s) */}
+        <div className="col-md-6">
+          <label htmlFor="author" className="form-label">Author(s):</label>
+          <input
+            id="author"
+            type="text"
+            className="form-control"
+            value={editData.author}
+            onChange={handleChange}
+            placeholder="Name1; Name2; ..."
+            required
+          />
+        </div>
+
+        {/* ISBNs */}
+        <div className="col-md-3">
+          <label htmlFor="isbn10" className="form-label">ISBN-10:</label>
+          <input
+            id="isbn10"
+            type="text"
+            className="form-control"
+            value={editData.isbn10}
+            onChange={handleChange}
+            placeholder="(optional)"
+          />
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="isbn13" className="form-label">ISBN-13:</label>
+          <input
+            id="isbn13"
+            type="text"
+            className="form-control"
+            value={editData.isbn13}
+            onChange={handleChange}
+            placeholder="(optional)"
+          />
+        </div>
+
+        {/* Genres */}
+        <div className="col-12">
+          <label htmlFor="genres" className="form-label">Genre(s):</label>
+          <input
+            id="genres"
+            type="text"
+            className="form-control"
+            value={editData.genres}
+            onChange={handleChange}
+            placeholder="Genre1; Genre2; ..."
+            required
+          />
+        </div>
+
+        {/* Publication Year & Page Count */}
+        <div className="col-md-6">
+          <label htmlFor="publicationYear" className="form-label">Publication Year:</label>
+          <input
+            id="publicationYear"
+            type="number"
+            className="form-control"
+            value={editData.publicationYear}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="pageCount" className="form-label">Page Count:</label>
+          <input
+            id="pageCount"
+            type="number"
+            className="form-control"
+            value={editData.pageCount}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        {/* Format */}
+        <fieldset className="col-md-6">
+          <legend>Format:</legend>
+          {['physical','ebook','library'].map(opt => (
+            <div key={opt} className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={opt}
+                name="format"
+                value={opt}
+                checked={editData.format === opt}
+                onChange={handleRadioChange}
+              />
+              <label className="form-check-label" htmlFor={opt}>
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+              </label>
+            </div>
+          ))}
+        </fieldset>
+
+        {/* Status */}
+        <fieldset className="col-md-6">
+          <legend>Status:</legend>
+          {['read','want','currentlyReading','owned'].map(opt => (
+            <div key={opt} className="form-check form-check-inline">
+              <input
+                className="form-check-input"
+                type="radio"
+                id={opt}
+                name="status"
+                value={opt}
+                checked={editData.status === opt}
+                onChange={handleRadioChange}
+              />
+              <label className="form-check-label" htmlFor={opt}>
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+              </label>
+            </div>
+          ))}
+        </fieldset>
+
+        {/* Rating */}
+        <div className="col-md-6">
+          <label htmlFor="rating" className="form-label">Rating:</label>
+          <input
+            id="rating"
+            type="number"
+            className="form-control"
+            value={editData.rating}
+            onChange={handleChange}
+            placeholder="1–5 (optional)"
+          />
+        </div>
+
+        {/* Date Added */}
+        <div className="col-md-6">
+          <label htmlFor="dateAdded" className="form-label">Date Added:</label>
+          <input
+            id="dateAdded"
+            type="date"
+            className="form-control"
+            value={editData.dateAdded}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* Submit */}
+        <div className="col-12">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={!isFormValid}
+          >
+            Save Changes
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline-secondary ms-2"
+            onClick={() => navigate(`/books/${id}`)}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
