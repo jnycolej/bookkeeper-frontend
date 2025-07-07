@@ -155,11 +155,11 @@ useEffect(() => {
     }, [getAccessTokenSilently]);
 
     return (
-        <div className='m-3 bodycolor'>
+        <div className='m-3'>
             <NavBar />
-            <h3 className='display-6 align-items-center mb-3'>My Reading List</h3>
-            <div className='d-flex flex-wrap align-items-center gap-3'>
-                <button type="button" className="btn common-height" onClick={() => navigate('/bookform')}>Add Book</button>
+            <h3 className='display-4 align-items-center text-center mb-3'>My Library</h3>
+            <div className='d-flex flex-wrap align-items-center gap-3 p-3'>
+                <button type="button" className="btn btn-primary common-height" onClick={() => navigate('/bookform')}>Add Book</button>
                 <SortButton handleSort={handleSort} />
                 <GenreFilter handleFilter={handleFilter} />
                 <StatusFilter handleFilter={handleStatusFilter} />
@@ -172,6 +172,7 @@ useEffect(() => {
                     <li className="list-group-item">Currently Reading: {bookCounts.currentlyReading}</li>
                     <li className="list-group-item">Want: {bookCounts.want}</li>
                     <li className="list-group-item">Owned: {bookCounts.owned}</li>
+                    <li className="list-group-item">Total Unread: {bookCounts.want + bookCounts.owned}</li>
                     <li className='list-group-item'>Total: {bookCounts.read + bookCounts.currentlyReading + bookCounts.want + bookCounts.owned}</li>
                 </ul>
             </div>
