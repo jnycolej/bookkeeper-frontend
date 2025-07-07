@@ -35,9 +35,14 @@ const BookDetails = () => {
                  );
                 const data = response.data;
                 setBook(data);
-                setBookImage(
+                if(!data.asin)
+                {setBookImage(
                     `https://covers.openlibrary.org/b/isbn/${data.isbn13 || data.isbn10}-M.jpg`
-                )
+                )} else {
+                    setBookImage(
+                        `https://images.amazon.com/images/P/${data.asin}.jpg`
+                    )
+                }
             } catch (err) {
                 console.error(err);
                 setError('Failed to fetch book details');
@@ -64,12 +69,16 @@ const BookDetails = () => {
     return (
         <div className="container mt-5">
             <NavBar />
+            <img src={bookImage} alt="Book Cover" width="125" height="200"></img>
             <h1 className='display-2'>{book.title}</h1>
             <h3 className='display-6'>{book.series}</h3>
-            <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
+            <div>
+                <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
+                <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
+            </div>
             <p className='lead'>By {
                 Array.isArray(book.author)
-                    ? book.author.join(', ')
+                    ? book.author.join(' | ')
                     : book.author
                 }
             </p>
