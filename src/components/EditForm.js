@@ -22,6 +22,7 @@ export default function EditForm() {
     dateAdded: '',
     isbn10: '',
     isbn13: '',
+    asin: '',
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -55,6 +56,7 @@ export default function EditForm() {
           rating:          data.rating || '',
           isbn10:          data.isbn10 || '',
           isbn13:          data.isbn13 || '',
+          asin:            data.asin || '',
           dateAdded:       toInputDate(data.dateAdded),
         });
 
@@ -118,6 +120,7 @@ export default function EditForm() {
       format:          editData.format || null,
       isbn10:          editData.isbn10.trim() || null,
       isbn13:          editData.isbn13.trim() || null,
+      asin:            editData.asin.trim() || null,
       rating:          editData.rating ? Number(editData.rating) : null,
       ...(editData.dateAdded
          ? { dateAdded: new Date(editData.dateAdded) }
@@ -142,7 +145,7 @@ export default function EditForm() {
   return (
     <div>
       <NavBar />
-      <h1 className="display-1">Edit Book</h1>
+      <h1 className="display-1 text-center">Edit Book</h1>
       <form className="row g-3 m-3" onSubmit={handleSubmit}>
         {/* Title */}
         <div className="col-md-6">
@@ -207,7 +210,17 @@ export default function EditForm() {
             placeholder="(optional)"
           />
         </div>
-
+                        <div className="col-md-6">
+          <label htmlFor="asin" className="form-label">ASIN:</label>
+          <input
+            id="asin"
+            type="text"
+            className="form-control"
+            value={editData.asin}
+            onChange={handleChange}
+            placeholder="(optional)"
+          />
+        </div>
         {/* Genres */}
         <div className="col-12">
           <label htmlFor="genres" className="form-label">Genre(s):</label>

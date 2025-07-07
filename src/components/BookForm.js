@@ -21,6 +21,7 @@ export default function BookForm() {
     dateAdded: '',
     isbn10: '',
     isbn13: '',
+    asin: '',
   }
 
   const [formData, setFormData] = useState({...INITIAL_STATE});
@@ -78,6 +79,7 @@ export default function BookForm() {
       format:          formData.format || null,
       isbn10:          formData.isbn10.trim() || null,
       isbn13:          formData.isbn13.trim() || null,
+      asin:            formData.asin.trim() || null,
       rating:          formData.rating ? Number(formData.rating) : null,
       ...(formData.dateAdded
          ? { dateAdded: new Date(formData.dateAdded) }
@@ -106,7 +108,7 @@ export default function BookForm() {
   return (
     <div>
       <NavBar />
-      <h1 className="display-1">Add Book</h1>
+      <h1 className="display-1 text-center">Add New Book</h1>
       <form className="row g-3 m-3" onSubmit={handleSubmit}>
         {/* Title */}
         <div className="col-md-6">
@@ -167,6 +169,17 @@ export default function BookForm() {
             type="text"
             className="form-control"
             value={formData.isbn13}
+            onChange={handleChange}
+            placeholder="(optional)"
+          />
+        </div>
+                <div className="col-md-6">
+          <label htmlFor="asin" className="form-label">ASIN:</label>
+          <input
+            id="asin"
+            type="text"
+            className="form-control"
+            value={formData.asin}
             onChange={handleChange}
             placeholder="(optional)"
           />
@@ -278,17 +291,17 @@ export default function BookForm() {
         </div>
 
         {/* Submit */}
-        <div className="col-12">
+        <div className="col-12 p-3">
           <button
             type="submit"
-            className="btn btn-primary"
+            className="btn btn-light w-50"
             disabled={!isFormValid}
           >
             Add Book
           </button>
           <button
             type="button"
-            className="btn btn-outline-secondary ms-2"
+            className="btn btn-outline-secondary ms-2 w-25"
             onClick={() => navigate('/home')}
           >
             Cancel
