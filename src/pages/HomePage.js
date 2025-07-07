@@ -10,9 +10,9 @@ import '../assets/bookkeeper.css';
 
 const HomePage = () => {
     return (
-        <div>
+        <body>
             <BookList />
-        </div>
+        </body>
     )
 }
 

@@ -2,7 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS (optional)
+import './assets/bookkeeper.css';
 import App from './App';    // Import your main App component
+
 import {Auth0Provider} from '@auth0/auth0-react';
 import { redirect } from 'react-router';
 
