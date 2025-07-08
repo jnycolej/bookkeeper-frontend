@@ -105,6 +105,51 @@ export default function BookForm() {
     }
   };
 
+    // 3) Submit with blank→null normalization
+  const handleSubmitAndAddAgain = async (e) => {
+    e.preventDefault();
+
+    // turn semicolon-lists into arrays
+    const authors = formData.author.split(';').map((a) => a.trim());
+    const genres  = formData.genres.split(';').map((g) => g.trim());
+
+    const payload = {
+      title:           formData.title,
+      series:          formData.series.trim() || null,
+      author:          authors,
+      genres:          genres,
+      publicationYear: Number(formData.publicationYear),
+      pageCount:       Number(formData.pageCount),
+      status:          formData.status,
+      format:          formData.format || null,
+      isbn10:          formData.isbn10.trim() || null,
+      isbn13:          formData.isbn13.trim() || null,
+      asin:            formData.asin.trim() || null,
+      rating:          formData.rating ? Number(formData.rating) : null,
+      ...(formData.dateAdded
+         ? { dateAdded: new Date(formData.dateAdded) }
+         : {}),
+    };
+
+    try {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+          scope:    'read:books write:books'
+        },
+        prompt: 'consent'
+      });
+      await addBook(payload, token);
+
+      // reset form & go home
+      setFormData({...INITIAL_STATE});
+      setIsFormValid(false);
+      navigate('/bookform');
+    } catch (err) {
+      console.error('Error adding book:', err);
+    }
+  };
+
   return (
     <div>
       <NavBar />
@@ -294,11 +339,18 @@ export default function BookForm() {
         <div className="col-12 p-3">
           <button
             type="submit"
-            className="btn btn-light w-50"
+            className="btn btn-light w-25"
             disabled={!isFormValid}
           >
             Add Book
           </button>
+          {/* <button
+            type="submit"
+            className='btn btn-light ms-2 w-25'
+            onClick={() => navigate("/bookform")}
+          >
+            Add Another Book
+          </button> */}
           <button
             type="button"
             className="btn btn-outline-secondary ms-2 w-25"
