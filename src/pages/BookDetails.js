@@ -23,6 +23,7 @@ const BookDetails = () => {
     const handleDelete = () => {
         
     }
+
     useEffect(() => {
         //Fetch book details from the backend API
         setLoading(true);
@@ -36,12 +37,9 @@ const BookDetails = () => {
                 const data = response.data;
                 setBook(data);
                 if(!data.asin)
-                {setBookImage(
-                    `https://covers.openlibrary.org/b/isbn/${data.isbn13 || data.isbn10}-M.jpg`
-                )} else {
-                    setBookImage(
-                        `https://images.amazon.com/images/P/${data.asin}.jpg`
-                    )
+                {setBookImage(`https://covers.openlibrary.org/b/isbn/${data.isbn13 || data.isbn10}-M.jpg`
+                    )} else {
+                        setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg`)
                 }
             } catch (err) {
                 console.error(err);
@@ -50,71 +48,69 @@ const BookDetails = () => {
                 setLoading(false);
             }
         };
-
         fetchBookDetails();
     }, [id, getAccessTokenSilently]);
 
-    if (loading) {
-        return <div className='text-center text-danger mt-5'>Loading...</div>;
-    }
+    if (loading) { return <div className='text-center text-danger mt-5'>Loading...</div>; }
 
-    if (error) {
-        return <div className="text-center text-danger mt-5">{error}</div>;
-    }
+    if (error) { return <div className="text-center text-danger mt-5">{error}</div>;}
 
-    if (!book) {
-        return <div className='text-centeer text-danger mt-5'>Book not found</div>
-    }
+    if (!book) { return <div className='text-centeer text-danger mt-5'>Book not found</div> }
 
     return (
         <div className="container mt-5">
             <NavBar />
-            <img src={bookImage} alt="Book Cover" width="125" height="200"></img>
             <h1 className='display-2'>{book.title}</h1>
-            <h3 className='display-6'>{book.series}</h3>
-            <div>
-                <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
-                <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
+            <h3 className='fs-3 fw-lighter fst-italic'>{book.series}</h3>            
+            <div className='container text-center'>
+                <div className='row align-items-center'>
+                    <div className='col'>
+                        <p className='lead fw-bold'>{
+                            Array.isArray(book.author)
+                            ? book.author.join(' | ')
+                            : book.author
+                        }
+                        </p>
+                        <hr />
+                        <div>
+                            <h4>Genres</h4>
+                            <p className='text-capitalize font-monospace'>{Array.isArray(book.genres)
+                                ? book.genres.join(' | ')
+                                : book.genre
+                            }
+                            </p>
+                        </div>
+                    <div>
+                    <h4>Publication Year</h4>
+                    <p>{book.publicationYear}</p>
+                </div>
+                <div>
+                    <h4>Page Count</h4>
+                    <p>{book.pageCount}</p>
+                </div>
+                <div>
+                    <h4>Status</h4>
+                    <p className='text-capitalize'>{book.status}</p>
+                </div>
+                <div>
+                    <h4>Format</h4>
+                    <p className='text-capitalize'>{book.format}</p>
+                </div>
+                <div>
+                    <h4>Page Count</h4>
+                    <p>{book.pageCount}</p>
+                </div>
+                <div className=' btn-group d-flex m-2'>
+                    <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
+                    <button className='btn btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
+                </div>
             </div>
-            <p className='lead'>By {
-                Array.isArray(book.author)
-                    ? book.author.join(' | ')
-                    : book.author
-                }
-            </p>
-            <hr />
-            <div>
-                <h4>Genres</h4>
-                <p className='text-capitalize'>{Array.isArray(book.genres)
-                        ? book.genres.join(' | ')
-                        : book.genre
-                    }
-                </p>
-            </div>
-            <div>
-                <h4>Publication Year</h4>
-                <p>{book.publicationYear}</p>
-            </div>
-            <div>
-                <h4>Page Count</h4>
-                <p>{book.pageCount}</p>
-            </div>
-            <div>
-                <h4>Status</h4>
-                <p className='text-capitalize'>{book.status}</p>
-            </div>
-            <div>
-                <h4>Format</h4>
-                <p className='text-capitalize'>{book.format}</p>
-            </div>
-            <div>
-                <h4>Page Count</h4>
-                <p>{book.pageCount}</p>
-            </div>
-            <div className=' d-flex m-2'>
-                <button className='btn btn-lg btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
+            <div className='col'>
+                <img src={bookImage} alt="Book Cover" width="225" height="350"></img> 
             </div>
         </div>
+    </div>
+</div>
     );
 };
 
