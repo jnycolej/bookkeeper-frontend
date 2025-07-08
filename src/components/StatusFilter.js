@@ -7,16 +7,13 @@ const StatusFilter = ({ handleFilter }) => {
     const [selectedStatus, setSelectedStatus] = useState([]);
     const {getAccessTokenSilently} = useAuth0();
 
-    const handleCheckBoxChange = (status) => {
-        let updatedStatuses;
-        if (selectedStatus.includes(status)) {
-            updatedStatuses = selectedStatus.filter(item => item !== genre);
-        } else {
-            updatedStatuses = [...selectedStatus, status];
-        }
-        setSelectedStatus(updatedStatuses);
-        handleFilter(updatedStatuses);
-    }
+const handleCheckBoxChange = (statusValue) => {
+  let updated = selectedStatus.includes(statusValue)
+    ? selectedStatus.filter(item => item !== statusValue)
+    : [...selectedStatus, statusValue];
+  setSelectedStatus(updated);
+  handleFilter(updated);
+};
 
     return (
         <div className="dropdown">
@@ -39,6 +36,58 @@ const StatusFilter = ({ handleFilter }) => {
                     />
                     <label className="form-check-label text-capitalize" htmlFor="status-read">
                         Read
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type='checkbox'
+                        id='status-currentlyReading'
+                        value='currentlyReading'
+                        checked={selectedStatus.includes('currentlyReading')}
+                        onChange={() => handleCheckBoxChange('currentlyReading')}
+                    />
+                    <label className="form-check-label text-capitalize" htmlFor="status-currentlyReading">
+                        Currently Reading
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type='checkbox'
+                        id='status-want'
+                        value='want'
+                        checked={selectedStatus.includes('want')}
+                        onChange={() => handleCheckBoxChange('want')}
+                    />
+                    <label className="form-check-label text-capitalize" htmlFor="status-want">
+                        Want
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type='checkbox'
+                        id='status-owned'
+                        value='owned'
+                        checked={selectedStatus.includes('owned')}
+                        onChange={() => handleCheckBoxChange('owned')}
+                    />
+                    <label className="form-check-label text-capitalize" htmlFor="status-owned">
+                        Owned
+                    </label>
+                </div>
+                             <div className="form-check">
+                    <input
+                        className="form-check-input"
+                        type='checkbox'
+                        id='status-unread'
+                        value='unread'
+                        checked={selectedStatus.includes('unread')}
+                        onChange={() => handleCheckBoxChange('unread')}
+                    />
+                    <label className="form-check-label text-capitalize" htmlFor="status-unread">
+                        Currently Reading
                     </label>
                 </div>
             </div>

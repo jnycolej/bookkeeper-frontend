@@ -22,6 +22,10 @@ const BookList = () => {
     const [searchQuery, setSearchQuery] = useState('');     //holds the search
     const [selectedGenres, setSelectedGenres] = useState([]);   //tracks the genres selected in the filtering
     const [selectedStatuses, setSelectedStatuses] = useState([]); //tracks the statuses selected in the filtering
+    // in BookList.js, alongside your state…
+    const handleGenreFilter = genres  => setSelectedGenres(genres);
+    const handleStatusFilter = statuses => setSelectedStatuses(statuses);
+
     //tracks the books read
     const [bookCounts, setBookCounts] = useState({
         read: 0,
@@ -32,6 +36,7 @@ const BookList = () => {
 
     const navigate = useNavigate();
 
+    //Get all books
   useEffect(() => {
     const fetchBooks = async () => {
       const token = await getAccessTokenSilently();
@@ -41,7 +46,7 @@ const BookList = () => {
     fetchBooks();
   }, [getAccessTokenSilently]);
 
-
+    //Sort books based on criteria
     const handleSort = (sortType) => {
         let sortedBooks;
         switch (sortType) {
@@ -74,26 +79,6 @@ const BookList = () => {
         }
         setFilteredBooks(sortedBooks);
     }
-
-    const handleFilter = (selectedGenres) => {
-        if (selectedGenres.length === 0) {
-            // If no genres are selected, show all books
-            setFilteredBooks(books);
-        } else {
-            // Filter books to include only those that have all selected genres
-            const filtered = books.filter((book) =>
-                selectedGenres.every((selectedGenre) =>
-                    book.genres.includes(selectedGenre)
-                )
-            );
-            setFilteredBooks(filtered);
-            setSelectedGenres(selectedGenres);
-        }
-    };
-
-    const handleStatusFilter = () => {
-
-    };
     
 // Function to highlight search matches
 const highlightText = (text, query) => {
@@ -119,7 +104,12 @@ useEffect(() => {
     }
 
     // Filter by status if any are selected
-    
+  if (selectedStatuses.length > 0) {
+    filtered = filtered.filter(book =>
+      // assumes your book model has a `status` field like 'read', 'want', etc.
+      selectedStatuses.includes(book.status)
+    );
+  }
 
     // Filter by search query
     if (searchQuery.trim() !== '') {
@@ -132,7 +122,7 @@ useEffect(() => {
     }
 
     setFilteredBooks(filtered);
-}, [books, selectedGenres, searchQuery]);
+}, [books, selectedGenres, selectedStatuses, searchQuery]);
 
     useEffect(() => {
         const fetchCounts = async () => {
@@ -161,7 +151,7 @@ useEffect(() => {
             <div className='d-flex flex-wrap align-items-center gap-3 p-3'>
                 <button type="button" className="btn btn-primary common-height" onClick={() => navigate('/bookform')}>Add Book</button>
                 <SortButton handleSort={handleSort} />
-                <GenreFilter handleFilter={handleFilter} />
+                <GenreFilter handleFilter={handleGenreFilter} />
                 <StatusFilter handleFilter={handleStatusFilter} />
                 <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
             </div>
@@ -199,7 +189,7 @@ useEffect(() => {
                                 >
                                     <td dangerouslySetInnerHTML={{ __html: highlightText(book.title, searchQuery) }}></td>
                                     <td dangerouslySetInnerHTML={{ __html:highlightText(book.series || '', searchQuery)}}></td>
-                                    <td dangerouslySetInnerHTML={{ __html: highlightText(book.author.join(', '), searchQuery) }}></td>
+                                    <td dangerouslySetInnerHTML={{ __html: highlightText(book.author.join(' | '), searchQuery) }}></td>
                                     <td className='text-capitalize'>{book.genres.join(', ')}</td>
                                     <td>{book.publicationYear}</td>
                                     <td>{book.pageCount}</td>
