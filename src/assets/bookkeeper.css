@@ -8,11 +8,6 @@
     --bs-primary: #5a2530;          /* buttons, links, highlights */
     --bs-secondary: #742435;        /* nav, cards header */
     --bs-dark: #40262b;             /* for text on dark bg */
-
-  /* table overrides */
-  --bs-table-striped-bg:   rgba(116, 36, 53, 0.05);
-  --bs-table-striped-color: var(--bs-primary);
-  --bs-table-hover-bg:     rgba(116, 36, 53, 0.10);
 }
 
 body {
@@ -20,6 +15,16 @@ body {
     color:      var(--bs-body-color);
 }
 
+.list-body {
+    background-color: var(--bs-secondary);
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.feature-banner {
+    max-height: 400px;
+    padding: 20px;
+}
 form {
     background-color: #5a2530;
     color: var(--bs-light);
@@ -110,10 +115,17 @@ a:hover {
     max-height: 200px;
 }
 
-.table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: rgba(116, 36, 53, 0.05) !important;
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+  background-color: #742435 !important;
+  color: #fff        !important;
 }
 
-.table-hover > tbody > tr:hover {
-  background-color: rgba(116, 36, 53, 0.10) !important;
+.table-striped>tbody>tr:nth-of-type(even)>* {
+  background-color: #40262b !important;
+  color: #fff        !important;
+}
+/* force the hover, too */
+.table-hover>tbody>tr:hover>* {
+  background-color: #fcfcfc !important;
+  color: #262827        !important;
 }
