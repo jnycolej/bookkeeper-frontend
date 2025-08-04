@@ -18,6 +18,7 @@ const BookDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     const navigation = useNavigate();
 
     const handleDelete = () => {
@@ -99,6 +100,14 @@ const BookDetails = () => {
                 <div>
                     <h4>Page Count</h4>
                     <p>{book.pageCount}</p>
+                </div>
+                <div>
+                    <h4>Kindle Unlimited</h4>
+                    <p>{book.kindleUnlimited ? 'Yes' : 'No'}</p>
+                </div>
+                <div>
+                    <h4>Libby</h4>
+                    <p>{book.libby ? 'Yes' : 'No'}</p>
                 </div>
                 <div className=' btn-group d-flex m-2'>
                     <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>

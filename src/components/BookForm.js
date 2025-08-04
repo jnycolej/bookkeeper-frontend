@@ -22,6 +22,8 @@ export default function BookForm() {
     isbn10: '',
     isbn13: '',
     asin: '',
+    kindleUnlimited: false,
+    libby: false,
   }
 
   const [formData, setFormData] = useState({...INITIAL_STATE});
@@ -47,8 +49,9 @@ export default function BookForm() {
 
   // 2) Handlers
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    const upd = { ...formData, [id]: value };
+    const { id, type, value, checked } = e.target;
+    const val = type === 'checkbox' ? checked: value;
+    const upd = { ...formData, [id]: val };
     setFormData(upd);
     validateForm(upd);
   };
@@ -80,6 +83,8 @@ export default function BookForm() {
       isbn10:          formData.isbn10.trim() || null,
       isbn13:          formData.isbn13.trim() || null,
       asin:            formData.asin.trim() || null,
+      kindleUnlimited: formData.kindleUnlimited,
+      libby:           formData.libby,
       rating:          formData.rating ? Number(formData.rating) : null,
       ...(formData.dateAdded
          ? { dateAdded: new Date(formData.dateAdded) }
@@ -310,6 +315,35 @@ export default function BookForm() {
           ))}
         </fieldset>
 
+        {/* Kindle Unlimited */}
+        <div className='col-md-6'>
+          <input 
+            type="checkbox" 
+            name="kindleUnlimited"
+            id="kindleUnlimited"
+            checked={formData.kindleUnlimited}
+            onChange={handleChange}
+            className='form-check-input'
+          />
+          <label className='form-check-label' htmlFor='kindleUnlimited'>
+            Kindle Unlimited
+          </label>          
+        </div>
+
+        {/* Libby */}
+        <div className='col-md-6'>
+          <input 
+            type="checkbox"
+            name="libby"
+            id="libby"
+            checked={formData.libby}
+            onChange={handleChange}
+            className='form-check-input'
+          />
+          <label className='form-check-label' htmlFor='libby'>
+            Libby
+          </label>
+        </div>
         {/* Rating */}
         <div className="col-md-6">
           <label htmlFor="rating" className="form-label">Rating:</label>

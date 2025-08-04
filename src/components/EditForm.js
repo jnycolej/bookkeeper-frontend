@@ -23,6 +23,8 @@ export default function EditForm() {
     isbn10: '',
     isbn13: '',
     asin: '',
+    kindleUnlimited: false,
+    libby: false,
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -57,6 +59,8 @@ export default function EditForm() {
           isbn10:          data.isbn10 || '',
           isbn13:          data.isbn13 || '',
           asin:            data.asin || '',
+          kindleUnlimited: data.kindleUnlimited,
+          libby:           data.libby,
           dateAdded:       toInputDate(data.dateAdded),
         });
 
@@ -94,8 +98,9 @@ export default function EditForm() {
 
   // 3) Handlers
   const handleChange = e => {
-    const { id, value } = e.target;
-    const upd = { ...editData, [id]: value };
+    const { id, value, type, checked } = e.target;
+    const val = type === 'checkbox' ? checked: value;
+    const upd = { ...editData, [id]: val };
     setEditData(upd);
     validateForm(upd);
   };
@@ -121,6 +126,8 @@ export default function EditForm() {
       isbn10:          editData.isbn10.trim() || null,
       isbn13:          editData.isbn13.trim() || null,
       asin:            editData.asin.trim() || null,
+      kindleUnlimited:  editData.kindleUnlimited,
+      libby:            editData.libby,
       rating:          editData.rating ? Number(editData.rating) : null,
       ...(editData.dateAdded
          ? { dateAdded: new Date(editData.dateAdded) }
@@ -300,6 +307,36 @@ export default function EditForm() {
             </div>
           ))}
         </fieldset>
+
+        {/* Kindle Unlimited */}
+        <div className='col-md-6'>
+          <input 
+            type="checkbox" 
+            name="kindleUnlimited"
+            id="kindleUnlimited"
+            checked={editData.kindleUnlimited}
+            onChange={handleChange}
+            className='form-check-input'
+          />
+          <label className='form-check-label' htmlFor='kindleUnlimited'>
+            Kindle Unlimited
+          </label>          
+        </div>
+
+        {/* Libby */}
+        <div className='col-md-6'>
+          <input 
+            type="checkbox"
+            name="libby"
+            id="libby"
+            checked={editData.libby}
+            onChange={handleChange}
+            className='form-check-input'
+          />
+          <label className='form-check-label' htmlFor='libby'>
+            Libby
+          </label>
+        </div>
 
         {/* Rating */}
         <div className="col-md-6">

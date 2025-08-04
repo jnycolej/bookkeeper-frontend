@@ -8,6 +8,7 @@ const FeatureBanner = () => {
     const [books, setBooks] = useState([]);
     const [featuredBooks, setFeaturedBooks] = useState([]);
     const [bookImage, setBookImage] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -56,11 +57,13 @@ const FeatureBanner = () => {
             key={book._id}
             className={`carousel-item${idx === 0 ? ' active' : ''}`}
           >
-            <img
-              src={book.coverUrl}
-              className="d-block mx-auto"
-              alt={book.title}
-            />
+            <a onClick={() => navigate(`/books/${book._id}`)}>
+              <img
+                src={book.coverUrl}
+                className="d-block mx-auto"
+                alt={book.title}
+              />              
+            </a>
           </div>
         ))}
       </div>
