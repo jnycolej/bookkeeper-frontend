@@ -1,48 +1,49 @@
-import React, { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { addBook } from '../services/bookService';
-import { useNavigate } from 'react-router-dom';
-import NavBar from './NavBar';
+import React, { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { addBook } from "../services/bookService";
+import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 export default function BookForm() {
   const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
 
   const INITIAL_STATE = {
-    title: '',
-    series: '',
-    author: '',
-    genres: '',
-    publicationYear: '',
-    pageCount: '',
-    status: '',
-    format: '',
-    rating: '',
-    dateAdded: '',
-    isbn10: '',
-    isbn13: '',
-    asin: '',
+    title: "",
+    series: "",
+    seriesNum: "",
+    author: "",
+    genres: "",
+    publicationYear: "",
+    pageCount: "",
+    status: "",
+    format: "",
+    rating: "",
+    dateAdded: "",
+    isbn10: "",
+    isbn13: "",
+    asin: "",
     kindleUnlimited: false,
     libby: false,
-  }
+  };
 
-  const [formData, setFormData] = useState({...INITIAL_STATE});
+  const [formData, setFormData] = useState({ ...INITIAL_STATE });
 
   const [isFormValid, setIsFormValid] = useState(false);
 
   // 1) Validation always returns true/false
   const validateForm = (data) => {
     const required = [
-      'title',
-      'author',
-      'genres',
-      'publicationYear',
-      'pageCount',
-      'status',
+      "title",
+      "author",
+      "genres",
+      "publicationYear",
+      "pageCount",
+      "status",
     ];
     const ok = required.every((key) => {
       const v = data[key];
-      return Array.isArray(v) ? v.length > 0 : v !== '';
+      return Array.isArray(v) ? v.length > 0 : v !== "";
     });
     setIsFormValid(ok);
   };
@@ -50,7 +51,7 @@ export default function BookForm() {
   // 2) Handlers
   const handleChange = (e) => {
     const { id, type, value, checked } = e.target;
-    const val = type === 'checkbox' ? checked: value;
+    const val = type === "checkbox" ? checked : value;
     const upd = { ...formData, [id]: val };
     setFormData(upd);
     validateForm(upd);
@@ -68,90 +69,92 @@ export default function BookForm() {
     e.preventDefault();
 
     // turn semicolon-lists into arrays
-    const authors = formData.author.split(';').map((a) => a.trim());
-    const genres  = formData.genres.split(';').map((g) => g.trim());
+    const authors = formData.author.split(";").map((a) => a.trim());
+    const genres = formData.genres.split(";").map((g) => g.trim());
 
     const payload = {
-      title:           formData.title,
-      series:          formData.series.trim() || null,
-      author:          authors,
-      genres:          genres,
+      title: formData.title,
+      series: formData.series.trim() || null,
+      seriesNum: Number(formData.seriesNum),
+      author: authors,
+      genres: genres,
       publicationYear: Number(formData.publicationYear),
-      pageCount:       Number(formData.pageCount),
-      status:          formData.status,
-      format:          formData.format || null,
-      isbn10:          formData.isbn10.trim() || null,
-      isbn13:          formData.isbn13.trim() || null,
-      asin:            formData.asin.trim() || null,
+      pageCount: Number(formData.pageCount),
+      status: formData.status,
+      format: formData.format || null,
+      isbn10: formData.isbn10.trim() || null,
+      isbn13: formData.isbn13.trim() || null,
+      asin: formData.asin.trim() || null,
       kindleUnlimited: formData.kindleUnlimited,
-      libby:           formData.libby,
-      rating:          formData.rating ? Number(formData.rating) : null,
+      libby: formData.libby,
+      rating: formData.rating ? Number(formData.rating) : null,
       ...(formData.dateAdded
-         ? { dateAdded: new Date(formData.dateAdded) }
-         : {}),
+        ? { dateAdded: new Date(formData.dateAdded) }
+        : {}),
     };
 
     try {
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-          scope:    'read:books write:books'
+          scope: "read:books write:books",
         },
-        prompt: 'consent'
+        prompt: "consent",
       });
       await addBook(payload, token);
 
       // reset form & go home
-      setFormData({...INITIAL_STATE});
+      setFormData({ ...INITIAL_STATE });
       setIsFormValid(false);
-      navigate('/home');
+      navigate("/home");
     } catch (err) {
-      console.error('Error adding book:', err);
+      console.error("Error adding book:", err);
     }
   };
 
-    // 3) Submit with blank→null normalization
+  // 3) Submit with blank→null normalization
   const handleSubmitAndAddAgain = async (e) => {
     e.preventDefault();
 
     // turn semicolon-lists into arrays
-    const authors = formData.author.split(';').map((a) => a.trim());
-    const genres  = formData.genres.split(';').map((g) => g.trim());
+    const authors = formData.author.split(";").map((a) => a.trim());
+    const genres = formData.genres.split(";").map((g) => g.trim());
 
     const payload = {
-      title:           formData.title,
-      series:          formData.series.trim() || null,
-      author:          authors,
-      genres:          genres,
+      title: formData.title,
+      series: formData.series.trim() || null,
+      seriesNum: Number(formData.seriesNum),
+      author: authors,
+      genres: genres,
       publicationYear: Number(formData.publicationYear),
-      pageCount:       Number(formData.pageCount),
-      status:          formData.status,
-      format:          formData.format || null,
-      isbn10:          formData.isbn10.trim() || null,
-      isbn13:          formData.isbn13.trim() || null,
-      asin:            formData.asin.trim() || null,
-      rating:          formData.rating ? Number(formData.rating) : null,
+      pageCount: Number(formData.pageCount),
+      status: formData.status,
+      format: formData.format || null,
+      isbn10: formData.isbn10.trim() || null,
+      isbn13: formData.isbn13.trim() || null,
+      asin: formData.asin.trim() || null,
+      rating: formData.rating ? Number(formData.rating) : null,
       ...(formData.dateAdded
-         ? { dateAdded: new Date(formData.dateAdded) }
-         : {}),
+        ? { dateAdded: new Date(formData.dateAdded) }
+        : {}),
     };
 
     try {
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-          scope:    'read:books write:books'
+          scope: "read:books write:books",
         },
-        prompt: 'consent'
+        prompt: "consent",
       });
       await addBook(payload, token);
 
       // reset form & go home
-      setFormData({...INITIAL_STATE});
+      setFormData({ ...INITIAL_STATE });
       setIsFormValid(false);
-      navigate('/bookform');
+      navigate("/bookform");
     } catch (err) {
-      console.error('Error adding book:', err);
+      console.error("Error adding book:", err);
     }
   };
 
@@ -162,7 +165,9 @@ export default function BookForm() {
       <form className="row g-3 m-3" onSubmit={handleSubmit}>
         {/* Title */}
         <div className="col-md-6">
-          <label htmlFor="title" className="form-label">Title:</label>
+          <label htmlFor="title" className="form-label">
+            Title:
+          </label>
           <input
             id="title"
             type="text"
@@ -175,20 +180,40 @@ export default function BookForm() {
 
         {/* Series */}
         <div className="col-md-6">
-          <label htmlFor="series" className="form-label">Series:</label>
-          <input
-            id="series"
-            type="text"
-            className="form-control"
-            value={formData.series}
-            onChange={handleChange}
-            placeholder="(optional)"
-          />
+          <label htmlFor="series" className="form-label">
+            Series:
+          </label>
+          <div className="input-group">
+            <input
+              id="series"
+              type="text"
+              className="form-control w-auto"
+              value={formData.series}
+              onChange={handleChange}
+              placeholder="(optional)"
+            />
+            <select
+              id="seriesNum"
+              className="form-select w-auto"
+              value={formData.seriesNum || ""}
+              onChange={handleChange}
+              aria-label="Series number"
+            >
+              <option value="">#</option>
+              {[...Array(10)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Author(s) */}
         <div className="col-12">
-          <label htmlFor="author" className="form-label">Author(s):</label>
+          <label htmlFor="author" className="form-label">
+            Author(s):
+          </label>
           <input
             id="author"
             type="text"
@@ -201,8 +226,10 @@ export default function BookForm() {
         </div>
 
         {/* ISBNs */}
-        <div className="col-md-6">
-          <label htmlFor="isbn10" className="form-label">ISBN-10:</label>
+        <div className="col-md-4">
+          <label htmlFor="isbn10" className="form-label">
+            ISBN-10:
+          </label>
           <input
             id="isbn10"
             type="text"
@@ -212,8 +239,10 @@ export default function BookForm() {
             placeholder="(optional)"
           />
         </div>
-        <div className="col-md-6">
-          <label htmlFor="isbn13" className="form-label">ISBN-13:</label>
+        <div className="col-md-4">
+          <label htmlFor="isbn13" className="form-label">
+            ISBN-13:
+          </label>
           <input
             id="isbn13"
             type="text"
@@ -223,8 +252,10 @@ export default function BookForm() {
             placeholder="(optional)"
           />
         </div>
-                <div className="col-md-6">
-          <label htmlFor="asin" className="form-label">ASIN:</label>
+        <div className="col-md-4">
+          <label htmlFor="asin" className="form-label">
+            ASIN:
+          </label>
           <input
             id="asin"
             type="text"
@@ -237,7 +268,9 @@ export default function BookForm() {
 
         {/* Genres */}
         <div className="col-12">
-          <label htmlFor="genres" className="form-label">Genre(s):</label>
+          <label htmlFor="genres" className="form-label">
+            Genre(s):
+          </label>
           <input
             id="genres"
             type="text"
@@ -251,7 +284,9 @@ export default function BookForm() {
 
         {/* Year & Pages */}
         <div className="col-md-6">
-          <label htmlFor="publicationYear" className="form-label">Publication Year:</label>
+          <label htmlFor="publicationYear" className="form-label">
+            Publication Year:
+          </label>
           <input
             id="publicationYear"
             type="number"
@@ -262,7 +297,9 @@ export default function BookForm() {
           />
         </div>
         <div className="col-md-6">
-          <label htmlFor="pageCount" className="form-label">Page Count:</label>
+          <label htmlFor="pageCount" className="form-label">
+            Page Count:
+          </label>
           <input
             id="pageCount"
             type="number"
@@ -276,7 +313,7 @@ export default function BookForm() {
         {/* Format */}
         <fieldset className="col-md-6">
           <legend>Format:</legend>
-          {['physical','ebook','library'].map((opt) => (
+          {["physical", "ebook", "library"].map((opt) => (
             <div key={opt} className="form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -288,7 +325,7 @@ export default function BookForm() {
                 onChange={handleRadioChange}
               />
               <label className="form-check-label" htmlFor={opt}>
-                {opt.charAt(0).toUpperCase()+opt.slice(1)}
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
               </label>
             </div>
           ))}
@@ -297,7 +334,7 @@ export default function BookForm() {
         {/* Status */}
         <fieldset className="col-md-6">
           <legend>Status:</legend>
-          {['read','want','currentlyReading','owned'].map((opt) => (
+          {["read", "want", "currentlyReading", "owned"].map((opt) => (
             <div key={opt} className="form-check form-check-inline">
               <input
                 className="form-check-input"
@@ -309,44 +346,46 @@ export default function BookForm() {
                 onChange={handleRadioChange}
               />
               <label className="form-check-label" htmlFor={opt}>
-                {opt.charAt(0).toUpperCase()+opt.slice(1)}
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
               </label>
             </div>
           ))}
         </fieldset>
 
         {/* Kindle Unlimited */}
-        <div className='col-md-6'>
-          <input 
-            type="checkbox" 
+        <div className="col-md-6">
+          <input
+            type="checkbox"
             name="kindleUnlimited"
             id="kindleUnlimited"
             checked={formData.kindleUnlimited}
             onChange={handleChange}
-            className='form-check-input'
+            className="form-check-input"
           />
-          <label className='form-check-label' htmlFor='kindleUnlimited'>
+          <label className="form-check-label" htmlFor="kindleUnlimited">
             Kindle Unlimited
-          </label>          
+          </label>
         </div>
 
         {/* Libby */}
-        <div className='col-md-6'>
-          <input 
+        <div className="col-md-6">
+          <input
             type="checkbox"
             name="libby"
             id="libby"
             checked={formData.libby}
             onChange={handleChange}
-            className='form-check-input'
+            className="form-check-input"
           />
-          <label className='form-check-label' htmlFor='libby'>
+          <label className="form-check-label" htmlFor="libby">
             Libby
           </label>
         </div>
         {/* Rating */}
         <div className="col-md-6">
-          <label htmlFor="rating" className="form-label">Rating:</label>
+          <label htmlFor="rating" className="form-label">
+            Rating:
+          </label>
           <input
             id="rating"
             type="number"
@@ -359,7 +398,9 @@ export default function BookForm() {
 
         {/* Date Added */}
         <div className="col-md-6">
-          <label htmlFor="dateAdded" className="form-label">Date Added:</label>
+          <label htmlFor="dateAdded" className="form-label">
+            Date Added:
+          </label>
           <input
             id="dateAdded"
             type="date"
@@ -388,7 +429,7 @@ export default function BookForm() {
           <button
             type="button"
             className="btn btn-outline-secondary ms-2 w-25"
-            onClick={() => navigate('/home')}
+            onClick={() => navigate("/home")}
           >
             Cancel
           </button>

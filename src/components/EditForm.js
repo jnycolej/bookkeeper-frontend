@@ -12,6 +12,7 @@ export default function EditForm() {
   const [editData, setEditData] = useState({
     title: '',
     series: '',
+    seriesNum: '',
     author: '',
     genres: '',
     publicationYear: '',
@@ -49,6 +50,7 @@ export default function EditForm() {
         setEditData({
           title:           data.title,
           series:          data.series || '',
+          seriesNum:        data.seriesNum || '',
           author:          (data.author || []).join('; '),
           genres:          (data.genres || []).join('; '),
           publicationYear: data.publicationYear || '',
@@ -117,6 +119,7 @@ export default function EditForm() {
     const payload = {
       title:           editData.title,
       series:          editData.series.trim() || null,
+      seriesNum:        editData.seriesNum || null,
       author:          editData.author.split(';').map(a=>a.trim()),
       genres:          editData.genres.split(';').map(g=>g.trim()),
       publicationYear: Number(editData.publicationYear),
@@ -169,15 +172,33 @@ export default function EditForm() {
 
         {/* Series */}
         <div className="col-md-6">
-          <label htmlFor="series" className="form-label">Series:</label>
-          <input
-            id="series"
-            type="text"
-            className="form-control"
-            value={editData.series}
-            onChange={handleChange}
-            placeholder="(optional)"
-          />
+          <label htmlFor="series" className="form-label">
+            Series:
+          </label>
+          <div className="input-group">
+            <input
+              id="series"
+              type="text"
+              className="form-control w-auto"
+              value={editData.series}
+              onChange={handleChange}
+              placeholder="(optional)"
+            />
+            <select
+              id="seriesNum"
+              className="form-select w-auto"
+              value={editData.seriesNum || ""}
+              onChange={handleChange}
+              aria-label="Series number"
+            >
+              <option value="">#</option>
+              {[...Array(10)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Author(s) */}

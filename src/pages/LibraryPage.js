@@ -142,7 +142,7 @@ useEffect(() => {
         fetchCounts();
     }, [getAccessTokenSilently]);
     return (
-        <body>
+        <div>
             <NavBar />
             <h3 className='display-3 align-items-center text-center mb-3'>My Library</h3>
             <div className='d-flex flex-wrap align-items-center align-content-center gap-3 p-3'>
@@ -168,7 +168,7 @@ useEffect(() => {
                 searchQuery={searchQuery}
                 onRowClick={id => navigate(`/books/${id}`)}
             />
-        </body>
+        </div>
     )
 }
 
