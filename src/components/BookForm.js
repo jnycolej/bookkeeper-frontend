@@ -201,8 +201,8 @@ export default function BookForm() {
             >
               <option value="">#</option>
               {[...Array(10)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
+                <option key={i} value={i}>
+                  {i}
                 </option>
               ))}
             </select>

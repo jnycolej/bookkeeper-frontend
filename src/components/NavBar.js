@@ -21,9 +21,9 @@ export default function NavBar() {
             <nav className=" navbar navbar-expand-sm align-content-center d-flex flex-wrap gap-2">
                 <div className="container">
                     <a className="navbar-brand" href="/home"><img className="logo w-100" src={BookKeeperLogo}/></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navMenu" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                        <span className="navbar-toggler-icon"></span>
                     </button> 
                     <div className="collapse navbar-collapse" id="navMenu">
                         <ul className="navbar-nav ms-auto">

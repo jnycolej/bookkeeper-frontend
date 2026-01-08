@@ -25,7 +25,7 @@ root.render(
             scope: 'read:books write:books read:current_user'
         }}
         cacheLocation="localstorage"
-        useRefreshTokens={true}
+       // useRefreshTokens={true}
     >
         <App />
     </Auth0Provider>,

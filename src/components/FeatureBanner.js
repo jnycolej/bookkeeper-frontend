@@ -36,7 +36,7 @@ const FeatureBanner = () => {
 
     return (
         <div>
-            <h1 className="display-5 text-center">Currently Reading</h1>
+            <h1 className="display-5 fw-bold text-center">Currently Reading</h1>
     <div id="carouselIndicators" className="carousel carousel-dark slide pb-5">
       <div className="carousel-indicators">
         {featuredBooks.map((_, idx) => (

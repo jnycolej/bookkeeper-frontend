@@ -62,7 +62,7 @@ const BookDetails = () => {
         <div className="container mt-5">
             <NavBar />
             <h1 className='display-2'>{book.title}</h1>
-            <h3 className='fs-3 fw-lighter fst-italic'>{book.series}</h3>            
+            <h3 className='fs-3 fw-lighter fst-italic'>{book.series} {book.seriesNum ? `# ${book.seriesNum}` : ""}</h3>            
             <div className='container text-center'>
                 <div className='row align-items-center'>
                     <div className='col'>

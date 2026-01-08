@@ -14,7 +14,7 @@ import '../assets/bookkeeper.css';
 
 const HomePage = () => {
     const { getAccessTokenSilently} = useAuth0();
-
+const navigate = useNavigate();
     const [books, setBooks] = useState([]);
     //Get all books
    useEffect(() => {
@@ -26,7 +26,7 @@ const HomePage = () => {
      fetchBooks();
    }, [getAccessTokenSilently]);
     return (
-        <body>
+        <div className="bookKeeper-home-background">
             <NavBar />
             <div>
                 <FeatureBanner />
@@ -37,8 +37,7 @@ const HomePage = () => {
                 onRowClick={id => navigate(`/books/${id}`)}
             />                
             </div>
-
-        </body>
+        </div>
     )
 }
 

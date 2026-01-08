@@ -68,8 +68,8 @@ const BookList = ({ books, searchQuery, onRowClick }) => {
                   <td>{book.publicationYear}</td>
                   <td>{book.pageCount}</td>
                   <td>{book.status}</td>
-                  <td>{book.kindleUnlimited ? "Yes" : "No"}</td>
-                  <td>{book.libby ? "Yes" : "No"}</td>
+                  <td>{book.kindleUnlimited ? <i className="bi bi-check-square-fill"></i> : <i className="bi bi-x-square-fill"></i>}</td>
+                  <td>{book.libby ? <i className="bi bi-check-square-fill"></i> : <i className="bi bi-x-square-fill"></i>}</td>
                 </tr>
               ))
             ) : (

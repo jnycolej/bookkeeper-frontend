@@ -13,7 +13,7 @@ const SearchBar = ({searchQuery, setSearchQuery}) => {
     const debouncedHandleInputChange = useMemo(() => debounce(handleInputChange, 300), []);
     return (
         <div className='d-flex align-items-center'>
-            <label htmlFor="search" className="form-label me-2 mb-0">Search:</label>
+            <label htmlFor="search" className="form-label fw-bold fs-5 me-2 mb-0">Search:</label>
             <input 
                 type="text" 
                 className="form-control" 
