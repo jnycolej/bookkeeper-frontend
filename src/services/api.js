@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-// Always hit localhost:5050 from the browser in development
-const HOST =
-  process.env.NODE_ENV === 'development'
-    ? 'localhost:5050'
-    : process.env.REACT_APP_API_HOST;  // for production you can override
+const rawBase =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000/api";
 
-const BASE_URL = `http://${HOST}/api`;
-// console.log('[api] BASE_URL =', BASE_URL);
+// const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+const BASE_URL = rawBase.endsWith("/api") ? rawBase : `${rawBase.replace(/\/$/, "")}/api`;
+
 
 const api = axios.create({
   baseURL: BASE_URL,
+  headers: {"Content-Type": "application/json"},
   timeout: 10000,
 });
 
@@ -18,13 +18,11 @@ api.interceptors.request.use((config) => {
   // console.log('[api] request to', config.baseURL + config.url);
   return config;
 });
+
 api.interceptors.response.use(
-  (response) => {
-    // console.log('[api] response from', response.config.url, response.status);
-    return response;
-  },
+  (response) => {  return response;},
   (err) => {
-    console.error('[api] error from', err.config?.url, err.message);
+    console.error("[api] error from -", err.config?.url, "-", err?.message);
     return Promise.reject(err);
   }
 );

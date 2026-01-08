@@ -96,7 +96,7 @@ export default function BookForm() {
     try {
       const token = await getAccessTokenSilently({
         authorizationParams: {
-          audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
           scope: "read:books write:books",
         },
         prompt: "consent",
@@ -142,7 +142,7 @@ export default function BookForm() {
     try {
       const token = await getAccessTokenSilently({
         authorizationParams: {
-          audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
           scope: "read:books write:books",
         },
         prompt: "consent",

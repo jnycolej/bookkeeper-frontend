@@ -1,5 +1,5 @@
 # Build Stage
-FROM node:18 AS build
+FROM node:22 AS build
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Set build-time environment variables
-ARG REACT_APP_API_URL
+ARG VITE_API_BASE
 
 # Use the build argument to set the environment variable
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+ENV VITE_API_BASE=${VITE_API_BASE}
 
 # Build the React app
 RUN npm run build
@@ -26,7 +26,7 @@ RUN npm run build
 FROM nginx:stable-alpine
 
 # Copy the build output to nginx html folder
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
