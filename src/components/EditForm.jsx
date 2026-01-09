@@ -153,255 +153,537 @@ export default function EditForm() {
   if (error)   return <div className="text-center text-danger mt-5">{error}</div>;
 
   return (
+    // <div>
+    //   <NavBar />
+    //   <h1 className="display-1 text-center">Edit Book</h1>
+    //   <form className="row g-3 m-3" onSubmit={handleSubmit}>
+    //     {/* Title */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="title" className="form-label">Title:</label>
+    //       <input
+    //         id="title"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.title}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+
+    //     {/* Series */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="series" className="form-label">
+    //         Series:
+    //       </label>
+    //       <div className="input-group">
+    //         <input
+    //           id="series"
+    //           type="text"
+    //           className="form-control w-auto"
+    //           value={editData.series}
+    //           onChange={handleChange}
+    //           placeholder="(optional)"
+    //         />
+    //         <select
+    //           id="seriesNum"
+    //           className="form-select w-auto"
+    //           value={editData.seriesNum || ""}
+    //           onChange={handleChange}
+    //           aria-label="Series number"
+    //         >
+    //           <option value="">#</option>
+    //           {[...Array(10)].map((_, i) => (
+    //             <option key={i} value={i}>
+    //               {i}
+    //             </option>
+    //           ))}
+    //         </select>
+    //       </div>
+    //     </div>
+
+    //     {/* Author(s) */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="author" className="form-label">Author(s):</label>
+    //       <input
+    //         id="author"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.author}
+    //         onChange={handleChange}
+    //         placeholder="Name1; Name2; ..."
+    //         required
+    //       />
+    //     </div>
+
+    //     {/* ISBNs */}
+    //     <div className="col-md-3">
+    //       <label htmlFor="isbn10" className="form-label">ISBN-10:</label>
+    //       <input
+    //         id="isbn10"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.isbn10}
+    //         onChange={handleChange}
+    //         placeholder="(optional)"
+    //       />
+    //     </div>
+    //     <div className="col-md-3">
+    //       <label htmlFor="isbn13" className="form-label">ISBN-13:</label>
+    //       <input
+    //         id="isbn13"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.isbn13}
+    //         onChange={handleChange}
+    //         placeholder="(optional)"
+    //       />
+    //     </div>
+    //                     <div className="col-md-6">
+    //       <label htmlFor="asin" className="form-label">ASIN:</label>
+    //       <input
+    //         id="asin"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.asin}
+    //         onChange={handleChange}
+    //         placeholder="(optional)"
+    //       />
+    //     </div>
+    //     {/* Genres */}
+    //     <div className="col-12">
+    //       <label htmlFor="genres" className="form-label">Genre(s):</label>
+    //       <input
+    //         id="genres"
+    //         type="text"
+    //         className="form-control"
+    //         value={editData.genres}
+    //         onChange={handleChange}
+    //         placeholder="Genre1; Genre2; ..."
+    //         required
+    //       />
+    //     </div>
+
+    //     {/* Publication Year & Page Count */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="publicationYear" className="form-label">Publication Year:</label>
+    //       <input
+    //         id="publicationYear"
+    //         type="number"
+    //         className="form-control"
+    //         value={editData.publicationYear}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+    //     <div className="col-md-6">
+    //       <label htmlFor="pageCount" className="form-label">Page Count:</label>
+    //       <input
+    //         id="pageCount"
+    //         type="number"
+    //         className="form-control"
+    //         value={editData.pageCount}
+    //         onChange={handleChange}
+    //         required
+    //       />
+    //     </div>
+
+    //     {/* Format */}
+    //     <fieldset className="col-md-6">
+    //       <legend>Format:</legend>
+    //       {['physical','ebook','library'].map(opt => (
+    //         <div key={opt} className="form-check form-check-inline">
+    //           <input
+    //             className="form-check-input"
+    //             type="radio"
+    //             id={opt}
+    //             name="format"
+    //             value={opt}
+    //             checked={editData.format === opt}
+    //             onChange={handleRadioChange}
+    //           />
+    //           <label className="form-check-label" htmlFor={opt}>
+    //             {opt.charAt(0).toUpperCase() + opt.slice(1)}
+    //           </label>
+    //         </div>
+    //       ))}
+    //     </fieldset>
+
+    //     {/* Status */}
+    //     <fieldset className="col-md-6">
+    //       <legend>Status:</legend>
+    //       {['read','want','currentlyReading','owned'].map(opt => (
+    //         <div key={opt} className="form-check form-check-inline">
+    //           <input
+    //             className="form-check-input"
+    //             type="radio"
+    //             id={opt}
+    //             name="status"
+    //             value={opt}
+    //             checked={editData.status === opt}
+    //             onChange={handleRadioChange}
+    //           />
+    //           <label className="form-check-label" htmlFor={opt}>
+    //             {opt.charAt(0).toUpperCase() + opt.slice(1)}
+    //           </label>
+    //         </div>
+    //       ))}
+    //     </fieldset>
+
+    //     {/* Kindle Unlimited */}
+    //     <div className='col-md-6'>
+    //       <input 
+    //         type="checkbox" 
+    //         name="kindleUnlimited"
+    //         id="kindleUnlimited"
+    //         checked={editData.kindleUnlimited}
+    //         onChange={handleChange}
+    //         className='form-check-input'
+    //       />
+    //       <label className='form-check-label' htmlFor='kindleUnlimited'>
+    //         Kindle Unlimited
+    //       </label>          
+    //     </div>
+
+    //     {/* Libby */}
+    //     <div className='col-md-6'>
+    //       <input 
+    //         type="checkbox"
+    //         name="libby"
+    //         id="libby"
+    //         checked={editData.libby}
+    //         onChange={handleChange}
+    //         className='form-check-input'
+    //       />
+    //       <label className='form-check-label' htmlFor='libby'>
+    //         Libby
+    //       </label>
+    //     </div>
+
+    //     {/* Rating */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="rating" className="form-label">Rating:</label>
+    //       <input
+    //         id="rating"
+    //         type="number"
+    //         className="form-control"
+    //         value={editData.rating}
+    //         onChange={handleChange}
+    //         placeholder="1–5 (optional)"
+    //       />
+    //     </div>
+
+    //     {/* Date Added */}
+    //     <div className="col-md-6">
+    //       <label htmlFor="dateAdded" className="form-label">Date Added:</label>
+    //       <input
+    //         id="dateAdded"
+    //         type="date"
+    //         className="form-control"
+    //         value={editData.dateAdded}
+    //         onChange={handleChange}
+    //       />
+    //     </div>
+
+    //     {/* Submit */}
+    //     <div className="col-12">
+    //       <button
+    //         type="submit"
+    //         className="btn btn-primary"
+    //         disabled={!isFormValid}
+    //       >
+    //         Save Changes
+    //       </button>
+    //       <button
+    //         type="button"
+    //         className="btn btn-outline-secondary ms-2"
+    //         onClick={() => navigate(`/books/${id}`)}
+    //       >
+    //         Cancel
+    //       </button>
+    //     </div>
+    //   </form>
+    // </div>
     <div>
       <NavBar />
-      <h1 className="display-1 text-center">Edit Book</h1>
-      <form className="row g-3 m-3" onSubmit={handleSubmit}>
-        {/* Title */}
-        <div className="col-md-6">
-          <label htmlFor="title" className="form-label">Title:</label>
-          <input
-            id="title"
-            type="text"
-            className="form-control"
-            value={editData.title}
-            onChange={handleChange}
-            required
-          />
-        </div>
 
-        {/* Series */}
-        <div className="col-md-6">
-          <label htmlFor="series" className="form-label">
-            Series:
-          </label>
-          <div className="input-group">
-            <input
-              id="series"
-              type="text"
-              className="form-control w-auto"
-              value={editData.series}
-              onChange={handleChange}
-              placeholder="(optional)"
-            />
-            <select
-              id="seriesNum"
-              className="form-select w-auto"
-              value={editData.seriesNum || ""}
-              onChange={handleChange}
-              aria-label="Series number"
-            >
-              <option value="">#</option>
-              {[...Array(10)].map((_, i) => (
-                <option key={i} value={i}>
-                  {i}
-                </option>
-              ))}
-            </select>
+      <div className="mx-auto w-full max-w-6xl px-4 py-6">
+        <h1 className="mb-6 text-center text-4xl font-semibold text-dark">
+          Edit Book
+        </h1>
+
+        <form onSubmit={handleSubmit} className="bk-form p-5">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {/* Title */}
+            <div>
+              <label htmlFor="title" className="bk-label">
+                Title
+              </label>
+              <input
+                id="title"
+                type="text"
+                className="bk-input"
+                value={editData.title}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Series */}
+            <div>
+              <label htmlFor="series" className="bk-label">
+                Series
+              </label>
+              <div className="grid grid-cols-[1fr_80px] gap-2">
+                <input
+                  id="series"
+                  type="text"
+                  className="bk-input"
+                  value={editData.series}
+                  onChange={handleChange}
+                  placeholder="(optional)"
+                />
+                <select
+                  id="seriesNum"
+                  className="bk-select"
+                  value={editData.seriesNum || ""}
+                  onChange={handleChange}
+                  aria-label="Series number"
+                >
+                  <option value="">#</option>
+                  {[...Array(10)].map((_, i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Author(s) */}
+            <div>
+              <label htmlFor="author" className="bk-label">
+                Author(s)
+              </label>
+              <input
+                id="author"
+                type="text"
+                className="bk-input"
+                value={editData.author}
+                onChange={handleChange}
+                placeholder="Name1; Name2; ..."
+                required
+              />
+            </div>
+
+            {/* ASIN */}
+            <div>
+              <label htmlFor="asin" className="bk-label">
+                ASIN
+              </label>
+              <input
+                id="asin"
+                type="text"
+                className="bk-input"
+                value={editData.asin}
+                onChange={handleChange}
+                placeholder="(optional)"
+              />
+            </div>
+
+            {/* ISBNs */}
+            <div>
+              <label htmlFor="isbn10" className="bk-label">
+                ISBN-10
+              </label>
+              <input
+                id="isbn10"
+                type="text"
+                className="bk-input"
+                value={editData.isbn10}
+                onChange={handleChange}
+                placeholder="(optional)"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="isbn13" className="bk-label">
+                ISBN-13
+              </label>
+              <input
+                id="isbn13"
+                type="text"
+                className="bk-input"
+                value={editData.isbn13}
+                onChange={handleChange}
+                placeholder="(optional)"
+              />
+            </div>
+
+            {/* Genres */}
+            <div className="md:col-span-2">
+              <label htmlFor="genres" className="bk-label">
+                Genre(s)
+              </label>
+              <input
+                id="genres"
+                type="text"
+                className="bk-input"
+                value={editData.genres}
+                onChange={handleChange}
+                placeholder="Genre1; Genre2; ..."
+                required
+              />
+            </div>
+
+            {/* Publication Year & Page Count */}
+            <div>
+              <label htmlFor="publicationYear" className="bk-label">
+                Publication Year
+              </label>
+              <input
+                id="publicationYear"
+                type="number"
+                className="bk-input"
+                value={editData.publicationYear}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="pageCount" className="bk-label">
+                Page Count
+              </label>
+              <input
+                id="pageCount"
+                type="number"
+                className="bk-input"
+                value={editData.pageCount}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {/* Format */}
+            <fieldset className="bk-fieldset">
+              <legend className="bk-legend">Format</legend>
+              <div className="mt-2 flex flex-wrap gap-4">
+                {["physical", "ebook", "library"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2 text-light">
+                    <input
+                      className="bk-radio"
+                      type="radio"
+                      id={opt}
+                      name="format"
+                      value={opt}
+                      checked={editData.format === opt}
+                      onChange={handleRadioChange}
+                    />
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            {/* Status */}
+            <fieldset className="bk-fieldset">
+              <legend className="bk-legend">Status</legend>
+              <div className="mt-2 flex flex-wrap gap-4">
+                {["read", "want", "currentlyReading", "owned"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2 text-light">
+                    <input
+                      className="bk-radio"
+                      type="radio"
+                      id={opt}
+                      name="status"
+                      value={opt}
+                      checked={editData.status === opt}
+                      onChange={handleRadioChange}
+                    />
+                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            {/* Kindle Unlimited */}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="kindleUnlimited"
+                checked={editData.kindleUnlimited}
+                onChange={handleChange}
+                className="bk-checkbox"
+              />
+              <label htmlFor="kindleUnlimited" className="text-light">
+                Kindle Unlimited
+              </label>
+            </div>
+
+            {/* Libby */}
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="libby"
+                checked={editData.libby}
+                onChange={handleChange}
+                className="bk-checkbox"
+              />
+              <label htmlFor="libby" className="text-light">
+                Libby
+              </label>
+            </div>
+
+            {/* Rating */}
+            <div>
+              <label htmlFor="rating" className="bk-label">
+                Rating
+              </label>
+              <input
+                id="rating"
+                type="number"
+                className="bk-input"
+                value={editData.rating}
+                onChange={handleChange}
+                placeholder="1–5 (optional)"
+              />
+            </div>
+
+            {/* Date Added */}
+            <div>
+              <label htmlFor="dateAdded" className="bk-label">
+                Date Added
+              </label>
+              <input
+                id="dateAdded"
+                type="date"
+                className="bk-input"
+                value={editData.dateAdded}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Author(s) */}
-        <div className="col-md-6">
-          <label htmlFor="author" className="form-label">Author(s):</label>
-          <input
-            id="author"
-            type="text"
-            className="form-control"
-            value={editData.author}
-            onChange={handleChange}
-            placeholder="Name1; Name2; ..."
-            required
-          />
-        </div>
+          {/* Actions */}
+          <div className="mt-6 flex flex-wrap gap-3">
+            <button
+              type="submit"
+              className="bk-btn-primary"
+              disabled={!isFormValid}
+            >
+              Save Changes
+            </button>
 
-        {/* ISBNs */}
-        <div className="col-md-3">
-          <label htmlFor="isbn10" className="form-label">ISBN-10:</label>
-          <input
-            id="isbn10"
-            type="text"
-            className="form-control"
-            value={editData.isbn10}
-            onChange={handleChange}
-            placeholder="(optional)"
-          />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="isbn13" className="form-label">ISBN-13:</label>
-          <input
-            id="isbn13"
-            type="text"
-            className="form-control"
-            value={editData.isbn13}
-            onChange={handleChange}
-            placeholder="(optional)"
-          />
-        </div>
-                        <div className="col-md-6">
-          <label htmlFor="asin" className="form-label">ASIN:</label>
-          <input
-            id="asin"
-            type="text"
-            className="form-control"
-            value={editData.asin}
-            onChange={handleChange}
-            placeholder="(optional)"
-          />
-        </div>
-        {/* Genres */}
-        <div className="col-12">
-          <label htmlFor="genres" className="form-label">Genre(s):</label>
-          <input
-            id="genres"
-            type="text"
-            className="form-control"
-            value={editData.genres}
-            onChange={handleChange}
-            placeholder="Genre1; Genre2; ..."
-            required
-          />
-        </div>
-
-        {/* Publication Year & Page Count */}
-        <div className="col-md-6">
-          <label htmlFor="publicationYear" className="form-label">Publication Year:</label>
-          <input
-            id="publicationYear"
-            type="number"
-            className="form-control"
-            value={editData.publicationYear}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="pageCount" className="form-label">Page Count:</label>
-          <input
-            id="pageCount"
-            type="number"
-            className="form-control"
-            value={editData.pageCount}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        {/* Format */}
-        <fieldset className="col-md-6">
-          <legend>Format:</legend>
-          {['physical','ebook','library'].map(opt => (
-            <div key={opt} className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                id={opt}
-                name="format"
-                value={opt}
-                checked={editData.format === opt}
-                onChange={handleRadioChange}
-              />
-              <label className="form-check-label" htmlFor={opt}>
-                {opt.charAt(0).toUpperCase() + opt.slice(1)}
-              </label>
-            </div>
-          ))}
-        </fieldset>
-
-        {/* Status */}
-        <fieldset className="col-md-6">
-          <legend>Status:</legend>
-          {['read','want','currentlyReading','owned'].map(opt => (
-            <div key={opt} className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                id={opt}
-                name="status"
-                value={opt}
-                checked={editData.status === opt}
-                onChange={handleRadioChange}
-              />
-              <label className="form-check-label" htmlFor={opt}>
-                {opt.charAt(0).toUpperCase() + opt.slice(1)}
-              </label>
-            </div>
-          ))}
-        </fieldset>
-
-        {/* Kindle Unlimited */}
-        <div className='col-md-6'>
-          <input 
-            type="checkbox" 
-            name="kindleUnlimited"
-            id="kindleUnlimited"
-            checked={editData.kindleUnlimited}
-            onChange={handleChange}
-            className='form-check-input'
-          />
-          <label className='form-check-label' htmlFor='kindleUnlimited'>
-            Kindle Unlimited
-          </label>          
-        </div>
-
-        {/* Libby */}
-        <div className='col-md-6'>
-          <input 
-            type="checkbox"
-            name="libby"
-            id="libby"
-            checked={editData.libby}
-            onChange={handleChange}
-            className='form-check-input'
-          />
-          <label className='form-check-label' htmlFor='libby'>
-            Libby
-          </label>
-        </div>
-
-        {/* Rating */}
-        <div className="col-md-6">
-          <label htmlFor="rating" className="form-label">Rating:</label>
-          <input
-            id="rating"
-            type="number"
-            className="form-control"
-            value={editData.rating}
-            onChange={handleChange}
-            placeholder="1–5 (optional)"
-          />
-        </div>
-
-        {/* Date Added */}
-        <div className="col-md-6">
-          <label htmlFor="dateAdded" className="form-label">Date Added:</label>
-          <input
-            id="dateAdded"
-            type="date"
-            className="form-control"
-            value={editData.dateAdded}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Submit */}
-        <div className="col-12">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={!isFormValid}
-          >
-            Save Changes
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline-secondary ms-2"
-            onClick={() => navigate(`/books/${id}`)}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+            <button
+              type="button"
+              className="bk-btn-outline"
+              onClick={() => navigate(`/books/${id}`)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,18 +1,45 @@
 //Component to display the list of books
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
-import GenreFilter from "./GenreFilter";
-import StatusFilter from "./StatusFilter";
-import SearchBar from "./SearchBar";
-import SortButton from "./SortButton";
-import NavBar from "./NavBar";
-import api from "../services/api";
-import { getBooks, getBookCounts } from "../services/bookService";
-import "../assets/bookkeeper.css";
+import React from "react";
 
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function HighlightText({text, query}) {
+  if (!query) return <>{text}</>;
+  const q = query.trim();
+  if (!q) return <>{text}</>;
+
+  const safe = escapeRegExp(q);
+  const parts = String(text).split(new RegExp(`(${safe})`, "gi"));
+
+  return (
+    <>
+      {parts.map((part, idx) => {
+        const match = part.toLowerCase();
+        return match ? (
+          <mark key={idx} className="rounded bg-secondary/30 px-0.5">
+            {part}
+          </mark>
+        ) : (
+          <span key={idx}>{part}</span>
+        );
+      })}
+    </>
+  );
+}
+
+const YesNoIcon = ({ value }) => (
+  <span
+    className={
+      value ? "text-green-600 font-semibold" : "text-red-600 font-semibold"
+    }
+    aria-label={value ? "Yes" : "No"}
+  >
+    {value ? "✓" : "✕"}
+  </span>
+)
 const BookList = ({ books, searchQuery, onRowClick }) => {
   const highlightText = (text, query) => {
     if (!query) return text;
@@ -20,61 +47,75 @@ const BookList = ({ books, searchQuery, onRowClick }) => {
   };
 
   return (
-    <div className="list-body">
-      <div className="table-responsive">
-        <table className="table table-striped table-hover">
-          <thead>
+<div className="rounded-lg bg-secondary p-2">
+      <div className="overflow-x-auto rounded-md bg-light">
+        <table className="min-w-full border-collapse text-sm">
+          <thead className="bg-secondary text-light">
             <tr>
-              <th>Title</th>
-              <th>Series</th>
-              <th>Series Num</th>
-              <th>Author</th>
-              <th>Genres</th>
-              <th>Year</th>
-              <th>Page Count</th>
-              <th>Status</th>
-              <th>Kindle Unlimited</th>
-              <th>Libby</th>
+              <th className="px-3 py-2 text-left font-semibold">Title</th>
+              <th className="px-3 py-2 text-left font-semibold">Series</th>
+              <th className="px-3 py-2 text-left font-semibold">#</th>
+              <th className="px-3 py-2 text-left font-semibold">Author</th>
+              <th className="px-3 py-2 text-left font-semibold">Genres</th>
+              <th className="px-3 py-2 text-left font-semibold">Year</th>
+              <th className="px-3 py-2 text-left font-semibold">Pages</th>
+              <th className="px-3 py-2 text-left font-semibold">Status</th>
+              <th className="px-3 py-2 text-left font-semibold">KU</th>
+              <th className="px-3 py-2 text-left font-semibold">Libby</th>
             </tr>
           </thead>
+
           <tbody>
             {books.length ? (
-              books.map((book) => (
+              books.map((book, idx) => (
                 <tr
                   key={book._id}
                   onClick={() => onRowClick(book._id)}
-                  style={{ cursor: "pointer" }}
+                  className={[
+                    "cursor-pointer border-t border-secondary/40",
+                    idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
+                    "hover:bg-body",
+                  ].join(" ")}
                 >
-                  <td
-                    dangerouslySetInnerHTML={{
-                      __html: highlightText(book.title, searchQuery),
-                    }}
-                  />
-                  <td
-                    dangerouslySetInnerHTML={{
-                      __html: highlightText(book.series || "", searchQuery),
-                    }}
-                  />
-                  <td>{book.seriesNum ? `# ${book.seriesNum}` : "N/A"}</td>
-                  <td
-                    dangerouslySetInnerHTML={{
-                      __html: highlightText(
-                        book.author.join(", "),
-                        searchQuery
-                      ),
-                    }}
-                  />
-                  <td>{book.genres.join(", ")}</td>
-                  <td>{book.publicationYear}</td>
-                  <td>{book.pageCount}</td>
-                  <td>{book.status}</td>
-                  <td>{book.kindleUnlimited ? <i className="bi bi-check-square-fill"></i> : <i className="bi bi-x-square-fill"></i>}</td>
-                  <td>{book.libby ? <i className="bi bi-check-square-fill"></i> : <i className="bi bi-x-square-fill"></i>}</td>
+                  <td className="px-3 py-2">
+                    <HighlightText text={book.title} query={searchQuery} />
+                  </td>
+
+                  <td className="px-3 py-2">
+                    <HighlightText text={book.series || ""} query={searchQuery} />
+                  </td>
+
+                  <td className="px-3 py-2">
+                    {book.seriesNum ? `# ${book.seriesNum}` : "N/A"}
+                  </td>
+
+                  <td className="px-3 py-2">
+                    <HighlightText
+                      text={(book.author || []).join(", ")}
+                      query={searchQuery}
+                    />
+                  </td>
+
+                  <td className="px-3 py-2">
+                    {(book.genres || []).join(", ")}
+                  </td>
+
+                  <td className="px-3 py-2">{book.publicationYear}</td>
+                  <td className="px-3 py-2">{book.pageCount}</td>
+                  <td className="px-3 py-2">{book.status}</td>
+                  <td className="px-3 py-2">
+                    <YesNoIcon value={!!book.kindleUnlimited} />
+                  </td>
+                  <td className="px-3 py-2">
+                    <YesNoIcon value={!!book.libby} />
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7">No books match the search criteria.</td>
+                <td colSpan={10} className="px-3 py-6 text-center text-text/70">
+                  No books match the search criteria.
+                </td>
               </tr>
             )}
           </tbody>

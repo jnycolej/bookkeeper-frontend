@@ -8,9 +8,6 @@ import BookForm from "../components/BookForm";
 import Profile from "./Profile";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
 import { getBooks } from "../services/bookService";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Import Bootstrap JS (optional)
-import "../assets/bookkeeper.css";
 
 const HomePage = () => {
   const { getAccessTokenSilently } = useAuth0();

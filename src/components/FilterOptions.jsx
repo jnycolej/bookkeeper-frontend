@@ -1,10 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import BookForm from './BookForm';
-import api from '../services/api';
-
-//import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-//import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS (optional)
+import React from 'react';
 
 const FilterOptions = ({handleFilter}) => {
     return (

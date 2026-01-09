@@ -1,15 +1,15 @@
-:root {
-  /* neutrals */
-  --bs-body-bg: #fcfcfc; /*page background*/
-  --bs-body-color: #262827; /* default text */
-  --bs-light: #fcfcfc; /* for text on dark bg */
+/* :root {
+  /* neutrals
+  --bs-body-bg: #fcfcfc; /*page background
+  --bs-body-color: #262827; /* default text 
+  --bs-light: #fcfcfc; /* for text on dark bg 
 
-  /* accents */
-  --bs-primary: #5a2530; /* buttons, links, highlights */
-  --bs-secondary: #742435; /* nav, cards header */
-  --bs-dark: #40262b; /* for text on dark bg */
+  /* accents 
+  --bs-primary: #5a2530; /* buttons, links, highlights 
+  --bs-secondary: #742435; /* nav, cards header 
+  --bs-dark: #40262b; /* for text on dark bg 
 
-  /* fonts */
+  /* fonts 
   --ff-jost: "Jost", sans-serif;
 }
 
@@ -35,40 +35,10 @@ form {
   box-shadow: 0 4px 8px 0 #5a2530, 0 0px 20px 0 #5a2530;
 }
 
-.navbar {
-  /* background-color: var(--bs-secondary); */
-}
 
-.navbar .navbar-brand,
-.navbar .nav-link {
-  color: var(--bs-dark) !important;
-}
-.navbar .nav-link:hover {
-  color: var(--bs-primary);
-}
 
-/*Buttons*/
-.btn-primary {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
-}
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: #5c1d2a;
-  border-color: #5c1d2a;
-}
 
-.btn-secondary {
-  background-color: var(--bs-secondary);
-  border-color: var(--bs-secondary);
-}
-
-.btn-light {
-  background-color: var(--bs-light);
-  color: #262827;
-}
-
-/* Cards */
+/* Cards 
 .card {
   border: 1px solid var(--bs-secondary);
 }
@@ -81,7 +51,7 @@ form {
   color: var(--bs-body-color);
 }
 
-/* Links */
+/* Links 
 a {
   color: var(--bs-primary);
 }
@@ -89,7 +59,7 @@ a:hover {
   color: #5c1d2a;
 }
 
-/* Footer */
+/* Footer 
 .footer {
   background-color: var(--bs-dark);
   color: var(--bs-light);
@@ -128,7 +98,7 @@ a:hover {
   background-color: #40262b !important;
   color: #fff !important;
 }
-/* force the hover, too */
+/* force the hover, too 
 .table-hover > tbody > tr:hover > * {
   background-color: #fcfcfc !important;
   color: #262827 !important;
@@ -157,9 +127,4 @@ a:hover {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
-
-div {
-    font-family: var(--ff-jost) !important;
-    font-weight: 400;
-}
+} */
