@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import {Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import GenreFilter from "../components/GenreFilter";
 import StatusFilter from "../components/StatusFilter";
 import SearchBar from "../components/SearchBar";
 import SortButton from "../components/SortButton";
 import NavBar from "../components/NavBar";
 import BookList from "../components/BookList";
+import { deleteBook } from "../services/bookService";
 
 
 import { getBooks, getBookCounts } from "../services/bookService";
@@ -154,6 +155,24 @@ const LibraryPage = () => {
     bookCounts.want +
     bookCounts.owned;
 
+    const handleDeleteBook = async (book) => {
+      const ok = window.confirm(`Delete "${book.title}"? This can't be undone.`);
+      if (!ok) return;
+
+      try {
+        const token = await getAccessTokenSilently();
+        await deleteBook(book._id, token);
+
+        // Remove from both lists
+        setBooks((prev) => prev.filter((b) => b._id !== book._id));
+        setFilteredBooks((prev) => prev.filter((b) => b._id !== book._id));
+
+        navigate("/library");
+      } catch(err) {
+        console.error("Error deleting book:", err);
+      }
+    };
+
   return (
     <div className="bookKeeper-library-background min-h-screen">
       <NavBar />
@@ -241,6 +260,7 @@ const LibraryPage = () => {
         {/* Table */}
         <BookList
           books={filteredBooks}
+          onDelete={handleDeleteBook}
           searchQuery={searchQuery}
           onRowClick={(id) => navigate(`/books/${id}`)}
         />

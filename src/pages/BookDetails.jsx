@@ -6,6 +6,7 @@ import axios from 'axios';
 import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react';
 import api from '../services/api';
 import NavBar from '../components/NavBar';
+import { formatDate } from '@/utils/date';
 import { deleteBook } from '../services/bookService';
 
 const BookDetails = () => {
@@ -92,6 +93,10 @@ const BookDetails = () => {
                 <div>
                     <h4>Status</h4>
                     <p className='text-capitalize'>{book.status}</p>
+                </div>
+                <div>
+                    <h4>Date Finished</h4>
+                    <p className=''>{formatDate(book.dateFinished)}</p>
                 </div>
                 <div>
                     <h4>Format</h4>

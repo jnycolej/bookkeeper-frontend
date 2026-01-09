@@ -1,12 +1,13 @@
 //Component to display the list of books
 
 import React from "react";
+import { formatDate } from "@/utils/date";
 
 function escapeRegExp(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function HighlightText({text, query}) {
+function HighlightText({ text, query }) {
   if (!query) return <>{text}</>;
   const q = query.trim();
   if (!q) return <>{text}</>;
@@ -39,15 +40,10 @@ const YesNoIcon = ({ value }) => (
   >
     {value ? "✓" : "✕"}
   </span>
-)
-const BookList = ({ books, searchQuery, onRowClick }) => {
-  const highlightText = (text, query) => {
-    if (!query) return text;
-    return text.replace(new RegExp(`(${query})`, "gi"), "<mark>$1</mark>");
-  };
-
+);
+const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
   return (
-<div className="rounded-lg bg-secondary p-2">
+    <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
         <table className="min-w-full border-collapse text-sm">
           <thead className="bg-secondary text-light">
@@ -60,8 +56,10 @@ const BookList = ({ books, searchQuery, onRowClick }) => {
               <th className="px-3 py-2 text-left font-semibold">Year</th>
               <th className="px-3 py-2 text-left font-semibold">Pages</th>
               <th className="px-3 py-2 text-left font-semibold">Status</th>
+              <th className="px-3 py-2 text-left font-semibold">Date Finished</th>
               <th className="px-3 py-2 text-left font-semibold">KU</th>
               <th className="px-3 py-2 text-left font-semibold">Libby</th>
+              <th className="px-3 py-2 text-left font-semibold">Delete</th>
             </tr>
           </thead>
 
@@ -82,7 +80,10 @@ const BookList = ({ books, searchQuery, onRowClick }) => {
                   </td>
 
                   <td className="px-3 py-2">
-                    <HighlightText text={book.series || ""} query={searchQuery} />
+                    <HighlightText
+                      text={book.series || ""}
+                      query={searchQuery}
+                    />
                   </td>
 
                   <td className="px-3 py-2">
@@ -103,11 +104,24 @@ const BookList = ({ books, searchQuery, onRowClick }) => {
                   <td className="px-3 py-2">{book.publicationYear}</td>
                   <td className="px-3 py-2">{book.pageCount}</td>
                   <td className="px-3 py-2">{book.status}</td>
+                  <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
                   <td className="px-3 py-2">
                     <YesNoIcon value={!!book.kindleUnlimited} />
                   </td>
                   <td className="px-3 py-2">
                     <YesNoIcon value={!!book.libby} />
+                  </td>
+                  <td className="px-3 py-2">
+                    <button
+                      type="button"
+                      className="px-3 py-2 rounded-md border"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(book);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))

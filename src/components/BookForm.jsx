@@ -20,6 +20,7 @@ export default function BookForm() {
     format: "",
     rating: "",
     dateAdded: "",
+    dateFinished: "",
     isbn10: "",
     isbn13: "",
     asin: "",
@@ -59,7 +60,12 @@ export default function BookForm() {
 
   const handleRadioChange = (e) => {
     const { name, value } = e.target;
-    const upd = { ...formData, [name]: value };
+    const upd = {
+      ...formData,
+      [name]: value,
+      ...(name === "status" && value !== "read" ? { dateFinished: "" } : {}),
+    };
+
     setFormData(upd);
     validateForm(upd);
   };
@@ -69,13 +75,23 @@ export default function BookForm() {
     e.preventDefault();
 
     // turn semicolon-lists into arrays
-    const authors = formData.author.split(";").map((a) => a.trim());
-    const genres = formData.genres.split(";").map((g) => g.trim());
+    const authors = formData.author
+      .split(";")
+      .map((a) => a.trim())
+      .filter(Boolean);
+
+    const genres = formData.genres
+      .split(";")
+      .map((g) => g.trim())
+      .filter(Boolean);
 
     const payload = {
       title: formData.title,
       series: formData.series.trim() || null,
-      seriesNum: Number(formData.seriesNum),
+      seriesNum:
+        formData.seriesNum === "" || formData.seriesNum == null
+          ? null
+          : Number(formData.seriesNum),
       author: authors,
       genres: genres,
       publicationYear: Number(formData.publicationYear),
@@ -91,6 +107,9 @@ export default function BookForm() {
       ...(formData.dateAdded
         ? { dateAdded: new Date(formData.dateAdded) }
         : {}),
+      ...(formData.status === "read" && formData.dateFinished
+        ? { dateFinished: new Date(formData.dateFinished) }
+        : { dateFinished: null }),
     };
 
     try {
@@ -123,7 +142,10 @@ export default function BookForm() {
     const payload = {
       title: formData.title,
       series: formData.series.trim() || null,
-      seriesNum: Number(formData.seriesNum),
+      seriesNum:
+        formData.seriesNum === "" || formData.seriesNum == null
+          ? null
+          : Number(formData.seriesNum),
       author: authors,
       genres: genres,
       publicationYear: Number(formData.publicationYear),
@@ -134,9 +156,14 @@ export default function BookForm() {
       isbn13: formData.isbn13.trim() || null,
       asin: formData.asin.trim() || null,
       rating: formData.rating ? Number(formData.rating) : null,
+      kindleUnlimited: formData.kindleUnlimited,
+      libby: formData.libby,
       ...(formData.dateAdded
         ? { dateAdded: new Date(formData.dateAdded) }
         : {}),
+      ...(formData.status === "read" && formData.dateFinished
+        ? { dateFinished: new Date(formData.dateFinished) }
+        : { dateFinished: null }),
     };
 
     try {
@@ -367,6 +394,22 @@ export default function BookForm() {
                 ))}
               </div>
             </fieldset>
+
+            {/* Date Finished (only if Read) */}
+            {formData.status === "read" && (
+              <div>
+                <label htmlFor="dateFinished" className="bk-label">
+                  Date Finished
+                </label>
+                <input
+                  id="dateFinished"
+                  type="date"
+                  className="bk-input"
+                  value={formData.dateFinished}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
 
             {/* Kindle Unlimited */}
             <div className="flex items-center gap-2">
