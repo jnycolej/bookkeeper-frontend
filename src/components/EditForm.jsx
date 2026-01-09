@@ -180,7 +180,7 @@ export default function EditForm() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="bk-label">
+              <label htmlFor="title" className="bk-label text-white">
                 Title
               </label>
               <input
@@ -195,7 +195,7 @@ export default function EditForm() {
 
             {/* Series */}
             <div>
-              <label htmlFor="series" className="bk-label">
+              <label htmlFor="series" className="bk-label text-white">
                 Series
               </label>
               <div className="grid grid-cols-[1fr_80px] gap-2">
@@ -226,7 +226,7 @@ export default function EditForm() {
 
             {/* Author(s) */}
             <div>
-              <label htmlFor="author" className="bk-label">
+              <label htmlFor="author" className="bk-label text-white">
                 Author(s)
               </label>
               <input
@@ -242,7 +242,7 @@ export default function EditForm() {
 
             {/* ASIN */}
             <div>
-              <label htmlFor="asin" className="bk-label">
+              <label htmlFor="asin" className="bk-label text-white">
                 ASIN
               </label>
               <input
@@ -257,7 +257,7 @@ export default function EditForm() {
 
             {/* ISBNs */}
             <div>
-              <label htmlFor="isbn10" className="bk-label">
+              <label htmlFor="isbn10" className="bk-label text-white">
                 ISBN-10
               </label>
               <input
@@ -271,7 +271,7 @@ export default function EditForm() {
             </div>
 
             <div>
-              <label htmlFor="isbn13" className="bk-label">
+              <label htmlFor="isbn13" className="bk-label text-white">
                 ISBN-13
               </label>
               <input
@@ -286,7 +286,7 @@ export default function EditForm() {
 
             {/* Genres */}
             <div className="md:col-span-2">
-              <label htmlFor="genres" className="bk-label">
+              <label htmlFor="genres" className="bk-label text-white">
                 Genre(s)
               </label>
               <input
@@ -302,7 +302,7 @@ export default function EditForm() {
 
             {/* Publication Year & Page Count */}
             <div>
-              <label htmlFor="publicationYear" className="bk-label">
+              <label htmlFor="publicationYear" className="bk-label text-white">
                 Publication Year
               </label>
               <input
@@ -316,7 +316,7 @@ export default function EditForm() {
             </div>
 
             <div>
-              <label htmlFor="pageCount" className="bk-label">
+              <label htmlFor="pageCount" className="bk-label text-white">
                 Page Count
               </label>
               <input
@@ -377,6 +377,8 @@ export default function EditForm() {
               </div>
             </fieldset>
 
+
+
             {/* Kindle Unlimited */}
             <div className="flex items-center gap-2">
               <input
@@ -407,7 +409,7 @@ export default function EditForm() {
 
             {/* Rating */}
             <div>
-              <label htmlFor="rating" className="bk-label">
+              <label htmlFor="rating" className="bk-label text-white">
                 Rating
               </label>
               <input
@@ -422,7 +424,7 @@ export default function EditForm() {
 
             {/* Date Added */}
             <div>
-              <label htmlFor="dateAdded" className="bk-label">
+              <label htmlFor="dateAdded" className="bk-label text-white">
                 Date Added
               </label>
               <input
@@ -434,21 +436,21 @@ export default function EditForm() {
               />
             </div>
           </div>
-          {/* Date Finished (only if Read) */}
-          {editData.status === "read" && (
-            <div>
-              <label htmlFor="dateFinished" className="bk-label">
-                Date Finished
-              </label>
-              <input
-                id="dateFinished"
-                type="date"
-                className="bk-input"
-                value={editData.dateFinished}
-                onChange={handleChange}
-              />
-            </div>
-          )}
+            {/* Date Finished (only if Read) */}
+            {editData.status === "read" && (
+              <div>
+                <label htmlFor="dateFinished" className="bk-label text-white">
+                  Date Finished
+                </label>
+                <input
+                  id="dateFinished"
+                  type="date"
+                  className="bk-input"
+                  value={editData.dateFinished}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           {/* Actions */}
           <div className="mt-6 flex flex-wrap gap-3">
             <button
