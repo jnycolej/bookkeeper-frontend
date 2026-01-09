@@ -10,7 +10,6 @@ import NavBar from "../components/NavBar";
 import BookList from "../components/BookList";
 import { deleteBook } from "../services/bookService";
 
-
 import { getBooks, getBookCounts } from "../services/bookService";
 
 const LibraryPage = () => {
@@ -155,40 +154,34 @@ const LibraryPage = () => {
     bookCounts.want +
     bookCounts.owned;
 
-    const handleDeleteBook = async (book) => {
-      const ok = window.confirm(`Delete "${book.title}"? This can't be undone.`);
-      if (!ok) return;
+  const handleDeleteBook = async (book) => {
+    const ok = window.confirm(`Delete "${book.title}"? This can't be undone.`);
+    if (!ok) return;
 
-      try {
-        const token = await getAccessTokenSilently();
-        await deleteBook(book._id, token);
+    try {
+      const token = await getAccessTokenSilently();
+      await deleteBook(book._id, token);
 
-        // Remove from both lists
-        setBooks((prev) => prev.filter((b) => b._id !== book._id));
-        setFilteredBooks((prev) => prev.filter((b) => b._id !== book._id));
+      // Remove from both lists
+      setBooks((prev) => prev.filter((b) => b._id !== book._id));
+      setFilteredBooks((prev) => prev.filter((b) => b._id !== book._id));
 
-        navigate("/library");
-      } catch(err) {
-        console.error("Error deleting book:", err);
-      }
-    };
+      navigate("/library");
+    } catch (err) {
+      console.error("Error deleting book:", err);
+    }
+  };
 
   return (
     <div className="bookKeeper-library-background min-h-screen">
       <NavBar />
 
       <div className="mx-auto w-full max-w-7xl px-4 py-6">
-        <h1 className="mb-5 text-center text-4xl font-semibold ">
-          My Library
-        </h1>
+        <h1 className="mb-5 text-center text-4xl font-semibold ">My Library</h1>
 
         {/* Controls */}
         <div className="mb-4 rounded-2xl bg-dark/70 p-4 text-light backdrop-blur-sm">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
-            <button className="bg-secondary text-light px-4 py-2 rounded-md">
-  Test
-</button>
-
             <button
               type="button"
               className="bk-btn-primary w-full"
@@ -210,7 +203,7 @@ const LibraryPage = () => {
 
             <button
               type="button"
-              className="bk-btn-outline w-full"
+              className="bk-btn-outline text-light w-full"
               onClick={clearFilters}
             >
               Clear
