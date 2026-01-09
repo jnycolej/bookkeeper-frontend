@@ -198,7 +198,7 @@ export default function BookForm() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="bk-label">
+              <label htmlFor="title" className="bk-label text-white">
                 Title
               </label>
               <input
@@ -213,7 +213,7 @@ export default function BookForm() {
 
             {/* Series */}
             <div>
-              <label htmlFor="series" className="bk-label">
+              <label htmlFor="series" className="bk-label text-white">
                 Series
               </label>
 
@@ -245,7 +245,7 @@ export default function BookForm() {
 
             {/* Author(s) */}
             <div className="md:col-span-2">
-              <label htmlFor="author" className="bk-label">
+              <label htmlFor="author" className="bk-label text-white">
                 Author(s)
               </label>
               <input
@@ -261,7 +261,7 @@ export default function BookForm() {
 
             {/* ISBNs */}
             <div>
-              <label htmlFor="isbn10" className="bk-label">
+              <label htmlFor="isbn10" className="bk-label text-white">
                 ISBN-10
               </label>
               <input
@@ -275,7 +275,7 @@ export default function BookForm() {
             </div>
 
             <div>
-              <label htmlFor="isbn13" className="bk-label">
+              <label htmlFor="isbn13" className="bk-label text-white">
                 ISBN-13
               </label>
               <input
@@ -289,7 +289,7 @@ export default function BookForm() {
             </div>
 
             <div>
-              <label htmlFor="asin" className="bk-label">
+              <label htmlFor="asin" className="bk-label text-white">
                 ASIN
               </label>
               <input
@@ -304,7 +304,7 @@ export default function BookForm() {
 
             {/* Genres */}
             <div className="md:col-span-2">
-              <label htmlFor="genres" className="bk-label">
+              <label htmlFor="genres" className="bk-label text-white">
                 Genre(s)
               </label>
               <input
@@ -320,7 +320,7 @@ export default function BookForm() {
 
             {/* Year & Pages */}
             <div>
-              <label htmlFor="publicationYear" className="bk-label">
+              <label htmlFor="publicationYear" className="bk-label text-white">
                 Publication Year
               </label>
               <input
@@ -334,7 +334,7 @@ export default function BookForm() {
             </div>
 
             <div>
-              <label htmlFor="pageCount" className="bk-label">
+              <label htmlFor="pageCount" className="bk-label text-white">
                 Page Count
               </label>
               <input
@@ -395,21 +395,7 @@ export default function BookForm() {
               </div>
             </fieldset>
 
-            {/* Date Finished (only if Read) */}
-            {formData.status === "read" && (
-              <div>
-                <label htmlFor="dateFinished" className="bk-label">
-                  Date Finished
-                </label>
-                <input
-                  id="dateFinished"
-                  type="date"
-                  className="bk-input"
-                  value={formData.dateFinished}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
+
 
             {/* Kindle Unlimited */}
             <div className="flex items-center gap-2">
@@ -441,7 +427,7 @@ export default function BookForm() {
 
             {/* Rating */}
             <div>
-              <label htmlFor="rating" className="bk-label">
+              <label htmlFor="rating" className="bk-label text-white">
                 Rating
               </label>
               <input
@@ -456,7 +442,7 @@ export default function BookForm() {
 
             {/* Date Added */}
             <div>
-              <label htmlFor="dateAdded" className="bk-label">
+              <label htmlFor="dateAdded" className="bk-label text-white">
                 Date Added
               </label>
               <input
@@ -468,7 +454,21 @@ export default function BookForm() {
               />
             </div>
           </div>
-
+            {/* Date Finished (only if Read) */}
+            {formData.status === "read" && (
+              <div>
+                <label htmlFor="dateFinished" className="bk-label text-white">
+                  Date Finished
+                </label>
+                <input
+                  id="dateFinished"
+                  type="date"
+                  className="bk-input"
+                  value={formData.dateFinished}
+                  onChange={handleChange}
+                />
+              </div>
+            )}
           {/* Actions */}
           <div className="mt-6 flex flex-wrap gap-3">
             <button
@@ -478,7 +478,14 @@ export default function BookForm() {
             >
               Add Book
             </button>
-
+            <button
+              type="button"
+              className="bk-btn-secondary"
+              disabled={!isFormValid}
+              onClick={handleSubmitAndAddAgain}
+            >
+              Add & Add Another
+            </button>
             <button
               type="button"
               className="bk-btn-outline"
