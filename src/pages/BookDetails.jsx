@@ -65,8 +65,8 @@ const BookDetails = () => {
             <h1 className='display-2'>{book.title}</h1>
             <h3 className='fs-3 fw-lighter fst-italic'>{book.series} {book.seriesNum ? `# ${book.seriesNum}` : ""}</h3>            
             <div className='container text-center'>
-                <div className='row align-items-center'>
-                    <div className='col'>
+                <div className='align-items-center'>
+                    <div className=''>
                         <p className='lead fw-bold'>{
                             Array.isArray(book.author)
                             ? book.author.join(' | ')
@@ -114,12 +114,12 @@ const BookDetails = () => {
                     <h4>Libby</h4>
                     <p>{book.libby ? 'Yes' : 'No'}</p>
                 </div>
-                <div className=' btn-group d-flex m-2'>
-                    <button className='btn btn-primary' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
-                    <button className='btn btn-outline-secondary' onClick={() => navigation('/home')}>Return</button>                
+                <div className='d-flex m-2'>
+                    <button className='' onClick={() => navigation(`/books/${book._id}/edit`)}>Edit Book</button>
+                    <button className='' onClick={() => navigation('/home')}>Return</button>                
                 </div>
             </div>
-            <div className='col'>
+            <div className=''>
                 <img src={bookImage} alt="Book Cover" width="225" height="350"></img> 
             </div>
         </div>

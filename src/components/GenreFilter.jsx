@@ -111,33 +111,6 @@ const GenreFilter = ({ handleFilter }) => {
         </div>
       </DropdownMenuContent>
     </DropdownMenu>
-        // <div className='dropdown'>
-        //     <button
-        //         className='btn btn-secondary dropdown-toggle'
-        //         type='button'
-        //         id='genreDropdown'
-        //         data-bs-toggle='dropdown'
-        //         aria-expanded='false'
-        //         >Genre Filter
-        //     </button>
-        //     <div className='dropdown-menu scrollable-menu p-3' aria-labelledby='genreDropdown'>
-        //         {genres.map((genre) => (
-        //             <div className='form-check' key={genre}>
-        //                 <input
-        //                     className='form-check-input'
-        //                     type='checkbox'
-        //                     id={`genre-${genre}`}
-        //                     value={genre}
-        //                     checked={selectedGenres.includes(genre)}
-        //                     onChange={() => handleCheckboxChange(genre)}
-        //                 />
-        //                 <label className='form-check-label text-capitalize' htmlFor={`genre-${genre}`}>
-        //                     {genre}
-        //                 </label>
-        //             </div>
-        //         ))}
-        //     </div>
-        // </div>
     );
 };
 

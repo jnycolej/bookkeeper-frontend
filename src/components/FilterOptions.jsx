@@ -5,7 +5,7 @@ const FilterOptions = ({handleFilter}) => {
         <div className='d-flex gap-2'>
             <div className='dropdown show'>
             <button 
-                className="btn btn-lg w-100 btn-secondary dropdown-toggle" 
+                className="w-100 dropdown-toggle" 
                 type="button" 
                 id="dropdownMenuButton" 
                 data-bs-toggle="dropdown"
@@ -23,7 +23,7 @@ const FilterOptions = ({handleFilter}) => {
 
             <div className=" dropdown show">
             <button 
-                className="btn btn-lg w-100 btn-secondary dropdown-toggle" 
+                className="w-100 dropdown-toggle" 
                 type="button" 
                 id="dropdownMenuButton" 
                 data-bs-toggle="dropdown"

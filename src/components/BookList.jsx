@@ -103,7 +103,7 @@ const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
 
                   <td className="px-3 py-2">{book.publicationYear}</td>
                   <td className="px-3 py-2">{book.pageCount}</td>
-                  <td className="px-3 py-2">{book.status}</td>
+                  <td className="px-3 py-2">{book.status == "currentlyReading" ? "currently reading" : book.status}</td>
                   <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
                   <td className="px-3 py-2">
                     <YesNoIcon value={!!book.kindleUnlimited} />

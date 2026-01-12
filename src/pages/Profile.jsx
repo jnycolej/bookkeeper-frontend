@@ -113,7 +113,7 @@ const Profile = () => {
       
 
       <p>Amount of books read: {bookCounts.read}</p>
-      <button className="btn btn-primary" onClick={() => {navigate('/profileform')}}>Edit Profile</button>
+      <button className="" onClick={() => {navigate('/profileform')}}>Edit Profile</button>
     </div>
   );
 };

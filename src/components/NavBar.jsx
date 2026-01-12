@@ -14,16 +14,6 @@ export default function NavBar() {
     navigate(path);
   };
 
-  // const LogoutButton = () => {
-  //     const { logout } = useAuth0()
-
-  //     return (
-  //         <button className="btn" onClick={() => logout({ logoutParams: {returnTo: window.location.origin}})}>
-  //             Log Out
-  //         </button>
-  //     );
-  // };
-
   return (
 <header className="w-full">
       <nav className="flex flex-wrap items-center gap-2 px-4 py-3">
@@ -82,7 +72,6 @@ export default function NavBar() {
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
               <LoginButton />
               <button
                 className="bk-btn-secondary"
@@ -92,7 +81,7 @@ export default function NavBar() {
               >
                 Log Out
               </button>
-            </div>
+
           </div>
         </div>
 

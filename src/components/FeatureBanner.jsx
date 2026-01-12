@@ -44,19 +44,15 @@ const FeatureBanner = () => {
     setFeaturedBooks(featured);
   }, [books]);
 
-  // console.log("API base:", api?.defaults?.baseURL); // if you use axios instance
-  // console.log("books length:", data.length);
-  // console.log("status counts:", data.reduce((a,b)=> (a[b.status]=(a[b.status]||0)+1, a), {}));
-
   return (
     <div>
-      <h1 className="text-3xl">Currently Reading</h1>
-      <Carousel className="mx-auto w-full max-w-3xl">
-        <CarouselContent>
+      <h1 className="text-3xl text-center">Currently Reading</h1>
+      <Carousel className="mx-auto w-80 max-w-3xl">
+        <CarouselContent className="test">
           {featuredBooks.map((book) => (
-            <CarouselItem key={book._id}>
+            <CarouselItem className="" key={book._id}>
               <div className="p-1">
-                <Card className="cursor-pointer">
+                <Card className="bg-transparent border-transparent shadow-none cursor-pointer">
                   <CardContent className="flex items-center justify-center p-6">
                     <button
                       type="button"
@@ -85,52 +81,3 @@ const FeatureBanner = () => {
 };
 
 export default FeatureBanner;
-{
-  /* <div className="carousel-indicators">
-            {featuredBooks.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                data-bs-target="#carouselIndicators"
-                data-bs-slide-to={idx}
-                className={idx === 0 ? "active" : undefined}
-                aria-current={idx === 0 ? "true" : undefined}
-                aria-label={`Slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-          <div className="carousel-inner">
-            {featuredBooks.map((book, idx) => (
-              <div
-                key={book._id}
-                className={`carousel-item${idx === 0 ? " active" : ""}`}
-              >
-                <a onClick={() => navigate(`/books/${book._id}`)}>
-                  <img
-                    src={book.coverUrl}
-                    className="d-block mx-auto"
-                    alt={book.title}
-                  />
-                </a>
-              </div>
-            ))}
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselIndicators"
-            data-bs-slide="prev"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true" />
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselIndicators"
-            data-bs-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true" />
-            <span className="visually-hidden">Next</span>
-          </button> */
-}
