@@ -1,7 +1,16 @@
 //Component to display the list of books
 
-import React from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { formatDate } from "@/utils/date";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 function escapeRegExp(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -41,7 +50,57 @@ const YesNoIcon = ({ value }) => (
     {value ? "✓" : "✕"}
   </span>
 );
-const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
+
+const BookList = ({
+  books,
+  searchQuery,
+  onRowClick,
+  onDelete,
+  pageSize = 10,
+}) => {
+  const [page, setPage] = useState(1);
+
+  const totalPages = Math.max(1, Math.ceil(books.length / pageSize));
+
+  //keeps page valid even during search or filter
+  useEffect(() => {
+    setPage((prev) => Math.min(Math.max(1, prev), totalPages));
+  }, [totalPages]);
+
+  const pageBooks = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return books.slice(start, start + pageSize);
+  }, [books, page, pageSize]);
+
+  const pageItems = useMemo(() => {
+    const siblingCount = 1;
+    const items = [];
+
+    const left = Math.max(1, page - siblingCount);
+    const right = Math.min(totalPages, page + siblingCount);
+
+    items.push(1);
+
+    if (left > 2) items.push("ellipsis-left");
+
+    for (let p = Math.max(2, left); p <= Math.min(totalPages - 1, right); p++) {
+      items.push(p);
+    }
+
+    if (right < totalPages - 1) items.push("ellipsis-right");
+
+    //always show last (if more than 1 page)
+    if (totalPages > 1) items.push(totalPages);
+
+    //remove duplicates
+    return items.filter((v, i, arr) => arr.indexOf(v) === i);
+  }, [page, totalPages]);
+
+  const goTo = (p) => setPage(Math.min(totalPages, Math.max(1, p)));
+
+  const startItem = books.length === 0 ? 0 : (page - 1) * pageSize + 1;
+  const endItem = Math.min(page * pageSize, books.length);
+
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -56,7 +115,9 @@ const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
               <th className="px-3 py-2 text-left font-semibold">Year</th>
               <th className="px-3 py-2 text-left font-semibold">Pages</th>
               <th className="px-3 py-2 text-left font-semibold">Status</th>
-              <th className="px-3 py-2 text-left font-semibold">Date Finished</th>
+              <th className="px-3 py-2 text-left font-semibold">
+                Date Finished
+              </th>
               <th className="px-3 py-2 text-left font-semibold">KU</th>
               <th className="px-3 py-2 text-left font-semibold">Libby</th>
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
@@ -65,7 +126,7 @@ const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
 
           <tbody>
             {books.length ? (
-              books.map((book, idx) => (
+              pageBooks.map((book, idx) => (
                 <tr
                   key={book._id}
                   onClick={() => onRowClick(book._id)}
@@ -103,7 +164,11 @@ const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
 
                   <td className="px-3 py-2">{book.publicationYear}</td>
                   <td className="px-3 py-2">{book.pageCount}</td>
-                  <td className="px-3 py-2">{book.status == "currentlyReading" ? "currently reading" : book.status}</td>
+                  <td className="px-3 py-2">
+                    {book.status == "currentlyReading"
+                      ? "currently reading"
+                      : book.status}
+                  </td>
                   <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
                   <td className="px-3 py-2">
                     <YesNoIcon value={!!book.kindleUnlimited} />
@@ -134,6 +199,68 @@ const BookList = ({ books, searchQuery, onRowClick, onDelete }) => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Footer: count + pagination */}
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="text-sm text-text/70">
+          Showing {startItem}-{endItem} of {books.length}
+        </div>
+
+        {totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo(page - 1);
+                  }}
+                  aria-disabled={page === 1}
+                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                />
+              </PaginationItem>
+
+              {pageItems.map((item) => {
+                if (typeof item === "string") {
+                  return (
+                    <PaginationItem key={item}>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  );
+                }
+
+                return (
+                  <PaginationItem key={item}>
+                    <PaginationLink
+                      href="#"
+                      isActive={item === page}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(item);
+                      }}
+                    >
+                      {item}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo(page + 1);
+                  }}
+                  aria-disabled={page === totalPages}
+                  className={page === totalPages ? "pointer-events-none opacity-50": ""}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
       </div>
     </div>
   );

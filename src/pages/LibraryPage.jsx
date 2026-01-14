@@ -1,13 +1,26 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import GenreFilter from "../components/GenreFilter";
 import StatusFilter from "../components/StatusFilter";
 import SearchBar from "../components/SearchBar";
 import SortButton from "../components/SortButton";
 import NavBar from "../components/NavBar";
 import BookList from "../components/BookList";
+import MovieList from "../components/MovieList";
 import { deleteBook } from "../services/bookService";
 
 import { getBooks, getBookCounts } from "../services/bookService";
@@ -250,13 +263,47 @@ const LibraryPage = () => {
           </div>
         </div>
 
-        {/* Table */}
-        <BookList
-          books={filteredBooks}
-          onDelete={handleDeleteBook}
-          searchQuery={searchQuery}
-          onRowClick={(id) => navigate(`/books/${id}`)}
-        />
+        <div className="flex w-full max-w-sm align-items-center flex-col gap-6">
+          <Tabs defaultValue="books">
+            <TabsList>
+              <TabsTrigger value="books">Books</TabsTrigger>
+              <TabsTrigger value="movies">Movies</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="books">
+              <Card className="bg-transparent border-transparent">
+                <CardContent className="grid gap-6">
+                  <div className="grid gap-3">
+                    {/* Table */}
+                    <BookList
+                      books={filteredBooks}
+                      onDelete={handleDeleteBook}
+                      searchQuery={searchQuery}
+                      onRowClick={(id) => navigate(`/books/${id}`)}
+                    />
+                  </div>
+                  <div className="grid gap-3">
+                    
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button>Save password</Button>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            <TabsContent value="movies">
+              <Card>
+                <CardContent className="grid gap-6">
+                  <div className="grid gap-3">
+<MovieList />
+                  </div>
+                  <div className="grid gap-3">
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>            
+          </Tabs>
+        </div>
       </div>
     </div>
   );
