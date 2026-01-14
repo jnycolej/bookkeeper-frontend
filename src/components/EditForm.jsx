@@ -111,19 +111,22 @@ export default function EditForm() {
     setEditData(upd);
     validateForm(upd);
   };
-  const handleRadioChange = (e) => {
-    const { name, value } = e.target;
-    const upd = {
-      ...editData,
-      [name]: value,
-      ...EditForm(
-        name === "status" && value !== "read" ? { dateFinished: "" } : {}
-      ),
-    };
+  
+const handleRadioChange = (e) => {
+  const { name, value } = e.target;
 
-    setEditData(upd);
+  setEditData((prev) => {
+    const upd = {
+      ...prev,
+      [name]: value,
+      ...(name === "status" && value !== "read" ? { dateFinished: "" } : {}),
+    };
     validateForm(upd);
-  };
+    return upd;
+  });
+};
+
+
 
   // 4) Submit: normalize blanks → null
   const handleSubmit = async (e) => {

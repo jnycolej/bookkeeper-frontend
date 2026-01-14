@@ -1,6 +1,8 @@
 //Component to display the list of books
 
 import React, { useMemo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { formatDate } from "@/utils/date";
 import {
   Pagination,
@@ -59,7 +61,7 @@ const BookList = ({
   pageSize = 10,
 }) => {
   const [page, setPage] = useState(1);
-
+  const navigation = useNavigate();
   const totalPages = Math.max(1, Math.ceil(books.length / pageSize));
 
   //keeps page valid even during search or filter
@@ -120,6 +122,7 @@ const BookList = ({
               </th>
               <th className="px-3 py-2 text-left font-semibold">KU</th>
               <th className="px-3 py-2 text-left font-semibold">Libby</th>
+              <th className="px-3 py-2 text-left font-semibold">Edit</th>
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
             </tr>
           </thead>
@@ -178,8 +181,19 @@ const BookList = ({
                   </td>
                   <td className="px-3 py-2">
                     <button
-                      type="button"
                       className="px-3 py-2 rounded-md border"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigation(`/books/${book._id}/edit`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td className="px-3 py-2">
+                    <button
+                      type="button"
+                      className="px-3 py-2 rounded-md bg-red-900 text-white border"
                       onClick={(e) => {
                         e.stopPropagation();
                         onDelete(book);
@@ -255,7 +269,9 @@ const BookList = ({
                     goTo(page + 1);
                   }}
                   aria-disabled={page === totalPages}
-                  className={page === totalPages ? "pointer-events-none opacity-50": ""}
+                  className={
+                    page === totalPages ? "pointer-events-none opacity-50" : ""
+                  }
                 />
               </PaginationItem>
             </PaginationContent>
