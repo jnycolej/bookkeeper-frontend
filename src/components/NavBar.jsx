@@ -16,7 +16,7 @@ export default function NavBar() {
 
   return (
 <header className="w-full">
-      <nav className="flex flex-wrap items-center gap-2 px-4 py-3">
+      <nav className="flex flex-wrap items-center bg-red-900/40 gap-2 px-4 py-3">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
           {/* Brand */}
           <button
@@ -26,7 +26,7 @@ export default function NavBar() {
             aria-label="Go to home"
           >
             <img
-              className="h-10 w-auto"
+              className="h-20 w-auto"
               src={BookKeeperLogo}
               alt="BookKeeper"
             />
@@ -52,21 +52,21 @@ export default function NavBar() {
               <button
                 type="button"
                 onClick={() => handleNav("/books")}
-                className="text-dark hover:text-primary"
+                className="text-white hover:text-primary"
               >
                 Library
               </button>
               <button
                 type="button"
                 onClick={() => handleNav("/bookform")}
-                className="text-dark hover:text-primary"
+                className="text-white hover:text-primary"
               >
                 Add Book
               </button>
               <button
                 type="button"
                 onClick={() => handleNav("/profile")}
-                className="text-dark hover:text-primary"
+                className="text-white hover:text-primary"
               >
                 Profile
               </button>
@@ -74,7 +74,7 @@ export default function NavBar() {
 
               <LoginButton />
               <button
-                className="bk-btn-secondary"
+                className="bg-red-900 p-2 rounded"
                 onClick={() =>
                   logout({ logoutParams: { returnTo: window.location.origin } })
                 }
@@ -115,7 +115,7 @@ export default function NavBar() {
                 <div className="mt-2 flex items-center gap-2">
                   <LoginButton />
                   <button
-                    className="bk-btn-secondary"
+                    className=" font-bold"
                     onClick={() =>
                       logout({
                         logoutParams: { returnTo: window.location.origin },
