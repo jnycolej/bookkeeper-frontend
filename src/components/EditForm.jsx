@@ -3,6 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function EditForm() {
   const { id } = useParams();
@@ -111,22 +121,20 @@ export default function EditForm() {
     setEditData(upd);
     validateForm(upd);
   };
-  
-const handleRadioChange = (e) => {
-  const { name, value } = e.target;
 
-  setEditData((prev) => {
-    const upd = {
-      ...prev,
-      [name]: value,
-      ...(name === "status" && value !== "read" ? { dateFinished: "" } : {}),
-    };
-    validateForm(upd);
-    return upd;
-  });
-};
+  const handleRadioChange = (e) => {
+    const { name, value } = e.target;
 
-
+    setEditData((prev) => {
+      const upd = {
+        ...prev,
+        [name]: value,
+        ...(name === "status" && value !== "read" ? { dateFinished: "" } : {}),
+      };
+      validateForm(upd);
+      return upd;
+    });
+  };
 
   // 4) Submit: normalize blanks → null
   const handleSubmit = async (e) => {
@@ -186,10 +194,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="title" className="bk-label text-white">
                 Title
               </label>
-              <input
+              <Input
                 id="title"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.title}
                 onChange={handleChange}
                 required
@@ -202,10 +210,10 @@ const handleRadioChange = (e) => {
                 Series
               </label>
               <div className="grid grid-cols-[1fr_80px] gap-2">
-                <input
+                <Input
                   id="series"
                   type="text"
-                  className="bk-input"
+                  className="bg-white text-black"
                   value={editData.series}
                   onChange={handleChange}
                   placeholder="(optional)"
@@ -232,10 +240,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="author" className="bk-label text-white">
                 Author(s)
               </label>
-              <input
+              <Input
                 id="author"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.author}
                 onChange={handleChange}
                 placeholder="Name1; Name2; ..."
@@ -248,10 +256,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="asin" className="bk-label text-white">
                 ASIN
               </label>
-              <input
+              <Input
                 id="asin"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.asin}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -263,10 +271,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="isbn10" className="bk-label text-white">
                 ISBN-10
               </label>
-              <input
+              <Input
                 id="isbn10"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.isbn10}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -277,10 +285,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="isbn13" className="bk-label text-white">
                 ISBN-13
               </label>
-              <input
+              <Input
                 id="isbn13"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.isbn13}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -292,10 +300,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="genres" className="bk-label text-white">
                 Genre(s)
               </label>
-              <input
+              <Input
                 id="genres"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.genres}
                 onChange={handleChange}
                 placeholder="Genre1; Genre2; ..."
@@ -308,10 +316,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="publicationYear" className="bk-label text-white">
                 Publication Year
               </label>
-              <input
+              <Input
                 id="publicationYear"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.publicationYear}
                 onChange={handleChange}
                 required
@@ -322,10 +330,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="pageCount" className="bk-label text-white">
                 Page Count
               </label>
-              <input
+              <Input
                 id="pageCount"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.pageCount}
                 onChange={handleChange}
                 required
@@ -380,8 +388,6 @@ const handleRadioChange = (e) => {
               </div>
             </fieldset>
 
-
-
             {/* Kindle Unlimited */}
             <div className="flex items-center gap-2">
               <input
@@ -415,10 +421,10 @@ const handleRadioChange = (e) => {
               <label htmlFor="rating" className="bk-label text-white">
                 Rating
               </label>
-              <input
+              <Input
                 id="rating"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={editData.rating}
                 onChange={handleChange}
                 placeholder="1–5 (optional)"
@@ -430,30 +436,30 @@ const handleRadioChange = (e) => {
               <label htmlFor="dateAdded" className="bk-label text-white">
                 Date Added
               </label>
-              <input
+              <Input
                 id="dateAdded"
                 type="date"
-                className="bk-input"
+                className="bg-white text-black text-black"
                 value={editData.dateAdded}
                 onChange={handleChange}
               />
             </div>
           </div>
-            {/* Date Finished (only if Read) */}
-            {editData.status === "read" && (
-              <div>
-                <label htmlFor="dateFinished" className="bk-label text-white">
-                  Date Finished
-                </label>
-                <input
-                  id="dateFinished"
-                  type="date"
-                  className="bk-input"
-                  value={editData.dateFinished}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
+          {/* Date Finished (only if Read) */}
+          {editData.status === "read" && (
+            <div>
+              <label htmlFor="dateFinished" className="bk-label text-white">
+                Date Finished
+              </label>
+              <Input
+                id="dateFinished"
+                type="date"
+                className="bg-white text-black text-black"
+                value={editData.dateFinished}
+                onChange={handleChange}
+              />
+            </div>
+          )}
           {/* Actions */}
           <div className="mt-6 flex flex-wrap gap-3">
             <button
@@ -466,7 +472,7 @@ const handleRadioChange = (e) => {
 
             <button
               type="button"
-              className="bk-btn-outline"
+              className="border-2 p-2 rounded bg-stone-100 text-red-600"
               onClick={() => navigate(`/books/${id}`)}
             >
               Cancel

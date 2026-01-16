@@ -3,6 +3,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { addBook } from "../services/bookService";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import { Input } from "./ui/input";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function BookForm() {
   const { getAccessTokenSilently } = useAuth0();
@@ -201,10 +212,10 @@ export default function BookForm() {
               <label htmlFor="title" className="bk-label text-white">
                 Title
               </label>
-              <input
+              <Input
                 id="title"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.title}
                 onChange={handleChange}
                 required
@@ -218,10 +229,10 @@ export default function BookForm() {
               </label>
 
               <div className="grid grid-cols-[1fr_80px] gap-2">
-                <input
+                <Input
                   id="series"
                   type="text"
-                  className="bk-input"
+                  className="bg-white text-black"
                   value={formData.series}
                   onChange={handleChange}
                   placeholder="(optional)"
@@ -248,10 +259,10 @@ export default function BookForm() {
               <label htmlFor="author" className="bk-label text-white">
                 Author(s)
               </label>
-              <input
+              <Input
                 id="author"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.author}
                 onChange={handleChange}
                 placeholder="Name1; Name2; ..."
@@ -264,10 +275,10 @@ export default function BookForm() {
               <label htmlFor="isbn10" className="bk-label text-white">
                 ISBN-10
               </label>
-              <input
+              <Input
                 id="isbn10"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.isbn10}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -278,10 +289,10 @@ export default function BookForm() {
               <label htmlFor="isbn13" className="bk-label text-white">
                 ISBN-13
               </label>
-              <input
+              <Input
                 id="isbn13"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.isbn13}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -292,10 +303,10 @@ export default function BookForm() {
               <label htmlFor="asin" className="bk-label text-white">
                 ASIN
               </label>
-              <input
+              <Input
                 id="asin"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.asin}
                 onChange={handleChange}
                 placeholder="(optional)"
@@ -307,10 +318,10 @@ export default function BookForm() {
               <label htmlFor="genres" className="bk-label text-white">
                 Genre(s)
               </label>
-              <input
+              <Input
                 id="genres"
                 type="text"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.genres}
                 onChange={handleChange}
                 placeholder="Genre1; Genre2; ..."
@@ -323,10 +334,10 @@ export default function BookForm() {
               <label htmlFor="publicationYear" className="bk-label text-white">
                 Publication Year
               </label>
-              <input
+              <Input
                 id="publicationYear"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.publicationYear}
                 onChange={handleChange}
                 required
@@ -337,10 +348,10 @@ export default function BookForm() {
               <label htmlFor="pageCount" className="bk-label text-white">
                 Page Count
               </label>
-              <input
+              <Input
                 id="pageCount"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.pageCount}
                 onChange={handleChange}
                 required
@@ -430,10 +441,10 @@ export default function BookForm() {
               <label htmlFor="rating" className="bk-label text-white">
                 Rating
               </label>
-              <input
+              <Input
                 id="rating"
                 type="number"
-                className="bk-input"
+                className="bg-white text-black"
                 value={formData.rating}
                 onChange={handleChange}
                 placeholder="1–5 (optional)"
@@ -445,10 +456,10 @@ export default function BookForm() {
               <label htmlFor="dateAdded" className="bk-label text-white">
                 Date Added
               </label>
-              <input
+              <Input
                 id="dateAdded"
                 type="date"
-                className="bk-input"
+                className="bg-white text-black text-dark"
                 value={formData.dateAdded}
                 onChange={handleChange}
               />
@@ -460,10 +471,10 @@ export default function BookForm() {
                 <label htmlFor="dateFinished" className="bk-label text-white">
                   Date Finished
                 </label>
-                <input
+                <Input
                   id="dateFinished"
                   type="date"
-                  className="bk-input"
+                  className="bg-white text-black"
                   value={formData.dateFinished}
                   onChange={handleChange}
                 />
@@ -473,14 +484,14 @@ export default function BookForm() {
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               type="submit"
-              className="bk-btn-light"
+              className="bg-red-900 p-3 m-1 font-medium rounded"
               disabled={!isFormValid}
             >
               Add Book
             </button>
             <button
               type="button"
-              className="bk-btn-secondary"
+              className="bg-red-900/40 p-3 m-1 font-medium rounded"
               disabled={!isFormValid}
               onClick={handleSubmitAndAddAgain}
             >
@@ -488,7 +499,7 @@ export default function BookForm() {
             </button>
             <button
               type="button"
-              className="bk-btn-outline"
+              className="border-2 border-red-600 p-2 px-4 font-semibold bg-stone-50/50 text-red-600 rounded"
               onClick={() => navigate("/home")}
             >
               Cancel

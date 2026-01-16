@@ -28,8 +28,8 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
 
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor="search" className="bk-label mb-0 text-dark">
-        Search
+      <label htmlFor="search" className="bk-label mb-0 text-white text-xl">
+        Search:
       </label>
       <input
         id="search"
