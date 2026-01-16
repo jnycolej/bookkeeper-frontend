@@ -102,7 +102,7 @@ const BookList = ({
 
   const startItem = books.length === 0 ? 0 : (page - 1) * pageSize + 1;
   const endItem = Math.min(page * pageSize, books.length);
-
+  
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -162,7 +162,7 @@ const BookList = ({
                   </td>
 
                   <td className="px-3 py-2">
-                    {(book.genres || []).join(", ")}
+                    {(book.genres.sort() || []).join(", ")}
                   </td>
 
                   <td className="px-3 py-2">{book.publicationYear}</td>
