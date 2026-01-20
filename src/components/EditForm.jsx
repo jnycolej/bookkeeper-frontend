@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { Input } from "./ui/input";
+
 import {
   Select,
   SelectContent,
@@ -13,6 +14,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "./ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 export default function EditForm() {
   const { id } = useParams();
@@ -38,7 +52,9 @@ export default function EditForm() {
     kindleUnlimited: false,
     libby: false,
   });
-  const [isFormValid, setIsFormValid] = useState(false);
+
+  // const [isFormValid, setIsFormValid] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -61,7 +77,7 @@ export default function EditForm() {
         setEditData({
           title: data.title,
           series: data.series || "",
-          seriesNum: data.seriesNum || "",
+          seriesNum: data.seriesNum == null ? "" : String(data.seriesNum),
           author: (data.author || []).join("; "),
           genres: (data.genres || []).join("; "),
           publicationYear: data.publicationYear || "",
@@ -79,14 +95,14 @@ export default function EditForm() {
         });
 
         // Pre-validate so Save is enabled if everything is already present
-        validateForm({
-          title: data.title,
-          author: (data.author || []).join("; "),
-          genres: (data.genres || []).join("; "),
-          publicationYear: data.publicationYear,
-          pageCount: data.pageCount,
-          status: data.status,
-        });
+        // validateForm({
+        //   title: data.title,
+        //   author: (data.author || []).join("; "),
+        //   genres: (data.genres || []).join("; "),
+        //   publicationYear: data.publicationYear,
+        //   pageCount: data.pageCount,
+        //   status: data.status,
+        // });
       } catch (e) {
         console.error(e);
         setError("Failed to load book");
@@ -97,29 +113,40 @@ export default function EditForm() {
   }, [id, getAccessTokenSilently]);
 
   // 2) Validation: always returns true/false
-  const validateForm = (data) => {
-    const required = [
-      "title",
-      "author",
-      "genres",
-      "publicationYear",
-      "pageCount",
-      "status",
-    ];
-    const ok = required.every((key) => {
-      const v = data[key];
-      return Array.isArray(v) ? v.length > 0 : v !== "";
-    });
-    setIsFormValid(ok);
+
+  const required = [
+    "title",
+    "author",
+    "genres",
+    "publicationYear",
+    "pageCount",
+    "status",
+  ];
+
+  // const validateForm = (data) => {
+  //     const ok = required.every((key) => {
+  //       const v = data[key];
+  //       return Array.isArray(v) ? v.length > 0 : v !== "";
+  //     });
+  //     setIsFormValid(ok);
+  //   };
+
+  const isFormValid = required.every((key) => {
+    const v = editData[key];
+    return String(v ?? "").trim() !== "";
+  });
+  // 3) Handlers
+  const setField = (key, value) => {
+    setEditData((prev) => ({
+      ...prev,
+      [key]: value,
+      ...(key === "status" && value !== "read" ? { dateFinished: "" } : {}),
+    }));
   };
 
-  // 3) Handlers
   const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-    const upd = { ...editData, [id]: val };
-    setEditData(upd);
-    validateForm(upd);
+    const { id, type, value, checked } = e.target;
+    setField(id, type === "checkbox" ? checked : value);
   };
 
   const handleRadioChange = (e) => {
@@ -138,13 +165,26 @@ export default function EditForm() {
 
   // 4) Submit: normalize blanks → null
   const handleSubmit = async (e) => {
+    const authors = editData.author
+      .split(";")
+      .map((a) => a.trim())
+      .filter(Boolean);
+
+    const genres = editData.genres
+      .split(";")
+      .map((g) => g.trim())
+      .filter(Boolean);
+
     e.preventDefault();
     const payload = {
       title: editData.title,
       series: editData.series.trim() || null,
-      seriesNum: editData.seriesNum || null,
-      author: editData.author.split(";").map((a) => a.trim()),
-      genres: editData.genres.split(";").map((g) => g.trim()),
+      seriesNum:
+        editData.seriesNum === "" || editData.seriesNum == null
+          ? null
+          : Number(editData.seriesNum),
+      authors,
+      genres,
       publicationYear: Number(editData.publicationYear),
       pageCount: Number(editData.pageCount),
       status: editData.status,
@@ -218,20 +258,27 @@ export default function EditForm() {
                   onChange={handleChange}
                   placeholder="(optional)"
                 />
-                <select
-                  id="seriesNum"
-                  className="bk-select"
-                  value={editData.seriesNum || ""}
-                  onChange={handleChange}
-                  aria-label="Series number"
+                <Select
+                  value={editData.seriesNum ?? ""}
+                  onValueChange={(value) => setField("seriesNum", value)}
                 >
-                  <option value="">#</option>
-                  {[...Array(10)].map((_, i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger className="bg-stone-100 text-black">
+                    <SelectValue placeholder="#" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(10)].map((_, i) => (
+                        <SelectItem
+                          key={i}
+                          value={String(i)}
+                          className="text-black"
+                        >
+                          {i}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
@@ -340,81 +387,103 @@ export default function EditForm() {
               />
             </div>
 
-            {/* Format */}
-            <fieldset className="bk-fieldset">
-              <legend className="bk-legend">Format</legend>
-              <div className="mt-2 flex flex-wrap gap-4">
-                {["physical", "ebook", "library"].map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 text-light"
-                  >
-                    <input
-                      className="bk-radio"
-                      type="radio"
-                      id={opt}
-                      name="format"
-                      value={opt}
-                      checked={editData.format === opt}
-                      onChange={handleRadioChange}
-                    />
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+              {/* Format */}
+              <FieldSet className="text-white">
+                <FieldLegend variant="label" className="text-white">
+                  Format
+                </FieldLegend>
 
-            {/* Status */}
-            <fieldset className="bk-fieldset">
-              <legend className="bk-legend">Status</legend>
-              <div className="mt-2 flex flex-wrap gap-4">
-                {["read", "want", "currentlyReading", "owned"].map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 text-light"
-                  >
-                    <input
-                      className="bk-radio"
-                      type="radio"
-                      id={opt}
-                      name="status"
-                      value={opt}
-                      checked={editData.status === opt}
-                      onChange={handleRadioChange}
-                    />
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+                <RadioGroup
+                  className="mt-2 flex flex-wrap items-center gap-6"
+                  value={editData.format}
+                  onValueChange={(val) => setField("format", val)}
+                >
+                  {["physical", "ebook", "library"].map((opt) => (
+                    <Field
+                      key={opt}
+                      orientation="horizontal"
+                      className="items-center gap-2"
+                    >
+                      <RadioGroupItem
+                        value={opt}
+                        id={`format-${opt}`}
+                        className="border-white/70 text-white data-[state=checked]:border-white data-[state=checked]:text-white"
+                      />
+                      <FieldLabel
+                        htmlFor={`format-${opt}`}
+                        className="text-white"
+                      >
+                        {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                      </FieldLabel>
+                    </Field>
+                  ))}
+                </RadioGroup>
+              </FieldSet>
 
-            {/* Kindle Unlimited */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="kindleUnlimited"
-                checked={editData.kindleUnlimited}
-                onChange={handleChange}
-                className="bk-checkbox"
-              />
-              <label htmlFor="kindleUnlimited" className="text-light">
-                Kindle Unlimited
-              </label>
+              {/* Status */}
+              <FieldSet className="text-white">
+                <FieldLegend variant="label" className="text-white">
+                  Status
+                </FieldLegend>
+
+                <RadioGroup
+                  className="mt-2 flex flex-wrap items-center gap-6"
+                  value={editData.status}
+                  onValueChange={(val) => setField("status", val)}
+                >
+                  {["read", "want", "currentlyReading", "owned"].map((opt) => (
+                    <Field
+                      key={opt}
+                      orientation="horizontal"
+                      className="items-center gap-2"
+                    >
+                      <RadioGroupItem
+                        value={opt}
+                        id={`status-${opt}`}
+                        className="border-white/70 text-white data-[state=checked]:border-white data-[state=checked]:text-white"
+                      />
+                      <FieldLabel
+                        htmlFor={`status-${opt}`}
+                        className="text-white"
+                      >
+                        {opt === "currentlyReading"
+                          ? "Currently Reading"
+                          : opt.charAt(0).toUpperCase() + opt.slice(1)}
+                      </FieldLabel>
+                    </Field>
+                  ))}
+                </RadioGroup>
+              </FieldSet>
             </div>
 
-            {/* Libby */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="libby"
-                checked={editData.libby}
-                onChange={handleChange}
-                className="bk-checkbox"
-              />
-              <label htmlFor="libby" className="text-light">
-                Libby
-              </label>
-            </div>
+            <FieldGroup className="grid grid-cols-2 gap-6 text-white">
+              <Field orientation="horizontal" className="items-center gap-2">
+                <Checkbox
+                  id="kindleUnlimited"
+                  checked={editData.kindleUnlimited}
+                  onCheckedChange={(checked) =>
+                    setField("kindleUnlimited", !!checked)
+                  }
+                  className="border-white/70 data-[state=checked]:bg-white data-[state=checked]:text-[#5a2530]"
+                />
+                <FieldLabel htmlFor="kindleUnlimited" className="text-white">
+                  Kindle Unlimited
+                </FieldLabel>
+              </Field>
+
+              <Field orientation="horizontal" className="items-center gap-2">
+                <Checkbox
+                  id="libby"
+                  checked={editData.libby}
+                  onCheckedChange={(checked) => setField("libby", !!checked)}
+                  className="border-white/70 data-[state=checked]:bg-white data-[state=checked]:text-[#5a2530]"
+                />
+                <FieldLabel htmlFor="libby" className="text-white">
+                  Libby
+                </FieldLabel>
+              </Field>
+            </FieldGroup>
 
             {/* Rating */}
             <div>

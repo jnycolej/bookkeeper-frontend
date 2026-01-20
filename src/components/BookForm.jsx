@@ -10,10 +10,20 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 
 export default function BookForm() {
   const { getAccessTokenSilently } = useAuth0();
@@ -41,51 +51,37 @@ export default function BookForm() {
 
   const [formData, setFormData] = useState({ ...INITIAL_STATE });
 
-  const [isFormValid, setIsFormValid] = useState(false);
+  const required = [
+    "title",
+    "author",
+    "genres",
+    "publicationYear",
+    "pageCount",
+    "status",
+  ];
 
-  // 1) Validation always returns true/false
-  const validateForm = (data) => {
-    const required = [
-      "title",
-      "author",
-      "genres",
-      "publicationYear",
-      "pageCount",
-      "status",
-    ];
-    const ok = required.every((key) => {
-      const v = data[key];
-      return Array.isArray(v) ? v.length > 0 : v !== "";
-    });
-    setIsFormValid(ok);
+  const isFormValid = required.every((key) => {
+    const v = formData[key];
+    return String(v ?? "").trim() !== "";
+  });
+
+  const setField = (key, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+      ...(key === "status" && value !== "read" ? { dateFinished: "" } : {}),
+    }));
   };
 
-  // 2) Handlers
   const handleChange = (e) => {
     const { id, type, value, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-    const upd = { ...formData, [id]: val };
-    setFormData(upd);
-    validateForm(upd);
+    setField(id, type === "checkbox" ? checked : value);
   };
 
-  const handleRadioChange = (e) => {
-    const { name, value } = e.target;
-    const upd = {
-      ...formData,
-      [name]: value,
-      ...(name === "status" && value !== "read" ? { dateFinished: "" } : {}),
-    };
-
-    setFormData(upd);
-    validateForm(upd);
-  };
-
-  // 3) Submit with blank→null normalization
+  // Submit (go home)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // turn semicolon-lists into arrays
     const authors = formData.author
       .split(";")
       .map((a) => a.trim())
@@ -131,24 +127,30 @@ export default function BookForm() {
         },
         prompt: "consent",
       });
+
       await addBook(payload, token);
 
       // reset form & go home
       setFormData({ ...INITIAL_STATE });
-      setIsFormValid(false);
       navigate("/home");
     } catch (err) {
       console.error("Error adding book:", err);
     }
   };
 
-  // 3) Submit with blank→null normalization
+  // Submit (stay on form)
   const handleSubmitAndAddAgain = async (e) => {
     e.preventDefault();
 
-    // turn semicolon-lists into arrays
-    const authors = formData.author.split(";").map((a) => a.trim());
-    const genres = formData.genres.split(";").map((g) => g.trim());
+    const authors = formData.author
+      .split(";")
+      .map((a) => a.trim())
+      .filter(Boolean);
+
+    const genres = formData.genres
+      .split(";")
+      .map((g) => g.trim())
+      .filter(Boolean);
 
     const payload = {
       title: formData.title,
@@ -185,11 +187,11 @@ export default function BookForm() {
         },
         prompt: "consent",
       });
+
       await addBook(payload, token);
 
-      // reset form & go home
+      // reset form & stay on form
       setFormData({ ...INITIAL_STATE });
-      setIsFormValid(false);
       navigate("/bookform");
     } catch (err) {
       console.error("Error adding book:", err);
@@ -209,7 +211,7 @@ export default function BookForm() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="bk-label text-white">
+              <label htmlFor="title" className="text-white">
                 Title
               </label>
               <Input
@@ -218,13 +220,14 @@ export default function BookForm() {
                 className="bg-white text-black"
                 value={formData.title}
                 onChange={handleChange}
+                placeholder="Title"
                 required
               />
             </div>
 
             {/* Series */}
             <div>
-              <label htmlFor="series" className="bk-label text-white">
+              <label htmlFor="series" className="text-white">
                 Series
               </label>
 
@@ -237,26 +240,34 @@ export default function BookForm() {
                   onChange={handleChange}
                   placeholder="(optional)"
                 />
-                <select
-                  id="seriesNum"
-                  className="bk-select"
-                  value={formData.seriesNum || ""}
-                  onChange={handleChange}
-                  aria-label="Series number"
+
+                <Select
+                  value={formData.seriesNum ?? ""}
+                  onValueChange={(value) => setField("seriesNum", value)}
                 >
-                  <option value="">#</option>
-                  {[...Array(10)].map((_, i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger className="bg-stone-100 text-black">
+                    <SelectValue placeholder="#" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {[...Array(10)].map((_, i) => (
+                        <SelectItem
+                          key={i}
+                          value={String(i)}
+                          className="text-black"
+                        >
+                          {i}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
             {/* Author(s) */}
             <div className="md:col-span-2">
-              <label htmlFor="author" className="bk-label text-white">
+              <label htmlFor="author" className="text-white">
                 Author(s)
               </label>
               <Input
@@ -271,51 +282,53 @@ export default function BookForm() {
             </div>
 
             {/* ISBNs */}
-            <div>
-              <label htmlFor="isbn10" className="bk-label text-white">
-                ISBN-10
-              </label>
-              <Input
-                id="isbn10"
-                type="text"
-                className="bg-white text-black"
-                value={formData.isbn10}
-                onChange={handleChange}
-                placeholder="(optional)"
-              />
-            </div>
+            <div className="flex md:inline-flex gap-4">
+              <div>
+                <label htmlFor="isbn10" className="text-white">
+                  ISBN-10
+                </label>
+                <Input
+                  id="isbn10"
+                  type="text"
+                  className="bg-white text-black"
+                  value={formData.isbn10}
+                  onChange={handleChange}
+                  placeholder="(optional)"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="isbn13" className="bk-label text-white">
-                ISBN-13
-              </label>
-              <Input
-                id="isbn13"
-                type="text"
-                className="bg-white text-black"
-                value={formData.isbn13}
-                onChange={handleChange}
-                placeholder="(optional)"
-              />
-            </div>
+              <div>
+                <label htmlFor="isbn13" className="text-white">
+                  ISBN-13
+                </label>
+                <Input
+                  id="isbn13"
+                  type="text"
+                  className="bg-white text-black"
+                  value={formData.isbn13}
+                  onChange={handleChange}
+                  placeholder="(optional)"
+                />
+              </div>
 
-            <div>
-              <label htmlFor="asin" className="bk-label text-white">
-                ASIN
-              </label>
-              <Input
-                id="asin"
-                type="text"
-                className="bg-white text-black"
-                value={formData.asin}
-                onChange={handleChange}
-                placeholder="(optional)"
-              />
+              <div>
+                <label htmlFor="asin" className="text-white">
+                  ASIN
+                </label>
+                <Input
+                  id="asin"
+                  type="text"
+                  className="bg-white text-black"
+                  value={formData.asin}
+                  onChange={handleChange}
+                  placeholder="(optional)"
+                />
+              </div>
             </div>
 
             {/* Genres */}
             <div className="md:col-span-2">
-              <label htmlFor="genres" className="bk-label text-white">
+              <label htmlFor="genres" className="text-white">
                 Genre(s)
               </label>
               <Input
@@ -331,7 +344,7 @@ export default function BookForm() {
 
             {/* Year & Pages */}
             <div>
-              <label htmlFor="publicationYear" className="bk-label text-white">
+              <label htmlFor="publicationYear" className="text-white">
                 Publication Year
               </label>
               <Input
@@ -345,7 +358,7 @@ export default function BookForm() {
             </div>
 
             <div>
-              <label htmlFor="pageCount" className="bk-label text-white">
+              <label htmlFor="pageCount" className="text-white">
                 Page Count
               </label>
               <Input
@@ -358,87 +371,107 @@ export default function BookForm() {
               />
             </div>
 
-            {/* Format */}
-            <fieldset className="bk-fieldset">
-              <legend className="bk-legend">Format</legend>
-              <div className="mt-2 flex flex-wrap gap-4">
-                {["physical", "ebook", "library"].map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 text-light"
-                  >
-                    <input
-                      className="bk-radio"
-                      type="radio"
-                      id={opt}
-                      name="format"
-                      value={opt}
-                      checked={formData.format === opt}
-                      onChange={handleRadioChange}
-                    />
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+              {/* Format */}
+              <FieldSet className="text-white">
+                <FieldLegend variant="label" className="text-white">
+                  Format
+                </FieldLegend>
 
-            {/* Status */}
-            <fieldset className="bk-fieldset">
-              <legend className="bk-legend">Status</legend>
-              <div className="mt-2 flex flex-wrap gap-4">
-                {["read", "want", "currentlyReading", "owned"].map((opt) => (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 text-light"
-                  >
-                    <input
-                      className="bk-radio"
-                      type="radio"
-                      id={opt}
-                      name="status"
-                      value={opt}
-                      checked={formData.status === opt}
-                      onChange={handleRadioChange}
-                    />
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+                <RadioGroup
+                  className="mt-2 flex flex-wrap items-center gap-6"
+                  value={formData.format}
+                  onValueChange={(val) => setField("format", val)}
+                >
+                  {["physical", "ebook", "library"].map((opt) => (
+                    <Field
+                      key={opt}
+                      orientation="horizontal"
+                      className="items-center gap-2"
+                    >
+                      <RadioGroupItem
+                        value={opt}
+                        id={`format-${opt}`}
+                        className="border-white/70 text-white data-[state=checked]:border-white data-[state=checked]:text-white"
+                      />
+                      <FieldLabel
+                        htmlFor={`format-${opt}`}
+                        className="text-white"
+                      >
+                        {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                      </FieldLabel>
+                    </Field>
+                  ))}
+                </RadioGroup>
+              </FieldSet>
 
+              {/* Status */}
+              <FieldSet className="text-white">
+                <FieldLegend variant="label" className="text-white">
+                  Status
+                </FieldLegend>
 
-
-            {/* Kindle Unlimited */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="kindleUnlimited"
-                checked={formData.kindleUnlimited}
-                onChange={handleChange}
-                className="bk-checkbox"
-              />
-              <label htmlFor="kindleUnlimited" className="text-light">
-                Kindle Unlimited
-              </label>
+                <RadioGroup
+                  className="mt-2 flex flex-wrap items-center gap-6"
+                  value={formData.status}
+                  onValueChange={(val) => setField("status", val)}
+                >
+                  {["read", "want", "currentlyReading", "owned"].map((opt) => (
+                    <Field
+                      key={opt}
+                      orientation="horizontal"
+                      className="items-center gap-2"
+                    >
+                      <RadioGroupItem
+                        value={opt}
+                        id={`status-${opt}`}
+                        className="border-white/70 text-white data-[state=checked]:border-white data-[state=checked]:text-white"
+                      />
+                      <FieldLabel
+                        htmlFor={`status-${opt}`}
+                        className="text-white"
+                      >
+                        {opt === "currentlyReading"
+                          ? "Currently Reading"
+                          : opt.charAt(0).toUpperCase() + opt.slice(1)}
+                      </FieldLabel>
+                    </Field>
+                  ))}
+                </RadioGroup>
+              </FieldSet>
             </div>
 
-            {/* Libby */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="libby"
-                checked={formData.libby}
-                onChange={handleChange}
-                className="bk-checkbox"
-              />
-              <label htmlFor="libby" className="text-light">
-                Libby
-              </label>
-            </div>
+            <FieldGroup className="grid grid-cols-2 gap-6 text-white">
+              <Field orientation="horizontal" className="items-center gap-2">
+                <Checkbox
+                  id="kindleUnlimited"
+                  checked={formData.kindleUnlimited}
+                  onCheckedChange={(checked) =>
+                    setField("kindleUnlimited", !!checked)
+                  }
+                  className="border-white/70 data-[state=checked]:bg-white data-[state=checked]:text-[#5a2530]"
+                />
+                <FieldLabel htmlFor="kindleUnlimited" className="text-white">
+                  Kindle Unlimited
+                </FieldLabel>
+              </Field>
+
+              <Field orientation="horizontal" className="items-center gap-2">
+                <Checkbox
+                  id="libby"
+                  checked={formData.libby}
+                  onCheckedChange={(checked) => setField("libby", !!checked)}
+                  className="border-white/70 data-[state=checked]:bg-white data-[state=checked]:text-[#5a2530]"
+                />
+                <FieldLabel htmlFor="libby" className="text-white">
+                  Libby
+                </FieldLabel>
+              </Field>
+            </FieldGroup>
 
             {/* Rating */}
             <div>
-              <label htmlFor="rating" className="bk-label text-white">
+              <label htmlFor="rating" className="text-white">
                 Rating
               </label>
               <Input
@@ -453,7 +486,7 @@ export default function BookForm() {
 
             {/* Date Added */}
             <div>
-              <label htmlFor="dateAdded" className="bk-label text-white">
+              <label htmlFor="dateAdded" className="text-white">
                 Date Added
               </label>
               <Input
@@ -465,21 +498,23 @@ export default function BookForm() {
               />
             </div>
           </div>
-            {/* Date Finished (only if Read) */}
-            {formData.status === "read" && (
-              <div>
-                <label htmlFor="dateFinished" className="bk-label text-white">
-                  Date Finished
-                </label>
-                <Input
-                  id="dateFinished"
-                  type="date"
-                  className="bg-white text-black"
-                  value={formData.dateFinished}
-                  onChange={handleChange}
-                />
-              </div>
-            )}
+
+          {/* Date Finished (only if Read) */}
+          {formData.status === "read" && (
+            <div>
+              <label htmlFor="dateFinished" className="text-white">
+                Date Finished
+              </label>
+              <Input
+                id="dateFinished"
+                type="date"
+                className="bg-white text-black"
+                value={formData.dateFinished}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+
           {/* Actions */}
           <div className="mt-6 flex flex-wrap gap-3">
             <button
@@ -489,6 +524,7 @@ export default function BookForm() {
             >
               Add Book
             </button>
+
             <button
               type="button"
               className="bg-red-900/40 p-3 m-1 font-medium rounded"
@@ -497,9 +533,10 @@ export default function BookForm() {
             >
               Add & Add Another
             </button>
+
             <button
               type="button"
-              className="border-2 border-red-600 p-2 px-4 font-semibold bg-stone-50/50 text-red-600 rounded"
+              className="border-2 border-red-600 p-2 px-4 font-bold bg-stone-50/50 text-red-900 rounded"
               onClick={() => navigate("/home")}
             >
               Cancel
