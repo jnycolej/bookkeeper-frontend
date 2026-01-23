@@ -1,9 +1,7 @@
 //Component to display the list of books
 
-import React, { useMemo, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { formatDate } from "@/utils/date";
+import React from "react";
+import { usePagination } from "@/features/library/hooks/usePagination";
 import {
   Pagination,
   PaginationContent,
@@ -13,45 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-function escapeRegExp(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function HighlightText({ text, query }) {
-  if (!query) return <>{text}</>;
-  const q = query.trim();
-  if (!q) return <>{text}</>;
-
-  const safe = escapeRegExp(q);
-  const parts = String(text).split(new RegExp(`(${safe})`, "gi"));
-
-  return (
-    <>
-      {parts.map((part, idx) => {
-        const match = part.toLowerCase();
-        return match ? (
-          <mark key={idx} className="rounded bg-secondary/30 px-0.5">
-            {part}
-          </mark>
-        ) : (
-          <span key={idx}>{part}</span>
-        );
-      })}
-    </>
-  );
-}
-
-const YesNoIcon = ({ value }) => (
-  <span
-    className={
-      value ? "text-green-600 font-semibold" : "text-red-600 font-semibold"
-    }
-    aria-label={value ? "Yes" : "No"}
-  >
-    {value ? "✓" : "✕"}
-  </span>
-);
+import { BookRow } from "@/features/library/components/BookRow";
 
 const BookList = ({
   books,
@@ -60,49 +20,11 @@ const BookList = ({
   onDelete,
   pageSize = 10,
 }) => {
-  const [page, setPage] = useState(1);
-  const navigation = useNavigate();
-  const totalPages = Math.max(1, Math.ceil(books.length / pageSize));
+  const safeBooks = Array.isArray(books) ? books : [];
 
-  //keeps page valid even during search or filter
-  useEffect(() => {
-    setPage((prev) => Math.min(Math.max(1, prev), totalPages));
-  }, [totalPages]);
+  const { page, totalPages, pagedItems, pageItems, goTo, startItem, endItem } =
+    usePagination(safeBooks, pageSize);
 
-  const pageBooks = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return books.slice(start, start + pageSize);
-  }, [books, page, pageSize]);
-
-  const pageItems = useMemo(() => {
-    const siblingCount = 1;
-    const items = [];
-
-    const left = Math.max(1, page - siblingCount);
-    const right = Math.min(totalPages, page + siblingCount);
-
-    items.push(1);
-
-    if (left > 2) items.push("ellipsis-left");
-
-    for (let p = Math.max(2, left); p <= Math.min(totalPages - 1, right); p++) {
-      items.push(p);
-    }
-
-    if (right < totalPages - 1) items.push("ellipsis-right");
-
-    //always show last (if more than 1 page)
-    if (totalPages > 1) items.push(totalPages);
-
-    //remove duplicates
-    return items.filter((v, i, arr) => arr.indexOf(v) === i);
-  }, [page, totalPages]);
-
-  const goTo = (p) => setPage(Math.min(totalPages, Math.max(1, p)));
-
-  const startItem = books.length === 0 ? 0 : (page - 1) * pageSize + 1;
-  const endItem = Math.min(page * pageSize, books.length);
-  
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -128,85 +50,20 @@ const BookList = ({
           </thead>
 
           <tbody>
-            {books.length ? (
-              pageBooks.map((book, idx) => (
-                <tr
+            {safeBooks.length ? (
+              pagedItems.map((book, idx) => (
+                <BookRow
                   key={book._id}
-                  onClick={() => onRowClick(book._id)}
-                  className={[
-                    "cursor-pointer border-t border-secondary/40",
-                    idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
-                    "hover:bg-body",
-                  ].join(" ")}
-                >
-                  <td className="px-3 py-2">
-                    <HighlightText text={book.title} query={searchQuery} />
-                  </td>
-
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={book.series || ""}
-                      query={searchQuery}
-                    />
-                  </td>
-
-                  <td className="px-3 py-2">
-                    {book.seriesNum ? `# ${book.seriesNum}` : "N/A"}
-                  </td>
-
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={(book.author || []).join(", ")}
-                      query={searchQuery}
-                    />
-                  </td>
-
-                  <td className="px-3 py-2">
-                    {(book.genres.sort() || []).join(", ")}
-                  </td>
-
-                  <td className="px-3 py-2">{book.publicationYear}</td>
-                  <td className="px-3 py-2">{book.pageCount}</td>
-                  <td className="px-3 py-2">
-                    {book.status == "currentlyReading"
-                      ? "currently reading"
-                      : book.status}
-                  </td>
-                  <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
-                  <td className="px-3 py-2">
-                    <YesNoIcon value={!!book.kindleUnlimited} />
-                  </td>
-                  <td className="px-3 py-2">
-                    <YesNoIcon value={!!book.libby} />
-                  </td>
-                  <td className="px-3 py-2">
-                    <button
-                      className="px-3 py-2 rounded-md border"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigation(`/books/${book._id}/edit`);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td className="px-3 py-2">
-                    <button
-                      type="button"
-                      className="px-3 py-2 rounded-md bg-red-900 text-white border"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDelete(book);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                  book={book}
+                  idx={idx}
+                  searchQuery={searchQuery}
+                  onRowClick={onRowClick}
+                  onDelete={onDelete}
+                />
               ))
             ) : (
               <tr>
-                <td colSpan={10} className="px-3 py-6 text-center text-text/70">
+                <td colSpan={13} className="px-3 py-6 text-center text-text/70">
                   No books match the search criteria.
                 </td>
               </tr>
