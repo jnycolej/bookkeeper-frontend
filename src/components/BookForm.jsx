@@ -15,8 +15,8 @@ export default function BookForm() {
     <div>
       <NavBar />
 
-      <div className="mx-auto w-full max-w-6xl px-4 py-6">
-        <h1 className="mb-6 text-center text-4xl font-semibold text-dark">
+      <div className="mx-auto bookKeeper-library-background w-full max-w-6xl px-4 py-6">
+        <h1 className="mb-6 text-center text-4xl font-semibold">
           Add New Book
         </h1>
 

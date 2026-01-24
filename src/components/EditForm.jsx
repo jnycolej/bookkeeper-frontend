@@ -56,7 +56,7 @@ export default function EditForm() {
     <div>
       <NavBar />
 
-      <div className="mx-auto w-full max-w-6xl px-4 py-6">
+      <div className="mx-auto w-full max-w-6xl px-4 py-6 bookKeeper-library-background">
         <h1 className="mb-6 text-center text-4xl font-semibold text-dark">
           Edit Book
         </h1>
