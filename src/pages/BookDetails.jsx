@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button"
+
 import axios from "axios";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
@@ -38,7 +40,7 @@ const BookDetails = () => {
           setBookImage(
             `https://covers.openlibrary.org/b/isbn/${
               data.isbn13 || data.isbn10
-            }-M.jpg`
+            }-M.jpg`,
           );
         } else {
           setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg`);
@@ -66,80 +68,66 @@ const BookDetails = () => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="h-screen bookKeeper-library-background text-stone-100">
       <NavBar />
-      <h1 className="display-2">{book.title}</h1>
-      <h3 className="fs-3 fw-lighter fst-italic">
-        {book.series} {book.seriesNum ? `# ${book.seriesNum}` : ""}
-      </h3>
-      <div className="container text-center">
-        <div className="align-items-center">
-          <div className="">
-            <p className="lead fw-bold">
-              {Array.isArray(book.author)
-                ? book.author.join(" | ")
-                : book.author}
-            </p>
-            <hr />
-            <div>
-              <h4>Genres</h4>
-              <p className="text-capitalize font-monospace">
-                {Array.isArray(book.genres)
-                  ? book.genres.join(" | ")
-                  : book.genre}
+      <div className="flex mt-10  place-content-center gap-2">
+        <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
+              <img
+                src={bookImage}
+                alt="Book Cover"
+                
+              ></img>
+        </div>
+        <div className="flex-intial p-2 rounded bg-red-900/60">
+          <p className="text-3xl">
+            {book.title} - <span className="font-light text-xl">{book.series}{" "}
+            {book.seriesNum ? `# ${book.seriesNum}` : ""}</span>
+          </p>
+
+          <div className="p-2">
+            <div className="">
+              <p className="font-bold">
+                {Array.isArray(book.author)
+                  ? book.author.join(" | ")
+                  : book.author}
               </p>
+              <hr />
+              <div>
+                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(book.genres)
+                    ? book.genres.join(" | ")
+                    : book.genre}
+                </p>
+              </div>
+              <div><p className="text-base/10 font-medium"><span className="text-lg">Publication Year</span> : {book.publicationYear}</p></div>
+              <div><p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {book.pageCount}</p></div>
+              <div>
+                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {book.status}</p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(book.dateFinished)}</p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {book.format}</p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {book.pageCount}</p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium"><span className="text-lg">Kindle Unlimited</span> : {book.kindleUnlimited ? "Yes" : "No"}</p>
+              </div>
+              <div className="text-base/10 font-medium"><p><span className="text-lg">Libby</span> : {book.libby ? "Yes" : "No"}</p></div>
+              <div className="flex p-2 gap-4">
+                <Button
+                  className="text-xl"
+                  onClick={() => navigation(`/books/${book._id}/edit`)}
+                >
+                  Edit Book
+                </Button>
+                <Button className="text-xl" onClick={() => navigation("/home")}>
+                  Return
+                </Button>
+              </div>
             </div>
-            <div>
-              <h4>Publication Year</h4>
-              <p>{book.publicationYear}</p>
-            </div>
-            <div>
-              <h4>Page Count</h4>
-              <p>{book.pageCount}</p>
-            </div>
-            <div>
-              <h4>Status</h4>
-              <p className="text-capitalize">{book.status}</p>
-            </div>
-            <div>
-              <h4>Date Finished</h4>
-              <p className="">{formatDate(book.dateFinished)}</p>
-            </div>
-            <div>
-              <h4>Format</h4>
-              <p className="text-capitalize">{book.format}</p>
-            </div>
-            <div>
-              <h4>Page Count</h4>
-              <p>{book.pageCount}</p>
-            </div>
-            <div>
-              <h4>Kindle Unlimited</h4>
-              <p>{book.kindleUnlimited ? "Yes" : "No"}</p>
-            </div>
-            <div>
-              <h4>Libby</h4>
-              <p>{book.libby ? "Yes" : "No"}</p>
-            </div>
-            <div className="d-flex m-2">
-              <button
-                className=""
-                onClick={() => navigation(`/books/${book._id}/edit`)}
-              >
-                Edit Book
-              </button>
-              <button className="" onClick={() => navigation("/home")}>
-                Return
-              </button>
-            </div>
-          </div>
-          <div className="">
-            <img
-              src={bookImage}
-              alt="Book Cover"
-              width="225"
-              height="350"
-            ></img>
           </div>
         </div>
       </div>

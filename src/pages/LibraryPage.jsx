@@ -118,7 +118,7 @@ const LibraryPage = () => {
           </div>
         </div>
 
-        <div className="flex w-full max-w-sm flex-col gap-6">
+        <div className="flex w-full max-w-7xl flex-col gap-6">
           <Tabs defaultValue="books">
             <TabsList>
               <TabsTrigger value="books">Books</TabsTrigger>
@@ -135,10 +135,6 @@ const LibraryPage = () => {
                     onDelete={deleteById}
                   />
                 </CardContent>
-
-                <CardFooter>
-                  <Button type="button">Save password</Button>
-                </CardFooter>
               </Card>
             </TabsContent>
 
