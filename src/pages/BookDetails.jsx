@@ -101,7 +101,9 @@ const BookDetails = () => {
               <div><p className="text-base/10 font-medium"><span className="text-lg">Publication Year</span> : {book.publicationYear}</p></div>
               <div><p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {book.pageCount}</p></div>
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {book.status}</p>
+                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {book.status === "currentlyReading"
+                    ? "Currently Reading"
+                    : opt.charAt(0).toUpperCase() + opt.slice(1)}</p>
               </div>
               <div>
                 <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(book.dateFinished)}</p>

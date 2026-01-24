@@ -184,7 +184,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
 
       {/* Format + Status */}
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:col-span-2">
-        <FieldSet className="text-white">
+        <FieldSet className="text-stone-100">
           <FieldLegend variant="label" className="text-white">
             Format
           </FieldLegend>
@@ -196,7 +196,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
           >
             {["physical", "ebook", "library"].map((opt) => (
               <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem value={opt} id={`format-${opt}`} />
+                <RadioGroupItem className="bg-stone-100" value={opt} id={`format-${opt}`} />
                 <FieldLabel htmlFor={`format-${opt}`} className="text-white">
                   {opt.charAt(0).toUpperCase() + opt.slice(1)}
                 </FieldLabel>
@@ -217,7 +217,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
           >
             {["read", "want", "currentlyReading", "owned"].map((opt) => (
               <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem value={opt} id={`status-${opt}`} />
+                <RadioGroupItem className="bg-stone-100" value={opt} id={`status-${opt}`} />
                 <FieldLabel htmlFor={`status-${opt}`} className="text-white">
                   {opt === "currentlyReading"
                     ? "Currently Reading"
