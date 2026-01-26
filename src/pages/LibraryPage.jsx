@@ -53,7 +53,7 @@ const LibraryPage = () => {
             <button
               type="button"
               className="bk-btn-primary w-full"
-              onClick={() => navigate("/bookform")}
+              onClick={() => navigate("library/books/new")}
             >
               Add Book
             </button>
@@ -123,6 +123,8 @@ const LibraryPage = () => {
             <TabsList>
               <TabsTrigger value="books">Books</TabsTrigger>
               <TabsTrigger value="movies">Movies</TabsTrigger>
+              <TabsTrigger value="TV">TV</TabsTrigger>
+              <TabsTrigger value="Games">Games</TabsTrigger>
             </TabsList>
 
             <TabsContent value="books">
@@ -131,7 +133,7 @@ const LibraryPage = () => {
                   <BookList
                     books={filteredBooks}
                     searchQuery={searchQuery}
-                    onRowClick={(id) => navigate(`/books/${id}`)}
+                    onRowClick={(id) => navigate(`/library/books/${id}`)}
                     onDelete={deleteById}
                   />
                 </CardContent>
@@ -141,7 +143,11 @@ const LibraryPage = () => {
             <TabsContent value="movies">
               <Card>
                 <CardContent className="grid gap-6">
-                  <MovieList />
+                  <MovieList 
+                    movies={[]}
+                    searchQuery={searchQuery}
+                    onRowClick={(id) => navigate(`/library/movies/${id}`)}
+                  />
                 </CardContent>
               </Card>
             </TabsContent>

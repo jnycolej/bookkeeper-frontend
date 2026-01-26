@@ -60,7 +60,7 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
           className="px-3 py-2 rounded-md border"
           onClick={(e) => {
             e.stopPropagation();
-            navigation(`/books/${book._id}/edit`);
+            navigation(`/library/books/${book._id}/edit`);
           }}
         >
           Edit

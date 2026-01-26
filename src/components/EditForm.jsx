@@ -25,7 +25,7 @@ export default function EditForm() {
     isValid,
     submit,
   } = useBookForm(async (payload, token) => {
-    await api.put(`/books/${id}`, payload, {
+    await api.put(`/library/books/${id}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
   });

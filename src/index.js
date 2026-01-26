@@ -19,7 +19,7 @@ root.render(
         authorizationParams={{
             redirect_uri: `${window.location.origin}/home`,
             audience,
-            scope: 'read:books write:books read:current_user'
+            scope: 'read:books write:books read:current_user read:movies write:movies'
         }}
         cacheLocation="localstorage"
        // useRefreshTokens={true}

@@ -41,7 +41,7 @@ const YesNoIcon = ({ value }) => (
     {value ? "✓" : "✕"}
   </span>
 );
-const MovieList = ({ books, searchQuery, onRowClick, onDelete }) => {
+const MovieList = ({ movies, searchQuery, onRowClick }) => {
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -62,11 +62,11 @@ const MovieList = ({ books, searchQuery, onRowClick, onDelete }) => {
           </thead>
 
           <tbody>
-            {books.length ? (
-              books.map((book, idx) => (
+            {movies.length ? (
+              movies.map((movie, idx) => (
                 <tr
-                  key={book._id}
-                  onClick={() => onRowClick(book._id)}
+                  key={movie._id}
+                  onClick={() => onRowClick(movie._id)}
                   className={[
                     "cursor-pointer border-t border-secondary/40",
                     idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
@@ -74,42 +74,42 @@ const MovieList = ({ books, searchQuery, onRowClick, onDelete }) => {
                   ].join(" ")}
                 >
                   <td className="px-3 py-2">
-                    <HighlightText text={book.title} query={searchQuery} />
+                    <HighlightText text={movie.title} query={searchQuery} />
                   </td>
 
                   <td className="px-3 py-2">
                     <HighlightText
-                      text={book.series || ""}
+                      text={movie.series || ""}
                       query={searchQuery}
                     />
                   </td>
 
                   <td className="px-3 py-2">
-                    {book.seriesNum ? `# ${book.seriesNum}` : "N/A"}
+                    {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
                   </td>
 
                   <td className="px-3 py-2">
                     <HighlightText
-                      text={(book.author || []).join(", ")}
+                      text={(movie.director || []).join(", ")}
                       query={searchQuery}
                     />
                   </td>
 
                   <td className="px-3 py-2">
-                    {(book.genres || []).join(", ")}
+                    {(movie.genres || []).join(", ")}
                   </td>
 
-                  <td className="px-3 py-2">{book.publicationYear}</td>
-                  <td className="px-3 py-2">{book.pageCount}</td>
-                  <td className="px-3 py-2">{book.status == "currentlyReading" ? "currently reading" : book.status}</td>
-                  <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
+                  <td className="px-3 py-2">{movie.releaseYear}</td>
+                  <td className="px-3 py-2">{movie.duration}</td>
+                  <td className="px-3 py-2">{movie.status == movie.status}</td>
+                  <td className="px-3 py-2">{formatDate(movie.dateFinished)}</td>
                   <td className="px-3 py-2">
                     <button
                       type="button"
                       className="px-3 py-2 rounded-md border"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(book);
+                        onDelete(movie);
                       }}
                     >
                       Delete
