@@ -5,12 +5,13 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import BookDetails from './pages/BookDetails';
 import BookForm from './components/BookForm';
-import BookList from './components/BookList';
 import EditForm from './components/EditForm';
 import Profile from './pages/Profile';
 import ProfileForm from './components/ProfileForm';
 import LibraryPage from './pages/LibraryPage';
-
+import MovieForm from './components/MovieForm';
+import MovieDetails from './pages/MovieDetails';
+import MovieEditForm from './components/MovieEditForm';
 
 // Create a router using createBrowserRouter and set up the routes to pages and components
 const router = createBrowserRouter(
@@ -18,9 +19,17 @@ const router = createBrowserRouter(
         { path: "/", element: <LoginPage />, },
         { path: "/home", element: <HomePage />},       
         { path: "/library", element: <LibraryPage />},
+
+        //Book Routes
         { path: "/library/books/new", element: <BookForm />, },
         { path: "/library/books/:id", element: <BookDetails />, },
         { path: "/library/books/:id/edit", element: <EditForm />,},
+
+        //Movie Routes
+        { path: "/library/movies/new", element: <MovieForm />},
+        { path: "/library/movies/:id", element: <MovieDetails />,},
+        { path: "/library/movies/:id/edit", element: <MovieEditForm />},
+
         { path: "/profile", element: <Profile />,},
         { path: "/profileform", element: <ProfileForm />,},
     ], 

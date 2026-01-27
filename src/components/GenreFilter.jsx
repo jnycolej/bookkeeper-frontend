@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-//Used to display the unique genres as they are entered into the database
+//Used to display the unique genres as they are entered into the database 
 const GenreFilter = ({ handleFilter }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenres, setSelectedGenres] = useState([]);
@@ -22,7 +22,7 @@ const GenreFilter = ({ handleFilter }) => {
     const fetchGenres = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const { data } = await api.get('books/genres', {
+        const { data } = await api.get('/library/books/genres', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setGenres(Array.isArray(data) ? data : []);

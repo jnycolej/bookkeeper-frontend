@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-export function useLibraryFilters(books) {
+export function useLibraryFilters(books, movies) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);

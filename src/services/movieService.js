@@ -28,7 +28,7 @@ export const addMovie = (movieData, token) =>
 
 export const deleteMovie = (movieId, token) =>
   api
-    .delete(`library/movies/${movieId}`, {
+    .delete(`/library/movies/${movieId}`, {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then((res) => res.data);

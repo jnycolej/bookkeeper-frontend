@@ -14,6 +14,7 @@ import BookList from "../components/BookList";
 import MovieList from "../components/MovieList";
 
 import { useBooksQuery } from "@/features/library/hooks/useBooksQuery";
+import { useMoviesQuery } from "@/features/library/hooks/useMoviesQuery";
 import { useLibraryFilters } from "@/features/library/hooks/useLibraryFilters";
 
 const LibraryPage = () => {
@@ -21,7 +22,7 @@ const LibraryPage = () => {
 
   // 1) data
   const { books, counts, deleteById } = useBooksQuery();
-
+const {movies, movieCounts, movieDeleteById} = useMoviesQuery();
   // 2) view state (filters/search/sort)
   const {
     filteredBooks,
@@ -31,7 +32,7 @@ const LibraryPage = () => {
     setSelectedStatuses,
     setSortKey,
     clearFilters,
-  } = useLibraryFilters(books);
+  } = useLibraryFilters(books, movies);
 
   const totalUnread = (counts.want || 0) + (counts.owned || 0);
   const totalAll =
@@ -144,7 +145,7 @@ const LibraryPage = () => {
               <Card>
                 <CardContent className="grid gap-6">
                   <MovieList 
-                    movies={[]}
+                    movies={movies}
                     searchQuery={searchQuery}
                     onRowClick={(id) => navigate(`/library/movies/${id}`)}
                   />

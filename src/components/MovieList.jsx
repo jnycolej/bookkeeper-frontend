@@ -1,4 +1,4 @@
-//Component to display the list of books
+//Component to display the list of movies
 
 import React from "react";
 import { formatDate } from "@/utils/date";
@@ -41,7 +41,7 @@ const YesNoIcon = ({ value }) => (
     {value ? "✓" : "✕"}
   </span>
 );
-const MovieList = ({ movies, searchQuery, onRowClick }) => {
+const MovieList = ({ movies =[], searchQuery = "", onRowClick, onDelete }) => {
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -50,13 +50,14 @@ const MovieList = ({ movies, searchQuery, onRowClick }) => {
             <tr>
               <th className="px-3 py-2 text-left font-semibold">Title</th>
               <th className="px-3 py-2 text-left font-semibold">Director</th>
-              <th className="px-3 py-2 text-left font-semibold">Series</th>
-              <th className="px-3 py-2 text-left font-semibold">#</th>
-              <th className="px-3 py-2 text-left font-semibold">Genres</th>
+              <th className="px-3 py-2 text-left font-semibold">Actors</th>
               <th className="px-3 py-2 text-left font-semibold">Release Year</th>
               <th className="px-3 py-2 text-left font-semibold">Duration</th>
-              <th className="px-3 py-2 text-left font-semibold">Status</th>
+              <th className="px-3 py-2 text-left font-semibold">Genres</th>
               <th className="px-3 py-2 text-left font-semibold">Studio</th>
+              <th className="px-3 py-2 text-left font-semibold">Series</th>
+              <th className="px-3 py-2 text-left font-semibold">#</th>
+              <th className="px-3 py-2 text-left font-semibold">Status</th>
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
             </tr>
           </thead>
@@ -76,7 +77,25 @@ const MovieList = ({ movies, searchQuery, onRowClick }) => {
                   <td className="px-3 py-2">
                     <HighlightText text={movie.title} query={searchQuery} />
                   </td>
+                  <td className="px-3 py-2">
+                    <HighlightText
+                      text={(movie.director || []).join(", ")}
+                      query={searchQuery}
+                    />
+                  </td>
+                  <td className="px-3 py-2">
+                    <HighlightText
+                      text={movie.actors || ""}
+                      query={searchQuery}
+                    />
+                  </td>
 
+                  <td className="px-3 py-2">{movie.releaseYear}</td>
+                  <td className="px-3 py-2">{movie.duration}min</td>
+                  <td className="px-3 py-2">
+                    {(movie.genres || []).join(", ")}
+                  </td>
+                  <td className="px-3 py-2">{movie.studio}</td>
                   <td className="px-3 py-2">
                     <HighlightText
                       text={movie.series || ""}
@@ -88,21 +107,12 @@ const MovieList = ({ movies, searchQuery, onRowClick }) => {
                     {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
                   </td>
 
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={(movie.director || []).join(", ")}
-                      query={searchQuery}
-                    />
-                  </td>
 
-                  <td className="px-3 py-2">
-                    {(movie.genres || []).join(", ")}
-                  </td>
 
-                  <td className="px-3 py-2">{movie.releaseYear}</td>
-                  <td className="px-3 py-2">{movie.duration}</td>
+
+
+
                   <td className="px-3 py-2">{movie.status == movie.status}</td>
-                  <td className="px-3 py-2">{formatDate(movie.dateFinished)}</td>
                   <td className="px-3 py-2">
                     <button
                       type="button"

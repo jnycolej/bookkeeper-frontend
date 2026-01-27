@@ -1,9 +1,9 @@
-export const BOOK_INITIAL_STATE = {
+export const MOVIE_DEFAULTS = {
   title: "",
   series: "",
   seriesNum: "",
   director: "",
-  actor: "",
+  actors: "",
   genres: "",
   releaseYear: "",
   duration: "",
@@ -12,13 +12,15 @@ export const BOOK_INITIAL_STATE = {
   rating: "",
   dateAdded: "",
   dateFinished: "",
-  };
+};
+
 
 export const REQUIRED_FIELDS = [
     "title",
-    "author",
+    "director",
+    "actors",
     "genres",
-    "publicationYear",
-    "pageCount",
+    "releaseYear",
+    "duration",
     "status",
   ];

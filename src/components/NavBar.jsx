@@ -51,17 +51,24 @@ export default function NavBar() {
             <div className="flex items-center gap-6">
               <button
                 type="button"
-                onClick={() => handleNav("/books")}
+                onClick={() => handleNav("/library")}
                 className="text-white hover:text-primary"
               >
                 Library
               </button>
               <button
                 type="button"
-                onClick={() => handleNav("/bookform")}
+                onClick={() => handleNav("/library/books/new")}
                 className="text-white hover:text-primary"
               >
                 Add Book
+              </button>
+                            <button
+                type="button"
+                onClick={() => handleNav("/library/movies/new")}
+                className="text-white hover:text-primary"
+              >
+                Add Movie
               </button>
               <button
                 type="button"
