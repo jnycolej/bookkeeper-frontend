@@ -1,60 +1,69 @@
 import { useMemo, useState } from "react";
 
-export function useLibraryFilters(books, movies) {
+export function useLibraryFilters(books = [], movies = [], videoGames = []) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [sortKey, setSortKey] = useState(null);
 
+  const q = searchQuery.trim().toLowerCase();
+
   const filteredBooks = useMemo(() => {
-    let filtered = books;
+    let filtered = [...books];
 
     if (selectedGenres.length) {
       filtered = filtered.filter((b) =>
         selectedGenres.every((g) =>
-          (b.genres || []).some(
-            (bg) => bg.toLowerCase() === g.toLowerCase()
-          )
+          (b.genres || []).some((bg) => bg.toLowerCase() === g.toLowerCase())
         )
       );
     }
 
     if (selectedStatuses.length) {
+      filtered = filtered.filter((b) => selectedStatuses.includes(b.status));
+    }
+
+    if (q) {
       filtered = filtered.filter((b) =>
-        selectedStatuses.includes(b.status)
+        [b.title, b.series, ...(b.author || [])].join(" ").toLowerCase().includes(q)
       );
     }
 
-    const q = searchQuery.trim().toLowerCase();
+    return filtered;
+  }, [books, selectedGenres, selectedStatuses, q]);
+
+  const filteredVideoGames = useMemo(() => {
+    let filtered = [...videoGames];
+
+    if (selectedGenres.length) {
+      filtered = filtered.filter((g) =>
+        selectedGenres.every((sel) =>
+          (g.genres || []).some((gg) => gg.toLowerCase() === sel.toLowerCase())
+        )
+      );
+    }
+
+    if (selectedStatuses.length) {
+      filtered = filtered.filter((g) => selectedStatuses.includes(g.status));
+    }
+
     if (q) {
-      filtered = filtered.filter((b) =>
-        [b.title, b.series, ...(b.author || [])]
+      filtered = filtered.filter((g) =>
+        [
+          g.title,
+          g.series,
+          ...(g.developer || []),
+          ...(g.publisher || []),
+          ...(g.actors || []),
+        ]
           .join(" ")
           .toLowerCase()
           .includes(q)
       );
     }
 
-    const sorted = [...filtered];
-    const sorters = {
-      "author-asc": (a, b) =>
-        (a.author?.[0] || "").localeCompare(b.author?.[0] || ""),
-      "author-desc": (a, b) =>
-        (b.author?.[0] || "").localeCompare(a.author?.[0] || ""),
-      "title-asc": (a, b) => (a.title || "").localeCompare(b.title || ""),
-      "title-desc": (a, b) => (b.title || "").localeCompare(a.title || ""),
-      "year-asc": (a, b) => (a.publicationYear || 0) - (b.publicationYear || 0),
-      "year-desc": (a, b) => (b.publicationYear || 0) - (a.publicationYear || 0),
-      "page-asc": (a, b) => (a.pageCount || 0) - (b.pageCount || 0),
-      "page-desc": (a, b) => (b.pageCount || 0) - (a.pageCount || 0),
-    };
-
-    if (sortKey && sorters[sortKey]) {
-      sorted.sort(sorters[sortKey]);
-    }
-
-    return sorted;
-  }, [books, searchQuery, selectedGenres, selectedStatuses, sortKey]);
+    return filtered;
+  }, [videoGames, selectedGenres, selectedStatuses, q]);
 
   const clearFilters = () => {
     setSearchQuery("");
@@ -65,6 +74,7 @@ export function useLibraryFilters(books, movies) {
 
   return {
     filteredBooks,
+    filteredVideoGames,
     searchQuery,
     setSearchQuery,
     selectedGenres,

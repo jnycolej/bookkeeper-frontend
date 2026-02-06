@@ -5,44 +5,41 @@ import { useAuth0 } from "@auth0/auth0-react";
 import api from "@/services/api";
 import NavBar from "@/components/NavBar";
 
-import { useMovieForm } from "@/features/library/hooks/useMovieForm";
-import { MovieFields } from "@/features/library/components/MovieFields";
-import { movieToFormData } from "@/features/library/utils/movieMappers";
+import { useVideoGameForm } from "@/features/library/hooks/useVideoGameForm";
+import { VideoGameFields } from "@/features/library/components/VideoGameFields";
+import { videoGameToFormData } from "@/features/library/utils/videoGameMappers";
 
-export default function MovieEditForm() {
+export default function VideoGameEditForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
+const [saving, setSaving] = useState(false);
+const [saveError, setSaveError] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const {
-    formData,
-    setFormData,
-    setField,
-    handleChange,
-    isValid,
-    submit,
-  } = useMovieForm(async (payload, token) => {
-    await api.put(`/library/movies/${id}`, payload, {
-      headers: { Authorization: `Bearer ${token}` },
+  const { formData, setFormData, setField, handleChange, isValid, submit } =
+    useVideoGameForm(async (payload, token) => {
+      const res = await api.put(`/library/videogames/${id}`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
     });
-  });
 
-  // Load existing movie
+  // Load existing tv show
   useEffect(() => {
     (async () => {
       try {
         const token = await getAccessTokenSilently();
-        const { data } = await api.get(`/library/movies/${id}`, {
+        const { data } = await api.get(`/library/videogames/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setFormData(movieToFormData(data));
+        setFormData(videoGameToFormData(data));
       } catch (e) {
         console.error(e);
-        setError("Failed to load movie");
+        setError("Failed to load video game");
       } finally {
         setLoading(false);
       }
@@ -58,18 +55,27 @@ export default function MovieEditForm() {
 
       <div className="mx-auto w-full max-w-6xl px-4 py-6 bookKeeper-library-background">
         <h1 className="mb-6 text-center text-4xl font-semibold text-dark">
-          Edit Movie
+          Edit Video Game
         </h1>
 
         <form
           className="bk-form p-5"
           onSubmit={async (e) => {
             e.preventDefault();
-            await submit();
-            navigate(`/library/movie/${id}`);
+            setSaveError(null);
+            setSaving(true);
+            try {
+              await submit();
+              navigate(`/library/videogames/${id}`);
+            } catch (err) {
+              console.error(err);
+              setSaveError("Failed to save changes");
+            } finally {
+              setSaving(false);
+            }
           }}
         >
-          <MovieFields
+          <VideoGameFields
             formData={formData}
             setField={setField}
             handleChange={handleChange}
@@ -87,7 +93,7 @@ export default function MovieEditForm() {
             <button
               type="button"
               className="border-2 p-2 rounded bg-stone-100 text-red-600"
-              onClick={() => navigate(`/library/movies/${id}`)}
+              onClick={() => navigate(`/library/videogames/${id}`)}
             >
               Cancel
             </button>

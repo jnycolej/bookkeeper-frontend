@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export function useBooksQuery() {
     const { getAccessTokenSilently } = useAuth0();
     const [books, setBooks] = useState([]);
-    const [counts, setCounts] = useState({
+    const [bookCounts, setCounts] = useState({
         read: 0,
         currentlyReading: 0,
         want: 0,
@@ -44,5 +44,5 @@ export function useBooksQuery() {
         setBooks((prev) => prev.filter((b) => b._id !== book._id));
     };
 
-    return { books, counts, deleteById };
+    return { books, bookCounts, deleteById };
 }

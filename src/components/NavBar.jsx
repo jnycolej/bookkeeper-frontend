@@ -15,7 +15,7 @@ export default function NavBar() {
   };
 
   return (
-<header className="w-full">
+    <header className="w-full">
       <nav className="flex flex-wrap items-center bg-red-900/40 gap-2 px-4 py-3">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
           {/* Brand */}
@@ -63,13 +63,25 @@ export default function NavBar() {
               >
                 Add Book
               </button>
-                            <button
+              <button
                 type="button"
                 onClick={() => handleNav("/library/movies/new")}
-                className="text-white hover:text-primary"
+                className="text-stone-100 hover:text-primary"
               >
                 Add Movie
               </button>
+              <button
+                type="button"
+                onClick={() => handleNav("/library/tvshows/new")}
+                className="text-stone-100 hover:text-primary"
+              >
+                Add TV Show
+              </button>
+              <button
+                type="button"
+                onClick={() => handleNav("/library/videogames/new")}
+                className="text-white hover:text-primary"
+              >Add Game</button>
               <button
                 type="button"
                 onClick={() => handleNav("/profile")}
@@ -79,16 +91,15 @@ export default function NavBar() {
               </button>
             </div>
 
-              <LoginButton />
-              <button
-                className="bg-red-900 p-2 rounded"
-                onClick={() =>
-                  logout({ logoutParams: { returnTo: window.location.origin } })
-                }
-              >
-                Log Out
-              </button>
-
+            <LoginButton />
+            <button
+              className="bg-red-900 p-2 rounded"
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
+            >
+              Log Out
+            </button>
           </div>
         </div>
 

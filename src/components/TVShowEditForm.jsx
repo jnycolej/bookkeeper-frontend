@@ -5,11 +5,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import api from "@/services/api";
 import NavBar from "@/components/NavBar";
 
-import { useMovieForm } from "@/features/library/hooks/useMovieForm";
-import { MovieFields } from "@/features/library/components/MovieFields";
-import { movieToFormData } from "@/features/library/utils/movieMappers";
+import { useTVShowForm } from "@/features/library/hooks/useTVShowForm";
+import { TVShowFields } from "@/features/library/components/TVShowFields";
+import { tvShowToFormData } from "@/features/library/utils/tvShowMappers";
 
-export default function MovieEditForm() {
+export default function TVShowEditForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
@@ -24,25 +24,25 @@ export default function MovieEditForm() {
     handleChange,
     isValid,
     submit,
-  } = useMovieForm(async (payload, token) => {
-    await api.put(`/library/movies/${id}`, payload, {
+  } = useTVShowForm(async (payload, token) => {
+    await api.put(`/library/tvshows/${id}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
   });
 
-  // Load existing movie
+  // Load existing tv show
   useEffect(() => {
     (async () => {
       try {
         const token = await getAccessTokenSilently();
-        const { data } = await api.get(`/library/movies/${id}`, {
+        const { data } = await api.get(`/library/tvshows/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setFormData(movieToFormData(data));
+        setFormData(tvShowToFormData(data));
       } catch (e) {
         console.error(e);
-        setError("Failed to load movie");
+        setError("Failed to load tv show");
       } finally {
         setLoading(false);
       }
@@ -58,7 +58,7 @@ export default function MovieEditForm() {
 
       <div className="mx-auto w-full max-w-6xl px-4 py-6 bookKeeper-library-background">
         <h1 className="mb-6 text-center text-4xl font-semibold text-dark">
-          Edit Movie
+          Edit TV Show
         </h1>
 
         <form
@@ -66,10 +66,10 @@ export default function MovieEditForm() {
           onSubmit={async (e) => {
             e.preventDefault();
             await submit();
-            navigate(`/library/movie/${id}`);
+            navigate(`/library/tvshow/${id}`);
           }}
         >
-          <MovieFields
+          <TVShowFields
             formData={formData}
             setField={setField}
             handleChange={handleChange}
@@ -87,7 +87,7 @@ export default function MovieEditForm() {
             <button
               type="button"
               className="border-2 p-2 rounded bg-stone-100 text-red-600"
-              onClick={() => navigate(`/library/movies/${id}`)}
+              onClick={() => navigate(`/library/tvshows/${id}`)}
             >
               Cancel
             </button>

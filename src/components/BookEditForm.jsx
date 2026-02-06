@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import api from "../services/api";
-import NavBar from "../components/NavBar";
+import api from "@/services/api";
+import NavBar from "@/components/NavBar";
 
 import { useBookForm } from "@/features/library/hooks/useBookForm";
 import { BookFields } from "@/features/library/components/BookFields";
 import { bookToFormData } from "@/features/library/utils/bookMappers";
 
-export default function EditForm() {
+export default function BookEditForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();

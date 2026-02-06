@@ -6,14 +6,14 @@ import { formatDate } from "@/utils/date";
 
 
 
-export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
+export const MovieRow = ({ movie, idx, searchQuery, onRowClick, onDelete }) => {
   
     const navigation = useNavigate();
 
     return (
     <tr
-      key={book._id}
-      onClick={() => onRowClick(`${book._id}`)}
+      key={movie._id}
+      onClick={() => onRowClick(movie._id)}
       className={[
         "cursor-pointer border-t border-secondary/40",
         idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
@@ -21,46 +21,46 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
       ].join(" ")}
     >
       <td className="px-3 py-2">
-        <HighlightText text={book.title} query={searchQuery} />
+        <HighlightText text={movie.title} query={searchQuery} />
       </td>
 
       <td className="px-3 py-2">
-        <HighlightText text={book.series || ""} query={searchQuery} />
+        <HighlightText text={movie.series || ""} query={searchQuery} />
       </td>
 
       <td className="px-3 py-2">
-        {book.seriesNum ? `# ${book.seriesNum}` : "N/A"}
+        {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
       </td>
 
       <td className="px-3 py-2">
         <HighlightText
-          text={(book.author || []).join(", ")}
+          text={(movie.author || []).join(", ")}
           query={searchQuery}
         />
       </td>
 
       <td className="px-3 py-2">
-        {(book.genres ? [...book.genres].sort() : []).join(", ")}
+        {(movie.genres ? [...movie.genres].sort() : []).join(", ")}
       </td>
 
-      <td className="px-3 py-2">{book.publicationYear}</td>
-      <td className="px-3 py-2">{book.pageCount}</td>
+      <td className="px-3 py-2">{movie.publicationYear}</td>
+      <td className="px-3 py-2">{movie.pageCount}</td>
       <td className="px-3 py-2">
-        {book.status == "currentlyReading" ? "currently reading" : book.status}
+        {movie.status == "currentlyReading" ? "currently reading" : movie.status}
       </td>
-      <td className="px-3 py-2">{formatDate(book.dateFinished)}</td>
+      <td className="px-3 py-2">{formatDate(movie.dateFinished)}</td>
       <td className="px-3 py-2">
-        <YesNoIcon value={!!book.kindleUnlimited} />
+        <YesNoIcon value={!!movie.kindleUnlimited} />
       </td>
       <td className="px-3 py-2">
-        <YesNoIcon value={!!book.libby} />
+        <YesNoIcon value={!!movie.libby} />
       </td>
       <td className="px-3 py-2">
         <button
           className="px-3 py-2 rounded-md border"
           onClick={(e) => {
             e.stopPropagation();
-            navigation(`/library/books/${book._id}/edit`);
+            navigation(`/library/movies/${movie._id}/edit`);
           }}
         >
           Edit
@@ -72,7 +72,7 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
           className="px-3 py-2 rounded-md bg-red-900 text-white border"
           onClick={(e) => {
             e.stopPropagation();
-            onDelete(book);
+            onDelete(movie);
           }}
         >
           Delete

@@ -8,7 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    }
+      "@features": path.resolve(__dirname, "./src/features/library"), // or ./src/features
+    },
   },
   server: {
     port: 3000,

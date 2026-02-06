@@ -9,15 +9,15 @@ import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
-import { deleteMovie } from "../services/movieService";
+import { deleteTVShow } from "../services/tvShowService";
 
-const MovieDetails = () => {
+const TVShowDetails = () => {
   const { id } = useParams();
 
   const { getAccessTokenSilently } = useAuth0();
 
-  const [movie, setMovie] = useState(null);
-  const [movieImage, setMovieImage] = useState(null);
+  const [tvShow, settvShow] = useState(null);
+  const [tvShowImage, settvShowImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -28,14 +28,14 @@ const MovieDetails = () => {
   useEffect(() => {
     //Fetch book details from the backend API
     setLoading(true);
-    const fetchMovieDetails = async () => {
+    const fetchTVShowDetails = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const response = await api.get(`/library/movies/${id}`, {
+        const response = await api.get(`/library/tvShows/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = response.data;
-        setMovie(data);
+        settvShow(data);
         // if (!data.asin) {
         //   setBookImage(
         //     `https://covers.openlibrary.org/b/isbn/${
@@ -47,12 +47,12 @@ const MovieDetails = () => {
         // }
       } catch (err) {
         console.error(err);
-        setError("Failed to fetch movie details");
+        setError("Failed to fetch tvShow details");
       } finally {
         setLoading(false);
       }
     };
-    fetchMovieDetails();
+    fetchTVShowDetails();
   }, [id, getAccessTokenSilently]);
 
   if (loading) {
@@ -63,8 +63,8 @@ const MovieDetails = () => {
     return <div className="text-center text-danger mt-5">{error}</div>;
   }
 
-  if (!movie) {
-    return <div className="text-centeer text-danger mt-5">Movie not found</div>;
+  if (!tvShow) {
+    return <div className="text-centeer text-danger mt-5">tvShow not found</div>;
   }
 
   return (
@@ -73,51 +73,51 @@ const MovieDetails = () => {
       <div className="flex mt-10  place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
               <img
-                src={movieImage}
-                alt="Movie Cover"
+                src={tvShowImage}
+                alt="tvShow Cover"
                 
               ></img>
         </div>
         <div className="flex-intial p-2 rounded bg-red-900/60">
           <p className="text-3xl">
-            {movie.title} - <span className="font-light text-xl">{movie.series}{" "}
-            {movie.seriesNum ? `# ${movie.seriesNum}` : ""}</span>
+            {tvShow.title}
           </p>
 
           <div className="p-2">
             <div className="">
               <p className="font-bold">
-                {Array.isArray(movie.director)
-                  ? movie.director.join(" | ")
-                  : movie.director}
+                {Array.isArray(tvShow.director)
+                  ? tvShow.director.join(" | ")
+                  : tvShow.director}
               </p>
               <hr />
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(movie.genres)
-                    ? movie.genres.join(" | ")
-                    : movie.genre}
+                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(tvShow.genres)
+                    ? tvShow.genres.join(" | ")
+                    : tvShow.genre}
                 </p>
               </div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Release Year</span> : {movie.releaseYear}</p></div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Duration</span> : {movie.duration} min</p></div>
+              <div><p className="text-base/10 font-medium"><span className="text-lg">Release Date</span> : {tvShow.releaseDate}</p></div>
+              <div><p className="text-base/10 font-medium"><span className="text-lg">Seasons</span> : {tvShow.seasons}</p></div>
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {movie.status === "wantToWatch"
-                    ? "Want to Watch"
-                    : opt.charAt(0).toUpperCase() + opt.slice(1)}</p>
+                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {tvShow.status === "currentlyWatching"
+                    ? "Currently Watching"
+                    : tvShow.status.charAt(0).toUpperCase() + tvShow.status.slice(1)}</p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(movie.dateFinished)}</p>
+                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(tvShow.dateFinished)}</p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {movie.format}</p>
+                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {tvShow.format}</p>
               </div>
-  
+              <div>
+              </div>
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`library/movies/${movie._id}/edit`)}
+                  onClick={() => navigation(`library/tvShows/${tvShow._id}/edit`)}
                 >
-                  Edit Movie
+                  Edit tvShow
                 </Button>
                 <Button className="text-xl" onClick={() => navigation("/library")}>
                   Return
@@ -131,7 +131,7 @@ const MovieDetails = () => {
   );
 };
 
-// export default MovieDetails;
-export default withAuthenticationRequired(MovieDetails, {
+// export default tvShowDetails;
+export default withAuthenticationRequired(TVShowDetails, {
   onRedirecting: () => <div>Loading...</div>,
 });

@@ -99,7 +99,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
             id="isbn10"
             type="text"
             className="bg-white text-black"
-            value={formData.isbn10}
+            value={formData.isbn10 ?? ""}
             onChange={handleChange}
             placeholder="(optional)"
           />
@@ -114,7 +114,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
             id="isbn13"
             type="text"
             className="bg-white text-black"
-            value={formData.isbn13}
+            value={formData.isbn13 ?? ""}
             onChange={handleChange}
             placeholder="(optional)"
           />
@@ -129,7 +129,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
             id="asin"
             type="text"
             className="bg-white text-black"
-            value={formData.asin}
+            value={formData.asin ?? ""}
             onChange={handleChange}
             placeholder="(optional)"
           />
@@ -234,7 +234,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
         <Field orientation="horizontal" className="items-center gap-2">
           <Checkbox
             id="kindleUnlimited"
-            checked={formData.kindleUnlimited}
+            checked={!!formData.kindleUnlimited}
             onCheckedChange={(checked) => setField("kindleUnlimited", !!checked)}
           />
           <FieldLabel htmlFor="kindleUnlimited" className="text-white">
@@ -245,7 +245,7 @@ export const BookFields = ({ formData, handleChange, setField }) => {
         <Field orientation="horizontal" className="items-center gap-2">
           <Checkbox
             id="libby"
-            checked={formData.libby}
+            checked={!!formData.libby}
             onCheckedChange={(checked) => setField("libby", !!checked)}
           />
           <FieldLabel htmlFor="libby" className="text-white">

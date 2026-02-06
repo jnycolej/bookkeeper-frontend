@@ -29,7 +29,7 @@ const HomePage = () => {
         <FeatureBanner />
       </div>
       <div className="list-body">
-        <BookList books={books} onRowClick={(id) => navigate(`/books/${id}`)} />
+        <BookList books={books} onRowClick={(id) => navigate(`/library/books/${id}`)} />
       </div>
     </div>
   );

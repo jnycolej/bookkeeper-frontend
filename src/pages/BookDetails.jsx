@@ -31,7 +31,7 @@ const BookDetails = () => {
     const fetchBookDetails = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const response = await api.get(`/books/${id}`, {
+        const response = await api.get(`library/books/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = response.data;
@@ -103,7 +103,7 @@ const BookDetails = () => {
               <div>
                 <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {book.status === "currentlyReading"
                     ? "Currently Reading"
-                    : opt.charAt(0).toUpperCase() + opt.slice(1)}</p>
+                    : book.status.charAt(0).toUpperCase() + book.status.slice(1)}</p>
               </div>
               <div>
                 <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(book.dateFinished)}</p>

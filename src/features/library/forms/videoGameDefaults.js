@@ -1,0 +1,35 @@
+export const VIDEOGAME_DEFAULTS = {
+  title: "",
+  series: "",
+  seriesNum: "",
+  developer: "",
+  publisher: "",
+  designer: "",
+  programmers: "",
+  artist: "",
+  writers: "",
+  composer: "",
+  actors: "",
+  engine: "",
+  platforms: "",
+  genres: "",
+  country: "",
+  mode: "",
+  releaseYear: "",
+  duration: "",
+  format: "",
+  status: "",
+  rating: "",
+  dateAdded: "",
+  dateStarted: "",
+  dateFinished: "",
+};
+
+
+export const REQUIRED_FIELDS = [
+    "title",
+    "genres",
+    "releaseYear",
+    "platforms",
+    "status",
+  ];

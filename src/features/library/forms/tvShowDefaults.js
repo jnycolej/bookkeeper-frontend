@@ -1,0 +1,37 @@
+export const TVSHOW_DEFAULTS = {
+title: "",
+creator: "",
+showRunner: "",
+writers: "",
+actors: "",
+genres: "",
+musicBy: "",
+execProducers: "",
+producers: "",
+cinematography: "",
+cameraSetup: "",
+avgRuntime: "",
+prodcutionCompanies: "",
+language: "",
+country: "",
+stillRunning: "",
+startDate: "",
+endDate: "",
+seasons: "",
+episodes: "",
+network: "",
+basedOn: "",
+status: "",
+dateAdded: "",
+dateFinished: "",
+dateStarted: "",
+};
+
+
+export const REQUIRED_FIELDS = [
+    "title",
+    "creator",
+    "actors",
+    "genres",
+    "status",
+  ];
