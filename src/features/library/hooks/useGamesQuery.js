@@ -6,7 +6,7 @@ export function useGamesQuery() {
     const { getAccessTokenSilently } = useAuth0();
     const [videoGames, setVideoGames] = useState([]);
     const [videoGameCounts, setVideoGameCounts] = useState({
-        played: 0,
+        completed: 0,
         wantToPlay: 0,
         playing: 0,
     });
@@ -24,7 +24,7 @@ export function useGamesQuery() {
             const token = await getAccessTokenSilently();
             const data = await getVideoGameCounts(token);
             setVideoGameCounts({
-                played: data.played || 0,
+                completed: data.completed || 0,
                 want: data.wantToPlay || 0,
                 playing: data.playing || 0,
             });

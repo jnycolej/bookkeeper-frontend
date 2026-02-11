@@ -115,9 +115,9 @@ const VideoGameDetails = () => {
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`library/videogames/${videoGame._id}/edit`)}
+                  onClick={() => navigation(`/library/videogames/${videoGame._id}/edit`)}
                 >
-                  Edit Movie
+                  Edit Video Game
                 </Button>
                 <Button className="text-xl" onClick={() => navigation("/library")}>
                   Return

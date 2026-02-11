@@ -115,7 +115,7 @@ const TVShowDetails = () => {
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`library/tvShows/${tvShow._id}/edit`)}
+                  onClick={() => navigation(`/library/tvShows/${tvShow._id}/edit`)}
                 >
                   Edit tvShow
                 </Button>

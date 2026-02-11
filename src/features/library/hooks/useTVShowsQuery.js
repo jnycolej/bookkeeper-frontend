@@ -8,6 +8,7 @@ export function useTVShowsQuery() {
     const [tvShowCounts, setTVShowCounts] = useState({
         watched: 0,
         wantToWatch: 0,
+        watching: 0,
         owned: 0,
     });
 
@@ -27,6 +28,7 @@ export function useTVShowsQuery() {
                 watched: data.watched || 0,
                 wantToWatch: data.wantToWatch || 0,
                 watching: data.watching || 0,
+                owned: data.owned || 0,
             });
         })();
     }, [getAccessTokenSilently]);

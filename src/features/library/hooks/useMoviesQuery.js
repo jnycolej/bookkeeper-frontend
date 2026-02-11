@@ -8,6 +8,7 @@ export function useMoviesQuery() {
     const [movieCounts, setMovieCounts] = useState({
         watched: 0,
         wantToWatch: 0,
+        watching: 0,
         owned: 0,
     });
 
@@ -25,8 +26,9 @@ export function useMoviesQuery() {
             const data = await getMovieCounts(token);
             setMovieCounts({
                 watched: data.watched || 0,
-                want: data.want || 0,
+                wantToWatch: data.wantToWatch || 0,
                 owned: data.owned || 0,
+                watching: data.watching || 0,
             });
         })();
     }, [getAccessTokenSilently]);
