@@ -80,7 +80,7 @@ const TVShowList = ({
               <th className="px-3 py-2 text-left font-semibold">Seasons</th>
               <th className="px-3 py-2 text-left font-semibold">Genres</th>
               <th className="px-3 py-2 text-left font-semibold">
-                Network/Studio
+                Network
               </th>
               <th className="px-3 py-2 text-left font-semibold">Status</th>
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
