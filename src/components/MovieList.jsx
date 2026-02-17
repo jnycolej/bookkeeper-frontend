@@ -1,6 +1,17 @@
 //Component to display the list of movies
 
 import React from "react";
+import { usePagination } from "@/features/library/hooks/usePagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { MovieRow } from "@/features/library/components/MovieRow";
 import { formatDate } from "@/utils/date";
 
 function escapeRegExp(str) {
@@ -41,7 +52,11 @@ const YesNoIcon = ({ value }) => (
     {value ? "✓" : "✕"}
   </span>
 );
-const MovieList = ({ movies =[], searchQuery = "", onRowClick, onDelete }) => {
+const MovieList = ({ movies, searchQuery, onRowClick, onDelete , pageSize = 10,}) => {
+  const safeMovies = Array.isArray(movies) ? movies : [];
+
+  const { page, totalPages, pagedItems, pageItems, goTo, startItem, endItem} = usePagination(safeMovies, pageSize);
+
   return (
     <div className="rounded-lg bg-secondary p-2">
       <div className="overflow-x-auto rounded-md bg-light">
@@ -51,7 +66,9 @@ const MovieList = ({ movies =[], searchQuery = "", onRowClick, onDelete }) => {
               <th className="px-3 py-2 text-left font-semibold">Title</th>
               <th className="px-3 py-2 text-left font-semibold">Director</th>
               <th className="px-3 py-2 text-left font-semibold">Actors</th>
-              <th className="px-3 py-2 text-left font-semibold">Release Year</th>
+              <th className="px-3 py-2 text-left font-semibold">
+                Release Year
+              </th>
               <th className="px-3 py-2 text-left font-semibold">Duration</th>
               <th className="px-3 py-2 text-left font-semibold">Genres</th>
               <th className="px-3 py-2 text-left font-semibold">Studio</th>
@@ -63,73 +80,20 @@ const MovieList = ({ movies =[], searchQuery = "", onRowClick, onDelete }) => {
           </thead>
 
           <tbody>
-            {movies.length ? (
-              movies.map((movie, idx) => (
-                <tr
+            {safeMovies.length ? (
+              pagedItems.map((movie, idx) => (
+                <MovieRow
                   key={movie._id}
-                  onClick={() => onRowClick(movie._id)}
-                  className={[
-                    "cursor-pointer border-t border-secondary/40",
-                    idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
-                    "hover:bg-body",
-                  ].join(" ")}
-                >
-                  <td className="px-3 py-2">
-                    <HighlightText text={movie.title} query={searchQuery} />
-                  </td>
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={(movie.director || []).join(", ")}
-                      query={searchQuery}
-                    />
-                  </td>
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={movie.actors || ""}
-                      query={searchQuery}
-                    />
-                  </td>
-
-                  <td className="px-3 py-2">{movie.releaseYear}</td>
-                  <td className="px-3 py-2">{movie.duration}min</td>
-                  <td className="px-3 py-2">
-                    {(movie.genres || []).join(", ")}
-                  </td>
-                  <td className="px-3 py-2">{movie.studio}</td>
-                  <td className="px-3 py-2">
-                    <HighlightText
-                      text={movie.series || ""}
-                      query={searchQuery}
-                    />
-                  </td>
-
-                  <td className="px-3 py-2">
-                    {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
-                  </td>
-
-
-
-
-
-
-                  <td className="px-3 py-2">{movie.status == movie.status}</td>
-                  <td className="px-3 py-2">
-                    <button
-                      type="button"
-                      className="px-3 py-2 rounded-md border"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDelete(movie);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                  movie={movie}
+                  idx={idx}
+                  searchQuery={searchQuery}
+                  onRowClick={onRowClick}
+                  onDelete={onDelete}
+                />
               ))
             ) : (
               <tr>
-                <td colSpan={10} className="px-3 py-6 text-center text-text/70">
+                <td colSpan={13} className="px-3 py-6 text-center text-text/70">
                   No movies match the search criteria.
                 </td>
               </tr>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 import axios from "axios";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
@@ -10,6 +10,9 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteMovie } from "../services/movieService";
+
+const POSTER_SIZE = "w500";
+const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -36,15 +39,32 @@ const MovieDetails = () => {
         });
         const data = response.data;
         setMovie(data);
-        // if (!data.asin) {
-        //   setBookImage(
-        //     `https://covers.openlibrary.org/b/isbn/${
-        //       data.isbn13 || data.isbn10
-        //     }-M.jpg`,
-        //   );
-        // } else {
-        //   setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg`);
-        // }
+        // ✅ TMDB poster
+        try {
+          let posterPath = null;
+
+          if (data.tmdbId) {
+            const tmdbRes = await api.get(`/tmdb/movie/${data.tmdbId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            posterPath = tmdbRes.data?.poster_path;
+          } else {
+            const searchRes = await api.get(
+              `/tmdb/search/movie?q=${encodeURIComponent(data.title)}`,
+              { headers: { Authorization: `Bearer ${token}` } },
+            );
+
+            const first = searchRes.data?.results?.[0];
+            posterPath = first?.poster_path || null;
+          }
+
+          setMovieImage(
+            posterPath ? `${TMDB_IMG_BASE}/${POSTER_SIZE}${posterPath}` : null,
+          );
+        } catch (e) {
+          console.error("TMDB poster fetch failed", e);
+          setMovieImage(null);
+        }
       } catch (err) {
         console.error(err);
         setError("Failed to fetch movie details");
@@ -72,16 +92,24 @@ const MovieDetails = () => {
       <NavBar />
       <div className="flex mt-10  place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
-              <img
-                src={movieImage}
-                alt="Movie Cover"
-                
-              ></img>
+          {movieImage ? (
+            <img
+              src={movieImage}
+              alt={`${movie.title} poster`}
+              className="w-[260px] rounded"
+            />
+          ) : (
+            <div className="w-[260px] h-[390px] grid place-items-center rounded bg-stone-900/40">
+              No poster
+            </div>
+          )}
         </div>
         <div className="flex-intial p-2 rounded bg-red-900/60">
           <p className="text-3xl">
-            {movie.title} - <span className="font-light text-xl">{movie.series}{" "}
-            {movie.seriesNum ? `# ${movie.seriesNum}` : ""}</span>
+            {movie.title} -{" "}
+            <span className="font-light text-xl">
+              {movie.series} {movie.seriesNum ? `# ${movie.seriesNum}` : ""}
+            </span>
           </p>
 
           <div className="p-2">
@@ -93,33 +121,57 @@ const MovieDetails = () => {
               </p>
               <hr />
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(movie.genres)
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Genres</span> :{" "}
+                  {Array.isArray(movie.genres)
                     ? movie.genres.join(" | ")
                     : movie.genre}
                 </p>
               </div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Release Year</span> : {movie.releaseYear}</p></div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Duration</span> : {movie.duration} min</p></div>
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {movie.status === "wantToWatch"
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Release Year</span> :{" "}
+                  {movie.releaseYear}
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Duration</span> : {movie.duration}{" "}
+                  min
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Status</span> :{" "}
+                  {movie.status === "wantToWatch"
                     ? "Want to Watch"
-                    : opt.charAt(0).toUpperCase() + opt.slice(1)}</p>
+                    : movie.status.charAt(0).toUpperCase() +
+                      movie.status.slice(1)}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(movie.dateFinished)}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Date Finished</span> :{" "}
+                  {formatDate(movie.dateFinished)}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {movie.format}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Format</span> : {movie.format}
+                </p>
               </div>
-  
+
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`library/movies/${movie._id}/edit`)}
+                  onClick={() => navigation(`/library/movies/${movie._id}/edit`)}
                 >
                   Edit Movie
                 </Button>
-                <Button className="text-xl" onClick={() => navigation("/library")}>
+                <Button
+                  className="text-xl"
+                  onClick={() => navigation("/library")}
+                >
                   Return
                 </Button>
               </div>

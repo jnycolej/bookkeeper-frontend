@@ -73,7 +73,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
 
       {/* Director(s) */}
-      <div className="md:col-span-2">
+      <div className="">
         <label htmlFor="director" className="text-white">
           Director(s)
         </label>
@@ -87,6 +87,81 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
           required
         />
       </div>
+
+      {/* Screenwriter(s) */}
+      <div className="">
+        <label htmlFor="screenwriter" className="text-white">
+          Screenwriter(s)
+        </label>
+        <Input
+          id="screenwriter"
+          type="text"
+          className="bg-white text-black"
+          value={formData.screenwriter}
+          onChange={handleChange}
+          placeholder="Name1; Name2; ..."
+        />
+      </div>
+
+      {/* Story By */}
+      <div className="">
+        <label htmlFor="storyBy" className="text-white">
+          Story By
+        </label>
+        <Input
+          id="storyBy"
+          type="text"
+          className="bg-white text-black"
+          value={formData.storyBy}
+          onChange={handleChange}
+          placeholder="story by; ..."
+        />
+      </div>
+
+      {/* Producer(s) */}
+            <div className="">
+        <label htmlFor="producers" className="text-white">
+          Producer(s)
+        </label>
+        <Input
+          id="producers"
+          type="text"
+          className="bg-white text-black"
+          value={formData.producers}
+          onChange={handleChange}
+          placeholder="Name1; Name2; ..."
+          required
+        />
+      </div>
+
+      {/* Cinematography */}
+      <div className="">
+        <label htmlFor="cinematography" className="text-white">
+           Cinematography
+        </label>
+        <Input
+          id="cinematography"
+          type="text"
+          className="bg-white text-black"
+          value={formData.cinematography}
+          onChange={handleChange}
+          placeholder="cinematographer ..."
+        />
+      </div>
+
+<div className="">
+  <label htmlFor="country" className="text-white">
+    Country
+  </label>
+  <Input
+    id="country"
+    type="text"
+    className="bg-white text-black"
+    value={formData.country}
+    onChange={handleChange}
+    placeholder="country 1; country 2; ..."
+  />
+</div>
       {/* Actor(s) */}
       <div className="md:col-span-2">
         <label htmlFor="actors" className="text-white">
@@ -102,6 +177,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
           required
         />
       </div>
+
       {/* Genres */}
       <div className="md:col-span-2">
         <label htmlFor="genres" className="text-white">
@@ -115,6 +191,49 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
           onChange={handleChange}
           placeholder="Genre1; Genre2; ..."
           required
+        />
+      </div>
+      {/* Music By */}
+      <div>
+        <label htmlFor="musicBy" className="text-white">
+          Music By
+        </label>
+        <Input
+          id="musicBy"
+          type="text"
+          className="bg-white text-black"
+          value={formData.musicBy}
+          onChange={handleChange}
+          placeholder="Music By ..."
+        />
+      </div>
+      {/* Production Company */}
+      <div>
+        <label htmlFor="productionCompany" className="text-white">
+          Production Company
+        </label>
+        <Input
+          id="productionCompany"
+          type="text"
+          className="bg-white text-black"
+          value={formData.productionCompany}
+          onChange={handleChange}
+          placeholder="Production Company 1; Production Company 2 ..."
+        />
+      </div>
+
+      {/* Studio */}
+      <div>
+        <label htmlFor="studio" className="text-white">
+          Studio
+        </label>
+        <Input
+          id="studio"
+          type="text"
+          className="bg-white text-black"
+          value={formData.studio}
+          onChange={handleChange}
+          placeholder="Studio ..."
         />
       </div>
 
@@ -161,8 +280,16 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
             onValueChange={(val) => setField("format", val)}
           >
             {["physical", "streaming", "owned"].map((opt) => (
-              <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem className="bg-stone-100" value={opt} id={`format-${opt}`} />
+              <Field
+                key={opt}
+                orientation="horizontal"
+                className="items-center gap-2"
+              >
+                <RadioGroupItem
+                  className="bg-stone-100"
+                  value={opt}
+                  id={`format-${opt}`}
+                />
                 <FieldLabel htmlFor={`format-${opt}`} className="text-white">
                   {opt.charAt(0).toUpperCase() + opt.slice(1)}
                 </FieldLabel>
@@ -182,8 +309,16 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
             onValueChange={(val) => setField("status", val)}
           >
             {["watched", "wantToWatch"].map((opt) => (
-              <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem className="bg-stone-100" value={opt} id={`status-${opt}`} />
+              <Field
+                key={opt}
+                orientation="horizontal"
+                className="items-center gap-2"
+              >
+                <RadioGroupItem
+                  className="bg-stone-100"
+                  value={opt}
+                  id={`status-${opt}`}
+                />
                 <FieldLabel htmlFor={`status-${opt}`} className="text-white">
                   {opt === "wantToWatch"
                     ? "Want to Watch"

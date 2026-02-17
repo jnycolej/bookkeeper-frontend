@@ -1,16 +1,25 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { HighlightText } from "@/shared/components/HighlightText";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { YesNoIcon } from "@/shared/components/YesNoIcon";
 import { formatDate } from "@/utils/date";
 
-
-
 export const MovieRow = ({ movie, idx, searchQuery, onRowClick, onDelete }) => {
-  
-    const navigation = useNavigate();
+  const navigation = useNavigate();
 
-    return (
+  const toDisplayList = (val) => {
+    if (!val) return "";
+    if (Array.isArray(val)) return val.join(" | ");
+    // if you store "Name1; Name2" in DB:
+    return String(val)
+      .split(";")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .join(", ");
+  };
+  return (
     <tr
       key={movie._id}
       onClick={() => onRowClick(movie._id)}
@@ -23,53 +32,42 @@ export const MovieRow = ({ movie, idx, searchQuery, onRowClick, onDelete }) => {
       <td className="px-3 py-2">
         <HighlightText text={movie.title} query={searchQuery} />
       </td>
-
       <td className="px-3 py-2">
-        <HighlightText text={movie.series || ""} query={searchQuery} />
+        <HighlightText
+          text={(movie.director || []).join(" | ")}
+          query={searchQuery}
+        />
+      </td>
+      <td className="px-3 py-2">
+        <ScrollArea className="h-20">
+        <HighlightText
+          text={toDisplayList(movie.actors || " ")}
+          query={searchQuery}
+        />          
+        </ScrollArea>
+
+      </td>
+
+      <td className="px-3 py-2">{movie.releaseYear}</td>
+      <td className="px-3 py-2">{movie.duration}min</td>
+      <td className="px-3 py-2">{(movie.genres || []).join(" | ")}</td>
+      <td className="px-3 py-2">{movie.studio}</td>
+      <td className="px-3 py-2">
+        <HighlightText
+          text={toDisplayList(movie.series || "")}
+          query={searchQuery}
+        />
       </td>
 
       <td className="px-3 py-2">
         {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
       </td>
 
-      <td className="px-3 py-2">
-        <HighlightText
-          text={(movie.author || []).join(", ")}
-          query={searchQuery}
-        />
-      </td>
-
-      <td className="px-3 py-2">
-        {(movie.genres ? [...movie.genres].sort() : []).join(", ")}
-      </td>
-
-      <td className="px-3 py-2">{movie.publicationYear}</td>
-      <td className="px-3 py-2">{movie.pageCount}</td>
-      <td className="px-3 py-2">
-        {movie.status == "currentlyReading" ? "currently reading" : movie.status}
-      </td>
-      <td className="px-3 py-2">{formatDate(movie.dateFinished)}</td>
-      <td className="px-3 py-2">
-        <YesNoIcon value={!!movie.kindleUnlimited} />
-      </td>
-      <td className="px-3 py-2">
-        <YesNoIcon value={!!movie.libby} />
-      </td>
-      <td className="px-3 py-2">
-        <button
-          className="px-3 py-2 rounded-md border"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigation(`/library/movies/${movie._id}/edit`);
-          }}
-        >
-          Edit
-        </button>
-      </td>
+      <td className="px-3 py-2">{movie.status == movie.status}</td>
       <td className="px-3 py-2">
         <button
           type="button"
-          className="px-3 py-2 rounded-md bg-red-900 text-white border"
+          className="px-3 py-2 rounded-md border"
           onClick={(e) => {
             e.stopPropagation();
             onDelete(movie);
