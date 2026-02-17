@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 import axios from "axios";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
@@ -55,6 +55,29 @@ const VideoGameDetails = () => {
     fetchVideoGameDetails();
   }, [id, getAccessTokenSilently]);
 
+  useEffect(() => {
+    if (!videoGame?.title) return;
+
+    const fetchCover = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+
+        const res = await api.get(
+          `/igdb/games/search?q=${encodeURIComponent(videoGame.title)}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+
+        const first = res.data?.results?.[0];
+        setVideoGameImage(first?.coverUrl || null);
+      } catch (err) {
+        console.error(err);
+        setVideoGameImage(null);
+      }
+    };
+
+    fetchCover();
+  }, [videoGame?.title, getAccessTokenSilently]);
+
   if (loading) {
     return <div className="text-center text-danger mt-5">Loading...</div>;
   }
@@ -64,7 +87,9 @@ const VideoGameDetails = () => {
   }
 
   if (!videoGame) {
-    return <div className="text-centeer text-danger mt-5">Video game not found</div>;
+    return (
+      <div className="text-centeer text-danger mt-5">Video game not found</div>
+    );
   }
 
   return (
@@ -72,16 +97,15 @@ const VideoGameDetails = () => {
       <NavBar />
       <div className="flex mt-10  place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
-              <img
-                src={videoGameImage}
-                alt="Video Game Cover"
-                
-              ></img>
+          <img src={videoGameImage} alt="Video Game Cover"></img>
         </div>
         <div className="flex-intial p-2 rounded bg-red-900/60">
           <p className="text-3xl">
-            {videoGame.title} - <span className="font-light text-xl">{videoGame.series}{" "}
-            {videoGame.seriesNum ? `# ${videoGame.seriesNum}` : ""}</span>
+            {videoGame.title} -{" "}
+            <span className="font-light text-xl">
+              {videoGame.series}{" "}
+              {videoGame.seriesNum ? `# ${videoGame.seriesNum}` : ""}
+            </span>
           </p>
 
           <div className="p-2">
@@ -93,33 +117,60 @@ const VideoGameDetails = () => {
               </p>
               <hr />
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(videoGame.genres)
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Genres</span> :{" "}
+                  {Array.isArray(videoGame.genres)
                     ? videoGame.genres.join(" | ")
                     : videoGame.genre}
                 </p>
               </div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Release Year</span> : {videoGame.releaseYear}</p></div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Duration</span> : {videoGame.duration} hrs</p></div>
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {videoGame.status}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Release Year</span> :{" "}
+                  {videoGame.releaseYear}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(videoGame.dateFinished)}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Duration</span> :{" "}
+                  {videoGame.duration} hrs
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {videoGame.format}</p>
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Status</span> : {videoGame.status}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {videoGame.pageCount}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Date Finished</span> :{" "}
+                  {formatDate(videoGame.dateFinished)}
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Format</span> : {videoGame.format}
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Page Count</span> :{" "}
+                  {videoGame.pageCount}
+                </p>
               </div>
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`/library/videogames/${videoGame._id}/edit`)}
+                  onClick={() =>
+                    navigation(`/library/videogames/${videoGame._id}/edit`)
+                  }
                 >
                   Edit Video Game
                 </Button>
-                <Button className="text-xl" onClick={() => navigation("/library")}>
+                <Button
+                  className="text-xl"
+                  onClick={() => navigation("/library")}
+                >
                   Return
                 </Button>
               </div>

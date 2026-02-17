@@ -90,7 +90,7 @@ export function videoGameToFormData(videogame) {
     platforms: (videogame.platforms || []).join("; "),
 
     // schema genre -> form genres
-    genres: (videogame.genre || []).join("; "),
+    genres: (videogame.genres || []).join("; "),
 
     country: (videogame.country || []).join("; "),
     mode: (videogame.mode || []).join("; "),

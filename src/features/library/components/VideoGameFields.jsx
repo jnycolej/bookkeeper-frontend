@@ -74,7 +74,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Developer(s) */}
       <div className="">
-        <label htmlFor="director" className="text-white">
+        <label htmlFor="developer" className="text-white">
           Developer(s)
         </label>
         <Input
@@ -283,7 +283,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Duration */}
       <div>
-        <label htmlFor="pageCount" className="text-white">
+        <label htmlFor="duration" className="text-white">
           Duration (hrs)
         </label>
         <Input
