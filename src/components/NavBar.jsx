@@ -3,7 +3,21 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router";
 import LoginButton from "./LoginButton";
 import BookKeeperLogo from "../assets/BookKeeperLogo.png";
-
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 export default function NavBar() {
   const navigate = useNavigate();
   const { logout } = useAuth0();
@@ -56,6 +70,7 @@ export default function NavBar() {
               >
                 Library
               </button>
+              
               <button
                 type="button"
                 onClick={() => handleNav("/library/books/new")}
