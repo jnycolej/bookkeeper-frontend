@@ -61,7 +61,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {[...Array(10)].map((_, i) => (
+                {[...Array(16)].map((_, i) => (
                   <SelectItem key={i} value={String(i)} className="text-black">
                     {i}
                   </SelectItem>
@@ -336,7 +336,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
-            {["completed", "playing", "wantToPlay"].map((opt) => (
+            {["completed", "playing", "wantToPlay", "replaying"].map((opt) => (
               <Field
                 key={opt}
                 orientation="horizontal"
@@ -356,6 +356,21 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
             ))}
           </RadioGroup>
         </FieldSet>
+      </div>
+
+            {/* Replaying Count */}
+      <div>
+        <label htmlFor="replayCount" className="text-white">
+          Replay Count
+        </label>
+        <Input
+          id="replayCount"
+          type="number"
+          className="bg-white text-black"
+          value={formData.replayCount}
+          onChange={handleChange}
+          required
+        />
       </div>
 
       {/* Rating */}

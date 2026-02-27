@@ -9,6 +9,7 @@ export function useGamesQuery() {
         completed: 0,
         wantToPlay: 0,
         playing: 0,
+        replaying: 0,
     });
 
     useEffect(() => {
@@ -27,6 +28,7 @@ export function useGamesQuery() {
                 completed: data.completed || 0,
                 want: data.wantToPlay || 0,
                 playing: data.playing || 0,
+                replaying: data.replaying || 0,
             });
         })();
     }, [getAccessTokenSilently]);

@@ -58,6 +58,7 @@ export function formToVideoGamePayload(formData) {
 
     format: formData.format, // or keep as single select -> [value]
     status: String(formData.status ?? "").trim(),
+    replayCount: formData.replayCount,
     rating: formData.rating ? Number(formData.rating) : null,
 
     dateAdded: formData.dateAdded ? new Date(formData.dateAdded) : null,

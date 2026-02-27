@@ -10,6 +10,7 @@ export function useTVShowsQuery() {
         wantToWatch: 0,
         watching: 0,
         owned: 0,
+        rewatching: 0,
     });
 
     useEffect(() => {
@@ -29,6 +30,7 @@ export function useTVShowsQuery() {
                 wantToWatch: data.wantToWatch || 0,
                 watching: data.watching || 0,
                 owned: data.owned || 0,
+                rewatching: data.rewatching || 0,
             });
         })();
     }, [getAccessTokenSilently]);

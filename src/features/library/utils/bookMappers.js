@@ -21,6 +21,7 @@ export function formToBookPayload(formData) {
     publicationYear: Number(formData.publicationYear),
     pageCount: Number(formData.pageCount),
     status: formData.status,
+    rereadCount: formData.rereadCount || 0,
     format: formData.format || null,
     isbn10: formData.isbn10.trim() || null,
     isbn13: formData.isbn13.trim() || null,

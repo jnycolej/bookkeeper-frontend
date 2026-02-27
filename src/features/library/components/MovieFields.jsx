@@ -119,7 +119,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
 
       {/* Producer(s) */}
-            <div className="">
+      <div className="">
         <label htmlFor="producers" className="text-white">
           Producer(s)
         </label>
@@ -137,7 +137,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       {/* Cinematography */}
       <div className="">
         <label htmlFor="cinematography" className="text-white">
-           Cinematography
+          Cinematography
         </label>
         <Input
           id="cinematography"
@@ -149,19 +149,19 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
         />
       </div>
 
-<div className="">
-  <label htmlFor="country" className="text-white">
-    Country
-  </label>
-  <Input
-    id="country"
-    type="text"
-    className="bg-white text-black"
-    value={formData.country}
-    onChange={handleChange}
-    placeholder="country 1; country 2; ..."
-  />
-</div>
+      <div className="">
+        <label htmlFor="country" className="text-white">
+          Country
+        </label>
+        <Input
+          id="country"
+          type="text"
+          className="bg-white text-black"
+          value={formData.country}
+          onChange={handleChange}
+          placeholder="country 1; country 2; ..."
+        />
+      </div>
       {/* Actor(s) */}
       <div className="md:col-span-2">
         <label htmlFor="actors" className="text-white">
@@ -308,7 +308,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
-            {["watched", "wantToWatch"].map((opt) => (
+            {["watched", "wantToWatch", "rewatching"].map((opt) => (
               <Field
                 key={opt}
                 orientation="horizontal"
@@ -328,6 +328,21 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
             ))}
           </RadioGroup>
         </FieldSet>
+      </div>
+
+      {/* Rewatching Count */}
+      <div>
+        <label htmlFor="rewatchCount" className="text-white">
+          Rewatch Count
+        </label>
+        <Input
+          id="rewatchCount"
+          type="number"
+          className="bg-white text-black"
+          value={formData.rewatchCount}
+          onChange={handleChange}
+          required
+        />
       </div>
 
       {/* Rating */}

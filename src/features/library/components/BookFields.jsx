@@ -195,8 +195,16 @@ export const BookFields = ({ formData, handleChange, setField }) => {
             onValueChange={(val) => setField("format", val)}
           >
             {["physical", "ebook", "library"].map((opt) => (
-              <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem className="bg-stone-100" value={opt} id={`format-${opt}`} />
+              <Field
+                key={opt}
+                orientation="horizontal"
+                className="items-center gap-2"
+              >
+                <RadioGroupItem
+                  className="bg-stone-100"
+                  value={opt}
+                  id={`format-${opt}`}
+                />
                 <FieldLabel htmlFor={`format-${opt}`} className="text-white">
                   {opt.charAt(0).toUpperCase() + opt.slice(1)}
                 </FieldLabel>
@@ -215,44 +223,75 @@ export const BookFields = ({ formData, handleChange, setField }) => {
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
-            {["read", "want", "currentlyReading", "owned"].map((opt) => (
-              <Field key={opt} orientation="horizontal" className="items-center gap-2">
-                <RadioGroupItem className="bg-stone-100" value={opt} id={`status-${opt}`} />
-                <FieldLabel htmlFor={`status-${opt}`} className="text-white">
-                  {opt === "currentlyReading"
-                    ? "Currently Reading"
-                    : opt.charAt(0).toUpperCase() + opt.slice(1)}
-                </FieldLabel>
-              </Field>
-            ))}
+            {["read", "want", "currentlyReading", "rereading", "owned"].map(
+              (opt) => (
+                <Field
+                  key={opt}
+                  orientation="horizontal"
+                  className="items-center gap-2"
+                >
+                  <RadioGroupItem
+                    className="bg-stone-100"
+                    value={opt}
+                    id={`status-${opt}`}
+                  />
+                  <FieldLabel htmlFor={`status-${opt}`} className="text-white">
+                    {opt === "currentlyReading"
+                      ? "Currently Reading"
+                      : opt.charAt(0).toUpperCase() + opt.slice(1)}
+                  </FieldLabel>
+                </Field>
+              ),
+            )}
           </RadioGroup>
         </FieldSet>
       </div>
+      {/* Reread Count */}
+      <div>
+        <label htmlFor="rereadCount" className="text-white">
+          Reread Count
+        </label>
+        <Input
+          id="rereadCount"
+          type="number"
+          className="bg-white text-black"
+          value={formData.rereadCount}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
       {/* KU + Libby */}
-      <FieldGroup className="grid grid-cols-2 gap-6 text-white md:col-span-2">
-        <Field orientation="horizontal" className="items-center gap-2">
-          <Checkbox
-            id="kindleUnlimited"
-            checked={!!formData.kindleUnlimited}
-            onCheckedChange={(checked) => setField("kindleUnlimited", !!checked)}
-          />
-          <FieldLabel htmlFor="kindleUnlimited" className="text-white">
-            Kindle Unlimited
-          </FieldLabel>
-        </Field>
+      <div>
+        <h3 className="text-xl p-2">Accessibility</h3>
+        <FieldGroup className="grid grid-cols-2 gap-6 text-white md:col-span-2">
+          <Field orientation="horizontal" className="items-center gap-2">
+            <Checkbox
+              id="kindleUnlimited"
+              className="bg-stone-100"
+              checked={!!formData.kindleUnlimited}
+              onCheckedChange={(checked) =>
+                setField("kindleUnlimited", !!checked)
+              }
+            />
+            <FieldLabel htmlFor="kindleUnlimited" className="text-white">
+              Kindle Unlimited
+            </FieldLabel>
+          </Field>
 
-        <Field orientation="horizontal" className="items-center gap-2">
-          <Checkbox
-            id="libby"
-            checked={!!formData.libby}
-            onCheckedChange={(checked) => setField("libby", !!checked)}
-          />
-          <FieldLabel htmlFor="libby" className="text-white">
-            Libby
-          </FieldLabel>
-        </Field>
-      </FieldGroup>
+          <Field orientation="horizontal" className="items-center gap-2">
+            <Checkbox
+              id="libby"
+              className="bg-stone-100"
+              checked={!!formData.libby}
+              onCheckedChange={(checked) => setField("libby", !!checked)}
+            />
+            <FieldLabel htmlFor="libby" className="text-white">
+              Libby
+            </FieldLabel>
+          </Field>
+        </FieldGroup>
+      </div>
 
       {/* Rating */}
       <div>

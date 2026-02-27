@@ -11,6 +11,7 @@ export function useBooksQuery() {
         currentlyReading: 0,
         want: 0,
         owned: 0,
+        rereading: 0,
     });
 
     useEffect(() => {
@@ -30,6 +31,7 @@ export function useBooksQuery() {
                 currentlyReading: data.currentlyReading || 0,
                 want: data.want || 0,
                 owned: data.owned || 0,
+                rereading: data.rereading || 0,
             });
         })();
     }, [getAccessTokenSilently]);

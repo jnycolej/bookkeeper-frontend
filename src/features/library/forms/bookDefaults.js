@@ -9,6 +9,7 @@ export const BOOK_INITIAL_STATE = {
   duration: "",
   format: "",
   status: "",
+  rereadCount: "",
   rating: "",
   dateAdded: "",
   dateFinished: "",

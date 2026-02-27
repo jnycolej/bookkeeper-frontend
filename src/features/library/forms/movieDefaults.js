@@ -9,6 +9,7 @@ export const MOVIE_DEFAULTS = {
   duration: "",
   releaseYear: "",
   status: "",
+  rewatchCount: "",
   format: "",
   series: "",
   seriesNum: "",

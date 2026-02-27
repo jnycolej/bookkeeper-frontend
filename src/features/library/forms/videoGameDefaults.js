@@ -19,6 +19,7 @@ export const VIDEOGAME_DEFAULTS = {
   duration: "",
   format: "",
   status: "",
+  replayCount: "",
   rating: "",
   dateAdded: "",
   dateStarted: "",

@@ -39,7 +39,7 @@ export function formToTVShowPayload(formData) {
     status: formData.status,
     // dateAdded: if blank, let schema default Date.now handle it
     ...(formData.dateAdded ? { dateAdded: new Date(formData.dateAdded) } : {}),
-
+    rewatchCount: formData.rewatchCount,
     ...(formData.status === "watched" && formData.dateFinished
       ? { dateFinished: new Date(formData.dateFinished) }
       : { dateFinished: null }),

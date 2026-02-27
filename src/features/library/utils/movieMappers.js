@@ -27,6 +27,7 @@ return {
         ? null
         : Number(formData.releaseYear),   
     status: formData.status,
+    rewatchCount: formData.rewatchCount || 0,
     format: formData.format || null,           
     series: String(formData.series ?? "").trim() || null,
     seriesNum:

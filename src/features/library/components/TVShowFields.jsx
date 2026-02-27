@@ -348,7 +348,7 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
-            {["watched", "watching", "wantToWatch"].map((opt) => (
+            {["watched", "watching", "wantToWatch", "rewatching"].map((opt) => (
               <Field
                 key={opt}
                 orientation="horizontal"
@@ -368,6 +368,21 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
             ))}
           </RadioGroup>
         </FieldSet>
+      </div>
+
+            {/* Rewatch Count */}
+      <div>
+        <label htmlFor="rereadCount" className="text-white">
+          Rewatch Count
+        </label>
+        <Input
+          id="rewatchCount"
+          type="number"
+          className="bg-white text-black"
+          value={formData.rewatchCount}
+          onChange={handleChange}
+          required
+        />
       </div>
       {/* Date Added */}
       <div>
