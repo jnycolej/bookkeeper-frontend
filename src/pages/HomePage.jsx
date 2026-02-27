@@ -28,9 +28,9 @@ const HomePage = () => {
       <div>
         <FeatureBanner />
       </div>
-      <div className="list-body">
+      {/* <div className="list-body">
         <BookList books={books} onRowClick={(id) => navigate(`/library/books/${id}`)} />
-      </div>
+      </div> */}
     </div>
   );
 };
