@@ -129,6 +129,14 @@ const LibraryPage = () => {
                           {bookCounts.currentlyReading || 0}
                         </div>
                       </div>
+                      <div className="rounded-md bg-light/10 px-3 py-2">
+                        <div className="text-xs opacity-80">
+                          Currently Rereading
+                        </div>
+                        <div className="text-lg font-semibold">
+                          {bookCounts.rereading}
+                        </div>
+                      </div>
 
                       <div className="rounded-md bg-light/10 px-3 py-2">
                         <div className="text-xs opacity-80">Want</div>
@@ -209,7 +217,14 @@ const LibraryPage = () => {
                           {movieCounts.watching || 0}
                         </div>
                       </div>
-
+                      <div className="rounded-md bg-light/10 px-3 py-2">
+                        <div className="text-xs opacity-80">
+                          Currently Rewatching
+                        </div>
+                        <div className="text-lg font-semibold">
+                          {movieCounts.rewatching}
+                        </div>
+                      </div>
                       <div className="rounded-md bg-light/10 px-3 py-2">
                         <div className="text-xs opacity-80">Want to Watch</div>
                         <div className="text-lg font-semibold">
@@ -274,7 +289,14 @@ const LibraryPage = () => {
                           {tvShowCounts.watching || 0}
                         </div>
                       </div>
-
+                      <div className="rounded-md bg-light/10 px-3 py-2">
+                        <div className="text-xs opacity-80">
+                          Currently Rewatching
+                        </div>
+                        <div className="text-lg font-semibold">
+                          {tvShowCounts.rewatching}
+                        </div>
+                      </div>
                       <div className="rounded-md bg-light/10 px-3 py-2">
                         <div className="text-xs opacity-80">Want to Watch</div>
                         <div className="text-lg font-semibold">
@@ -338,6 +360,15 @@ const LibraryPage = () => {
                         </div>
                         <div className="text-lg font-semibold">
                           {videoGameCounts.playing || 0}
+                        </div>
+                      </div>
+
+                                            <div className="rounded-md bg-light/10 px-3 py-2">
+                        <div className="text-xs opacity-80">
+                          Currently Replaying
+                        </div>
+                        <div className="text-lg font-semibold">
+                          {videoGameCounts.replaying}
                         </div>
                       </div>
 
