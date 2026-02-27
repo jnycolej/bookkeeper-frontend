@@ -39,7 +39,7 @@ const MovieDetails = () => {
         });
         const data = response.data;
         setMovie(data);
-        // ✅ TMDB poster
+        //TMDB poster
         try {
           let posterPath = null;
 
@@ -168,6 +168,18 @@ const MovieDetails = () => {
                 >
                   Edit Movie
                 </Button>
+
+                <button
+                  type="button"
+                  className="outline-stone-100"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteMovie();
+                  }}
+                >
+                  Delete Movie
+                </button>
+
                 <Button
                   className="text-xl"
                   onClick={() => navigation("/library")}

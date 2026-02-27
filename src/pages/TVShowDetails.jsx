@@ -165,8 +165,20 @@ const TVShowDetails = () => {
                     navigation(`/library/tvShows/${tvShow._id}/edit`)
                   }
                 >
-                  Edit tvShow
+                  Edit Show
                 </Button>
+
+                <button
+                  type="button"
+                  className="outline-stone-100"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteTVShow();
+                  }}
+                >
+                  Delete Show
+                </button>
+
                 <Button
                   className="text-xl"
                   onClick={() => navigation("/library")}

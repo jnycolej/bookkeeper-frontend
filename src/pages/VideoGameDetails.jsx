@@ -9,7 +9,7 @@ import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
-import { deleteMovie } from "../services/movieService";
+import { deleteVideoGame } from "@/services/gameService";
 
 const VideoGameDetails = () => {
   const { id } = useParams();
@@ -36,15 +36,6 @@ const VideoGameDetails = () => {
         });
         const data = response.data;
         setVideoGame(data);
-        // if (!data.asin) {
-        //   setBookImage(
-        //     `https://covers.openlibrary.org/b/isbn/${
-        //       data.isbn13 || data.isbn10
-        //     }-M.jpg`,
-        //   );
-        // } else {
-        //   setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg`);
-        // }
       } catch (err) {
         console.error(err);
         setError("Failed to fetch video game details");
@@ -165,8 +156,19 @@ const VideoGameDetails = () => {
                     navigation(`/library/videogames/${videoGame._id}/edit`)
                   }
                 >
-                  Edit Video Game
+                  Edit Game
                 </Button>
+
+                                <button
+                                  type="button"
+                                  className="outline-stone-100"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteVideoGame();
+                                  }}
+                                >
+                                  Delete Game
+                                </button>
                 <Button
                   className="text-xl"
                   onClick={() => navigation("/library")}

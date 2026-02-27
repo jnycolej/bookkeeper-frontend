@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 import axios from "axios";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
@@ -23,7 +23,9 @@ const BookDetails = () => {
 
   const navigation = useNavigate();
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+
+  };
 
   useEffect(() => {
     //Fetch book details from the backend API
@@ -72,16 +74,14 @@ const BookDetails = () => {
       <NavBar />
       <div className="flex mt-10  place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
-              <img
-                src={bookImage}
-                alt="Book Cover"
-                
-              ></img>
+          <img src={bookImage} alt="Book Cover"></img>
         </div>
         <div className="flex-intial p-2 rounded bg-red-900/60">
           <p className="text-3xl">
-            {book.title} - <span className="font-light text-xl">{book.series}{" "}
-            {book.seriesNum ? `# ${book.seriesNum}` : ""}</span>
+            {book.title} -{" "}
+            <span className="font-light text-xl">
+              {book.series} {book.seriesNum ? `# ${book.seriesNum}` : ""}
+            </span>
           </p>
 
           <div className="p-2">
@@ -93,31 +93,61 @@ const BookDetails = () => {
               </p>
               <hr />
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Genres</span> : {Array.isArray(book.genres)
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Genres</span> :{" "}
+                  {Array.isArray(book.genres)
                     ? book.genres.join(" | ")
                     : book.genre}
                 </p>
               </div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Publication Year</span> : {book.publicationYear}</p></div>
-              <div><p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {book.pageCount}</p></div>
               <div>
-                <p className="text-base/10 font-medium capitalize"><span className="text-lg">Status</span> : {book.status === "currentlyReading"
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Publication Year</span> :{" "}
+                  {book.publicationYear}
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Page Count</span> : {book.pageCount}
+                </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium capitalize">
+                  <span className="text-lg">Status</span> :{" "}
+                  {book.status === "currentlyReading"
                     ? "Currently Reading"
-                    : book.status.charAt(0).toUpperCase() + book.status.slice(1)}</p>
+                    : book.status.charAt(0).toUpperCase() +
+                      book.status.slice(1)}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Date Finished</span> : {formatDate(book.dateFinished)}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Date Finished</span> :{" "}
+                  {formatDate(book.dateFinished)}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Format</span> : {book.format}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Format</span> : {book.format}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Page Count</span> : {book.pageCount}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Page Count</span> : {book.pageCount}
+                </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium"><span className="text-lg">Kindle Unlimited</span> : {book.kindleUnlimited ? "Yes" : "No"}</p>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Kindle Unlimited</span> :{" "}
+                  {book.kindleUnlimited ? "Yes" : "No"}
+                </p>
               </div>
-              <div className="text-base/10 font-medium"><p><span className="text-lg">Libby</span> : {book.libby ? "Yes" : "No"}</p></div>
+              <div className="text-base/10 font-medium">
+                <p>
+                  <span className="text-lg">Libby</span> :{" "}
+                  {book.libby ? "Yes" : "No"}
+                </p>
+              </div>
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
@@ -125,6 +155,16 @@ const BookDetails = () => {
                 >
                   Edit Book
                 </Button>
+                <button
+                  type="button"
+                  className="outline-stone-100"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteBook();
+                  }}
+                >
+                  Delete Book
+                </button>
                 <Button className="text-xl" onClick={() => navigation("/home")}>
                   Return
                 </Button>
