@@ -83,6 +83,8 @@ const TVShowList = ({
                 Network
               </th>
               <th className="px-3 py-2 text-left font-semibold">Status</th>
+                            <th className="px-3 py-2 text-left font-semibold">Edit</th>
+
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
             </tr>
           </thead>

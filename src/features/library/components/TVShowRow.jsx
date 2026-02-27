@@ -74,8 +74,19 @@ export const TVShowRow = ({
       <td className="px-3 py-2">{tvShow.status}</td>
       <td className="px-3 py-2">
         <button
-          type="button"
           className="px-3 py-2 rounded-md border"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigation(`/library/tvshows/${tvShow._id}/edit`);
+          }}
+        >
+          Edit
+        </button>
+      </td>
+      <td className="px-3 py-2">
+        <button
+          type="button"
+          className="px-3 py-2 rounded-md bg-red-900 text-white border"
           onClick={(e) => {
             e.stopPropagation();
             onDelete(tvShow);

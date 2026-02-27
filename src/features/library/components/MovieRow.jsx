@@ -63,11 +63,22 @@ export const MovieRow = ({ movie, idx, searchQuery, onRowClick, onDelete }) => {
         {movie.seriesNum ? `# ${movie.seriesNum}` : "N/A"}
       </td>
 
-      <td className="px-3 py-2">{movie.status == movie.status}</td>
+      <td className="px-3 py-2">{movie.status}</td>
+      <td className="px-3 py-2">
+        <button
+          className="px-3 py-2 rounded-md border"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigation(`/library/movies/${movie._id}/edit`);
+          }}
+        >
+          Edit
+        </button>
+      </td>
       <td className="px-3 py-2">
         <button
           type="button"
-          className="px-3 py-2 rounded-md border"
+          className="px-3 py-2 rounded-md bg-red-900 text-white border"
           onClick={(e) => {
             e.stopPropagation();
             onDelete(movie);

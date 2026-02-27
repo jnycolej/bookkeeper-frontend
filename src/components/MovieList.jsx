@@ -75,6 +75,7 @@ const MovieList = ({ movies, searchQuery, onRowClick, onDelete , pageSize = 10,}
               <th className="px-3 py-2 text-left font-semibold">Series</th>
               <th className="px-3 py-2 text-left font-semibold">#</th>
               <th className="px-3 py-2 text-left font-semibold">Status</th>
+              <th className="px-3 py-2 text-left font-semibold">Edit</th>
               <th className="px-3 py-2 text-left font-semibold">Delete</th>
             </tr>
           </thead>
