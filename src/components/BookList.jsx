@@ -26,9 +26,9 @@ const BookList = ({
     usePagination(safeBooks, pageSize);
 
   return (
-    <div className="rounded-lg bg-secondary p-2">
+    <div className="rounded-lg bg-secondary p-2 mx-auto w-5/6 overscroll-x-contain">
       <div className="overflow-x-auto rounded-md bg-light">
-        <table className="min-w-full border-collapse text-sm">
+        <table className="min-w-full">
           <thead className="bg-secondary text-light">
             <tr>
               <th className="px-3 py-2 text-left font-semibold">Title</th>

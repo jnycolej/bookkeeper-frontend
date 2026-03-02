@@ -13,7 +13,7 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
     return (
     <tr
       key={book._id}
-      onClick={() => onRowClick(`${book._id}`)}
+      onClick={() => onRowClick(book._id)}
       className={[
         "cursor-pointer border-t border-secondary/40",
         idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",

@@ -35,7 +35,7 @@ export default function BookEditForm() {
     (async () => {
       try {
         const token = await getAccessTokenSilently();
-        const { data } = await api.get(`/books/${id}`, {
+        const { data } = await api.get(`/library/books/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
