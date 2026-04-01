@@ -22,13 +22,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Title */}
       <div>
-        <label htmlFor="title" className="text-white">
+        <label htmlFor="title" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Title
         </label>
         <Input
           id="title"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.title ?? ""}
           onChange={handleChange}
           placeholder="Title"
@@ -38,7 +38,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Series */}
       <div>
-        <label htmlFor="series" className="text-white">
+        <label htmlFor="series" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Series
         </label>
 
@@ -46,7 +46,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
           <Input
             id="series"
             type="text"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.series}
             onChange={handleChange}
             placeholder="(optional)"
@@ -56,10 +56,10 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
             value={formData.seriesNum ?? ""}
             onValueChange={(value) => setField("seriesNum", value)}
           >
-            <SelectTrigger className="bg-stone-100 text-black">
+            <SelectTrigger className="bg-stone-50/50 rounded-full text-stone-950">
               <SelectValue placeholder="#" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-stone-50/90">
               <SelectGroup>
                 {[...Array(10)].map((_, i) => (
                   <SelectItem key={i} value={String(i)} className="text-black">
@@ -74,13 +74,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Director(s) */}
       <div className="">
-        <label htmlFor="director" className="text-white">
+        <label htmlFor="director" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Director(s)
         </label>
         <Input
           id="director"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.director}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -90,13 +90,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Screenwriter(s) */}
       <div className="">
-        <label htmlFor="screenwriter" className="text-white">
+        <label htmlFor="screenwriter" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Screenwriter(s)
         </label>
         <Input
           id="screenwriter"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.screenwriter}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -105,13 +105,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Story By */}
       <div className="">
-        <label htmlFor="storyBy" className="text-white">
+        <label htmlFor="storyBy" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Story By
         </label>
         <Input
           id="storyBy"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.storyBy}
           onChange={handleChange}
           placeholder="story by; ..."
@@ -120,13 +120,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Producer(s) */}
       <div className="">
-        <label htmlFor="producers" className="text-white">
+        <label htmlFor="producers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Producer(s)
         </label>
         <Input
           id="producers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.producers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -136,13 +136,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Cinematography */}
       <div className="">
-        <label htmlFor="cinematography" className="text-white">
+        <label htmlFor="cinematography" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Cinematography
         </label>
         <Input
           id="cinematography"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.cinematography}
           onChange={handleChange}
           placeholder="cinematographer ..."
@@ -150,13 +150,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
 
       <div className="">
-        <label htmlFor="country" className="text-white">
+        <label htmlFor="country" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Country
         </label>
         <Input
           id="country"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.country}
           onChange={handleChange}
           placeholder="country 1; country 2; ..."
@@ -164,13 +164,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Actor(s) */}
       <div className="md:col-span-2">
-        <label htmlFor="actors" className="text-white">
+        <label htmlFor="actors" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Actor(s)
         </label>
         <Input
           id="actors"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.actors}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -180,13 +180,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Genres */}
       <div className="md:col-span-2">
-        <label htmlFor="genres" className="text-white">
+        <label htmlFor="genres" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Genre(s)
         </label>
         <Input
           id="genres"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.genres}
           onChange={handleChange}
           placeholder="Genre1; Genre2; ..."
@@ -195,13 +195,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Music By */}
       <div>
-        <label htmlFor="musicBy" className="text-white">
+        <label htmlFor="musicBy" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Music By
         </label>
         <Input
           id="musicBy"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.musicBy}
           onChange={handleChange}
           placeholder="Music By ..."
@@ -209,13 +209,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Production Company */}
       <div>
-        <label htmlFor="productionCompany" className="text-white">
+        <label htmlFor="productionCompany" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Production Company
         </label>
         <Input
           id="productionCompany"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.productionCompany}
           onChange={handleChange}
           placeholder="Production Company 1; Production Company 2 ..."
@@ -224,13 +224,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Studio */}
       <div>
-        <label htmlFor="studio" className="text-white">
+        <label htmlFor="studio" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Studio
         </label>
         <Input
           id="studio"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.studio}
           onChange={handleChange}
           placeholder="Studio ..."
@@ -239,13 +239,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Year */}
       <div>
-        <label htmlFor="publicationYear" className="text-white">
+        <label htmlFor="publicationYear" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Release Year
         </label>
         <Input
           id="releaseYear"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.releaseYear}
           onChange={handleChange}
           required
@@ -254,13 +254,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Duration */}
       <div>
-        <label htmlFor="pageCount" className="text-white">
+        <label htmlFor="pageCount" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Duration (min)
         </label>
         <Input
           id="duration"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.duration}
           onChange={handleChange}
           required
@@ -269,8 +269,8 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Format + Status */}
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:col-span-2">
-        <FieldSet className="text-stone-100">
-          <FieldLegend variant="label" className="text-white">
+        <FieldSet className="text-stone-50 bg-red-500/10 rounded-lg pb-2 px-2">
+          <FieldLegend variant="label" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Format
           </FieldLegend>
 
@@ -290,7 +290,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
                   value={opt}
                   id={`format-${opt}`}
                 />
-                <FieldLabel htmlFor={`format-${opt}`} className="text-white">
+                <FieldLabel htmlFor={`format-${opt}`} className="!text-lg text-shadow-lg/30 !tracking-wide text-stone-50">
                   {opt.charAt(0).toUpperCase() + opt.slice(1)}
                 </FieldLabel>
               </Field>
@@ -298,8 +298,8 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
           </RadioGroup>
         </FieldSet>
 
-        <FieldSet className="text-white">
-          <FieldLegend variant="label" className="text-white">
+        <FieldSet className="text-stone-50 bg-red-500/10 rounded-lg pb-2 px-2">
+          <FieldLegend variant="label" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Status
           </FieldLegend>
 
@@ -319,7 +319,7 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
                   value={opt}
                   id={`status-${opt}`}
                 />
-                <FieldLabel htmlFor={`status-${opt}`} className="text-white">
+                <FieldLabel htmlFor={`status-${opt}`} className="!text-lg text-shadow-lg/30 !tracking-wide text-stone-50">
                   {opt === "wantToWatch"
                     ? "Want to Watch"
                     : opt.charAt(0).toUpperCase() + opt.slice(1)}
@@ -332,28 +332,28 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Rewatching Count */}
       <div>
-        <label htmlFor="rewatchCount" className="text-white">
+        <label htmlFor="rewatchCount" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Rewatch Count
         </label>
         <Input
           id="rewatchCount"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.rewatchCount}
           onChange={handleChange}
-          required
+          
         />
       </div>
 
       {/* Rating */}
       <div>
-        <label htmlFor="rating" className="text-white">
+        <label htmlFor="rating" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Rating
         </label>
         <Input
           id="rating"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.rating}
           onChange={handleChange}
           placeholder="1–5 (optional)"
@@ -362,13 +362,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
 
       {/* Date Added */}
       <div>
-        <label htmlFor="dateAdded" className="text-white">
+        <label htmlFor="dateAdded" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Date Added
         </label>
         <Input
           id="dateAdded"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.dateAdded}
           onChange={handleChange}
         />
@@ -377,13 +377,13 @@ export const MovieFields = ({ formData, handleChange, setField }) => {
       {/* Date Finished (only if Read) */}
       {formData.status === "watched" && (
         <div className="md:col-span-2">
-          <label htmlFor="dateFinished" className="text-white">
+          <label htmlFor="dateFinished" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Date Finished
           </label>
           <Input
             id="dateFinished"
             type="date"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.dateFinished}
             onChange={handleChange}
           />

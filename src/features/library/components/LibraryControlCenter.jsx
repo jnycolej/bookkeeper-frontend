@@ -18,79 +18,53 @@ export const Controls = ({
   setSelectedStatuses,
 }) => {
   return (
-    <div className="mb-4 rounded-2xl bg-dark/70 p-4 text-light backdrop-blur-sm">
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        <button type="button" className="bk-btn-primary w-full" onClick={onAdd}>
-          {addLabel}
-        </button>
+    <div className="mb-4 mx-auto w-full max-w-5xl rounded-2xl bg-dark/70 p-4 text-light backdrop-blur-sm">
+      <div className="grid grid-cols-1 grid-rows-3 gap-4 sm:grid-cols-3">
+        <div className="col-span-3">
+          <button
+            type="button"
+            className="bk-btn-primary w-full"
+            onClick={onAdd}
+          >
+            {addLabel}
+          </button>
+        </div>
+          <SortButton
+            className=""
+            mediaType={mediaType}
+            value={sortKey}
+            onChange={setSortKey}
+          />
+          <GenreFilter
+            className=""
+            mediaType={mediaType}
+            value={selectedGenres}
+            onChange={setSelectedGenres}
+          />
+          <StatusFilter
+            className=""
+            mediaType={mediaType}
+            value={selectedStatuses}
+            onChange={setSelectedStatuses}
+          />
 
-        <SortButton
-          mediaType={mediaType}
-          value={sortKey}
-          onChange={setSortKey}
-        />
-        <GenreFilter
-          mediaType={mediaType}
-          value={selectedGenres}
-          onChange={setSelectedGenres}
-        />
-        <StatusFilter
-          mediaType={mediaType}
-          value={selectedStatuses}
-          onChange={setSelectedStatuses}
-        />
-
-        <div className="lg:col-span-2">
+        <div className="sm:col-span-2">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
         </div>
 
-        <button
-          type="button"
-          className="bk-btn-outline text-light w-full"
-          onClick={clearFilters}
-        >
-          Clear
-        </button>
+        <div className="sm-col-span-1">
+          <button
+            type="button"
+            className="bk-btn-outline text-light w-full"
+            onClick={clearFilters}
+          >
+            Clear
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-
-// export const StatusSummary = ({ counts }) => {
-//   return (
-//     <div className="mb-4 rounded-xl bg-dark/70 p-4 text-light">
-//       <div className="mb-2 text-lg font-semibold">Status Summary</div>
-
-//       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-//         <div className="rounded-md bg-light/10 px-3 py-2">
-//           <div className="text-xs opacity-80">Watched</div>
-//           <div className="text-lg font-semibold">
-//             {movieCounts.watched || 0}
-//           </div>
-//         </div>
-
-//         <div className="rounded-md bg-light/10 px-3 py-2">
-//           <div className="text-xs opacity-80">Currently Watching</div>
-//           <div className="text-lg font-semibold">
-//             {movieCounts.watching || 0}
-//           </div>
-//         </div>
-
-//         <div className="rounded-md bg-light/10 px-3 py-2">
-//           <div className="text-xs opacity-80">Want to Watch</div>
-//           <div className="text-lg font-semibold">
-//             {movieCounts.wantToWatch || 0}
-//           </div>
-//         </div>
-
-//         <div className="rounded-md bg-light/10 px-3 py-2">
-//           <div className="text-xs opacity-80">Total</div>
-//           <div className="text-lg font-semibold">{totalMoviesAll}</div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };

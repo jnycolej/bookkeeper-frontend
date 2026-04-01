@@ -88,9 +88,9 @@ const MovieDetails = () => {
   }
 
   return (
-    <div className="h-screen bookKeeper-library-background text-stone-100">
+    <div className="bookKeeper-library-background text-stone-100">
       <NavBar />
-      <div className="flex mt-10  place-content-center gap-2">
+      <div className="flex mt-10 py-5 place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
           {movieImage ? (
             <img
@@ -120,6 +120,8 @@ const MovieDetails = () => {
                   : movie.director}
               </p>
               <hr />
+
+              <div>{movie.rating ? `My Rating: ${movie.rating}` : " "}</div>
               <div>
                 <p className="text-base/10 font-medium capitalize">
                   <span className="text-lg">Genres</span> :{" "}
@@ -140,18 +142,76 @@ const MovieDetails = () => {
                   min
                 </p>
               </div>
-              <div>
-                <p className="text-base/10 font-medium capitalize">
-                  <span className="text-lg">Status</span> :{" "}
-                  {movie.status === "wantToWatch"
-                    ? "Want to Watch"
-                    : movie.status.charAt(0).toUpperCase() +
-                      movie.status.slice(1)}
+                            <div>
+                <p>
+                  Actors:{" "}
+                  {Array.isArray(movie.actors)
+                    ? movie.actors.join(" | ")
+                    : movie.actors}
                 </p>
               </div>
               <div>
+                <p>
+                  Screenwriter:{" "}
+                  {Array.isArray(movie.screenwriter)
+                    ? movie.screenwriter.join(" | ")
+                    : movie.screenwriter}
+                </p>
+              </div>
+                            <div>
+                <p>
+                  Cinematography:{" "}
+                  {Array.isArray(movie.screenwriter)
+                    ? movie.cinematography.join(" | ")
+                    : movie.cinematography}
+                </p>
+              </div>
+              <div>
+                <p>
+                  Story By:{" "}
+                  {Array.isArray(movie.storyBy)
+                    ? movie.storyBy.join(" | ")
+                    : movie.storyBy}
+                </p>
+              </div>
+              <div>
+                <p>Studio: {movie.studio}</p>
+              </div>
+                            <div>
+                <p>
+                  Composer:{" "}
+                  {Array.isArray(movie.musicBy)
+                    ? movie.musicBy.join(" | ")
+                    : movie.musicBy}
+                </p>
+              </div>
+              <div>
+                <p>
+                  Producers:{" "}
+                  {Array.isArray(movie.screenwriter)
+                    ? movie.producers.join(" | ")
+                    : movie.producers}
+                </p>
+              </div>
+              <div>
+                <p>
+                  Production Company:{" "}
+                  {Array.isArray(movie.productionCompany)
+                    ? movie.productionCompany.join(" | ")
+                    : movie.productionCompany}
+                </p>
+              </div>
+              <div><p>Country: {Array.isArray(movie.country) ? movie.country.join(" | ") : movie.country}</p></div>
+              <p className="text-base/10 font-medium capitalize">
+                <span className="text-lg">Status</span> :{" "}
+                {movie.status === "wantToWatch"
+                  ? "Want to Watch"
+                  : movie.status.charAt(0).toUpperCase() +
+                    movie.status.slice(1)}
+              </p>
+              <div>
                 <p className="text-base/10 font-medium">
-                  <span className="text-lg">Date Finished</span> :{" "}
+                  <span className="text-lg">Date Watched</span> :{" "}
                   {formatDate(movie.dateFinished)}
                 </p>
               </div>
@@ -160,11 +220,14 @@ const MovieDetails = () => {
                   <span className="text-lg">Format</span> : {movie.format}
                 </p>
               </div>
+              <div><p>Rewatch Count: {movie.rewatchCount}</p></div>
 
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`/library/movies/${movie._id}/edit`)}
+                  onClick={() =>
+                    navigation(`/library/movies/${movie._id}/edit`)
+                  }
                 >
                   Edit Movie
                 </Button>

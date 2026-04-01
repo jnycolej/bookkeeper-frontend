@@ -42,7 +42,7 @@ export const StatusSummary = ({ mediaType }) => {
         <div className="rounded-xl mx-auto w-4/5 my-4 bg-dark/70 p-4 text-light">
           <div className="mb-2 text-lg font-semibold">Status Summary</div>
 
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <div className="rounded-md bg-light/10 p-2">
               <div className="opacity-80">Read</div>
               <div className="text-lg font-semibold">

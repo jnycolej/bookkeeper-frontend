@@ -16,7 +16,7 @@ export default function TVShowForm() {
       <NavBar />
 
       <div className="mx-auto bookKeeper-library-background w-full max-w-6xl px-4 py-6">
-        <h1 className="mb-6 text-center text-4xl font-semibold">
+        <h1 className="mb-6 text-6xl text-center text-stone-50 text-shadow-lg/30 font-semibold">
           Add New TV Show
         </h1>
 

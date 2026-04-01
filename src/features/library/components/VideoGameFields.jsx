@@ -22,13 +22,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Title */}
       <div>
-        <label htmlFor="title" className="text-white">
+        <label htmlFor="title" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Title
         </label>
         <Input
           id="title"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.title ?? ""}
           onChange={handleChange}
           placeholder="Title"
@@ -38,7 +38,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Series */}
       <div>
-        <label htmlFor="series" className="text-white">
+        <label htmlFor="series" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Series
         </label>
 
@@ -46,7 +46,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
           <Input
             id="series"
             type="text"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.series}
             onChange={handleChange}
             placeholder="(optional)"
@@ -56,10 +56,10 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
             value={formData.seriesNum ?? ""}
             onValueChange={(value) => setField("seriesNum", value)}
           >
-            <SelectTrigger className="bg-stone-100 text-black">
+            <SelectTrigger className="bg-stone-50/50 rounded-full text-stone-950">
               <SelectValue placeholder="#" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-stone-50/90 overflow-auto h-60">
               <SelectGroup>
                 {[...Array(16)].map((_, i) => (
                   <SelectItem key={i} value={String(i)} className="text-black">
@@ -74,13 +74,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Developer(s) */}
       <div className="">
-        <label htmlFor="developer" className="text-white">
+        <label htmlFor="developer" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Developer(s)
         </label>
         <Input
           id="developer"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.developer}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -89,13 +89,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/*  Publisher */}
       <div className="">
-        <label htmlFor="publisher" className="text-white">
+        <label htmlFor="publisher" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Publisher(s)
         </label>
         <Input
           id="publisher"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.publisher}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -103,13 +103,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
       </div>
       {/*  Designer */}
       <div className="">
-        <label htmlFor="designer" className="text-white">
+        <label htmlFor="designer" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Designer(s)
         </label>
         <Input
           id="designer"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.designer}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -118,13 +118,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/*  Programmers */}
       <div className="">
-        <label htmlFor="programmers" className="text-white">
+        <label htmlFor="programmers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Programmer(s)
         </label>
         <Input
           id="programmers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.programmers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -133,13 +133,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/*  Artist */}
       <div className="">
-        <label htmlFor="artist" className="text-white">
+        <label htmlFor="artist" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Artist(s)
         </label>
         <Input
           id="artist"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.artist}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -148,13 +148,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Writers */}
       <div className="">
-        <label htmlFor="writers" className="text-white">
+        <label htmlFor="writers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Writer(s)
         </label>
         <Input
           id="writers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.writers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -163,13 +163,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Composer */}
       <div className="">
-        <label htmlFor="composer" className="text-white">
+        <label htmlFor="composer" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Composer(s)
         </label>
         <Input
           id="composer"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.composer}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -178,13 +178,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Engine */}
       <div className="">
-        <label htmlFor="engine" className="text-white">
+        <label htmlFor="engine" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Engine
         </label>
         <Input
           id="engine"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.engine}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -193,13 +193,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Platforms */}
       <div className="md:col-span-2">
-        <label htmlFor="platforms" className="text-white">
+        <label htmlFor="platforms" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Platform(s)
         </label>
         <Input
           id="platforms"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.platforms}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -208,13 +208,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Actor(s) */}
       <div className="md:col-span-2">
-        <label htmlFor="actors" className="text-white">
+        <label htmlFor="actors" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Actor(s)
         </label>
         <Input
           id="actors"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.actors}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -223,13 +223,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Genres */}
       <div className="md:col-span-2">
-        <label htmlFor="genres" className="text-white">
+        <label htmlFor="genres" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Genre(s)
         </label>
         <Input
           id="genres"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.genres}
           onChange={handleChange}
           placeholder="Genre1; Genre2; ..."
@@ -239,13 +239,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/*  Country */}
       <div className="">
-        <label htmlFor="country" className="text-white">
+        <label htmlFor="country" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Country
         </label>
         <Input
           id="country"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.country}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -253,13 +253,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
       </div>
       {/*  Mode */}
       <div className="">
-        <label htmlFor="mode" className="text-white">
+        <label htmlFor="mode" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Mode(s)
         </label>
         <Input
           id="mode"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.mode}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -268,13 +268,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Release Year */}
       <div>
-        <label htmlFor="releaseYear" className="text-white">
+        <label htmlFor="releaseYear" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Release Year
         </label>
         <Input
           id="releaseYear"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.releaseYear}
           onChange={handleChange}
           required
@@ -283,13 +283,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Duration */}
       <div>
-        <label htmlFor="duration" className="text-white">
+        <label htmlFor="duration" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Duration (hrs)
         </label>
         <Input
           id="duration"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.duration}
           onChange={handleChange}
         />
@@ -297,13 +297,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Format + Status */}
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:col-span-2">
-        <FieldSet className="text-stone-100">
-          <FieldLegend variant="label" className="text-white">
+        <FieldSet className="text-stone-50 bg-red-500/10 rounded-lg pb-2 px-2">
+          <FieldLegend variant="label" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Format
           </FieldLegend>
 
           <RadioGroup
-            className="mt-2 flex flex-wrap items-center gap-6"
+            className="mt-2 flex flex-wrap items-center h-20 overflow-auto gap-6"
             value={formData.format}
             onValueChange={(val) => setField("format", val)}
           >
@@ -318,7 +318,7 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
                   value={opt}
                   id={`format-${opt}`}
                 />
-                <FieldLabel htmlFor={`format-${opt}`} className="text-white">
+                <FieldLabel htmlFor={`format-${opt}`} className="!text-lg text-shadow-lg/30 !tracking-wide text-stone-50">
                   {opt.charAt(0).toUpperCase() + opt.slice(1)}
                 </FieldLabel>
               </Field>
@@ -326,13 +326,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
           </RadioGroup>
         </FieldSet>
 
-        <FieldSet className="text-white">
-          <FieldLegend variant="label" className="text-white">
+        <FieldSet className="text-stone-50 bg-red-500/10 rounded-lg pb-2 px-2">
+          <FieldLegend variant="label" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Status
           </FieldLegend>
 
           <RadioGroup
-            className="mt-2 flex flex-wrap items-center gap-6"
+            className="mt-2 flex flex-wrap items-center h-20 overflow-auto gap-6"
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
@@ -343,11 +343,11 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
                 className="items-center gap-2"
               >
                 <RadioGroupItem
-                  className="bg-stone-100"
+                  className="bg-stone-50"
                   value={opt}
                   id={`status-${opt}`}
                 />
-                <FieldLabel htmlFor={`status-${opt}`} className="text-white">
+                <FieldLabel htmlFor={`status-${opt}`} className="!text-lg text-shadow-lg/30 !tracking-wide text-stone-50">
                   {opt === "wantToPlay"
                     ? "Want to Play"
                     : opt.charAt(0).toUpperCase() + opt.slice(1)}
@@ -360,28 +360,28 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
             {/* Replaying Count */}
       <div>
-        <label htmlFor="replayCount" className="text-white">
+        <label htmlFor="replayCount" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Replay Count
         </label>
         <Input
           id="replayCount"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.replayCount}
           onChange={handleChange}
-          required
+          
         />
       </div>
 
       {/* Rating */}
       <div>
-        <label htmlFor="rating" className="text-white">
+        <label htmlFor="rating" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Rating
         </label>
         <Input
           id="rating"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.rating}
           onChange={handleChange}
           placeholder="1–5 (optional)"
@@ -390,13 +390,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Date Added */}
       <div>
-        <label htmlFor="dateAdded" className="text-white">
+        <label htmlFor="dateAdded" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Date Added
         </label>
         <Input
           id="dateAdded"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.dateAdded}
           onChange={handleChange}
         />
@@ -404,13 +404,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
 
       {/* Start Date */}
       {/* <div>
-        <label htmlFor="startDate" className="text-white">
+        <label htmlFor="startDate" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Start Date
         </label>
         <Input
           id="startDate"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.dateStarted}
           onChange={handleChange}
           required
@@ -420,13 +420,13 @@ export const VideoGameFields = ({ formData, handleChange, setField }) => {
       {/* Date Finished (only if completed) */}
       {formData.status === "completed" && (
         <div className="md:col-span-2">
-          <label htmlFor="dateFinished" className="text-white">
+          <label htmlFor="dateFinished" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Date Finished
           </label>
           <Input
             id="dateFinished"
             type="date"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.dateFinished}
             onChange={handleChange}
           />

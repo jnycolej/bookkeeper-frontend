@@ -16,7 +16,7 @@ export default function MovieForm() {
       <NavBar />
 
       <div className="mx-auto bookKeeper-library-background w-full max-w-6xl px-4 py-6">
-        <h1 className="mb-6 text-center text-4xl font-semibold">
+        <h1 className="mb-6 text-center text-6xl text-stone-50 text-shadow-lg/30 font-semibold">
           Add New Movie
         </h1>
 

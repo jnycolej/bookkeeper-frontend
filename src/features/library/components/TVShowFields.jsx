@@ -22,13 +22,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* Title */}
       <div>
-        <label htmlFor="title" className="text-white">
+        <label htmlFor="title" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Title
         </label>
         <Input
           id="title"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.title ?? ""}
           onChange={handleChange}
           placeholder="Title"
@@ -38,7 +38,7 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Creator */}
       <div>
-        <label htmlFor="creator" className="text-white">
+        <label htmlFor="creator" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Creator(s)
         </label>
 
@@ -46,7 +46,7 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
           <Input
             id="creator"
             type="text"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.creator}
             onChange={handleChange}
             placeholder="Show creator..."
@@ -57,13 +57,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* showRunner(s) */}
       <div className="">
-        <label htmlFor="showRunner" className="text-white">
+        <label htmlFor="showRunner" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Show Runner(s)
         </label>
         <Input
           id="showRunner"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.showRunner}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -72,13 +72,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Executive Producers */}
       <div className="">
-        <label htmlFor="execProducers" className="text-white">
+        <label htmlFor="execProducers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Executive Producer(s)
         </label>
         <Input
           id="execProducers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.execProducers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -86,13 +86,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Producers*/}
       <div className="">
-        <label htmlFor="producers" className="text-white">
+        <label htmlFor="producers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Producer(s)
         </label>
         <Input
           id="producers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.producers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -100,13 +100,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Cinematography */}
       <div className="">
-        <label htmlFor="cinematography" className="text-white">
+        <label htmlFor="cinematography" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Cinematography
         </label>
         <Input
           id="cinematography"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.cinematography}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -114,13 +114,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Camera Setup */}
       <div className="">
-        <label htmlFor="cameraSetup" className="text-white">
+        <label htmlFor="cameraSetup" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Camera Setup(s)
         </label>
         <Input
           id="cameraSetup"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.cameraSetup}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -128,13 +128,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Writer(s) */}
       <div className="">
-        <label htmlFor="writers" className="text-white">
+        <label htmlFor="writers" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Writer(s)
         </label>
         <Input
           id="writers"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.writers}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -143,13 +143,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Network/Studio */}
       <div className="">
-        <label htmlFor="network" className="text-white">
+        <label htmlFor="network" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Network/Studio
         </label>
         <Input
           id="network"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.network}
           onChange={handleChange}
           placeholder="Network/Studio..."
@@ -157,13 +157,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Production Companies */}
       <div className="">
-        <label htmlFor="productionCompanies" className="text-white">
+        <label htmlFor="productionCompanies" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Production Company
         </label>
         <Input
           id="productionCompanies"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.productionCompanies}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -171,13 +171,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Actor(s) */}
       <div className="">
-        <label htmlFor="actors" className="text-white">
+        <label htmlFor="actors" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Actor(s)
         </label>
         <Input
           id="actors"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.actors}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -186,13 +186,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Music By */}
       <div className="">
-        <label htmlFor="musicBy" className="text-white">
+        <label htmlFor="musicBy" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
          Music By
         </label>
         <Input
           id="musicBy"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.musicBy}
           onChange={handleChange}
           placeholder="Name1; Name2; ..."
@@ -200,13 +200,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Genres */}
       <div className="">
-        <label htmlFor="genres" className="text-white">
+        <label htmlFor="genres" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Genre(s)
         </label>
         <Input
           id="genres"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.genres}
           onChange={handleChange}
           placeholder="Genre1; Genre2; ..."
@@ -216,13 +216,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Language */}
       <div className="">
-        <label htmlFor="language" className="text-white">
+        <label htmlFor="language" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Language
         </label>
         <Input
           id="language"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.language}
           onChange={handleChange}
         />
@@ -230,13 +230,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Country */}
       <div>
-        <label htmlFor="country" className="text-white">
+        <label htmlFor="country" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Country
         </label>
         <Input
           id="country"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.country}
           onChange={handleChange}
         />
@@ -244,7 +244,7 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Still Running */}
       <div>
-        <label htmlFor="stillRunning" className="text-white">
+        <label htmlFor="stillRunning" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Still Running
         </label>
         <Checkbox
@@ -256,26 +256,26 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       </div>
       {/* Start Date */}
       <div>
-        <label htmlFor="startDate" className="text-white">
+        <label htmlFor="startDate" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Show Start Date
         </label>
         <Input
           id="startDate"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.startDate}
           onChange={handleChange}
         />
       </div>
       {/* End Date*/}
       <div>
-        <label htmlFor="endDate" className="text-white">
+        <label htmlFor="endDate" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Show End Date
         </label>
         <Input
           id="endDate"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.endDate}
           onChange={handleChange}
         />
@@ -283,26 +283,26 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Seasons */}
       <div>
-        <label htmlFor="seasons" className="text-white">
+        <label htmlFor="seasons" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Seasons
         </label>
         <Input
           id="seasons"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.seasons}
           onChange={handleChange}
         />
       </div>
       {/* Episodes */}
       <div>
-        <label htmlFor="episodes" className="text-white">
+        <label htmlFor="episodes" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Episodes
         </label>
         <Input
           id="episodes"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.episodes}
           onChange={handleChange}
         />
@@ -310,26 +310,26 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Average Episode Runtime */}
       <div>
-        <label htmlFor="avgRuntime" className="text-white">
+        <label htmlFor="avgRuntime" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Average Episode Runtime
         </label>
         <Input
           id="avgRuntime"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.avgRuntime}
           onChange={handleChange}
         />
       </div>
       {/* Based On */}
       <div>
-        <label htmlFor="basedOn" className="text-white">
+        <label htmlFor="basedOn" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Based On
         </label>
         <Input
           id="basedOn"
           type="text"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.basedOn}
           onChange={handleChange}
           placeholder="Based On"
@@ -338,13 +338,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
       {/* Status */}
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:col-span-2">
-        <FieldSet className="text-white">
-          <FieldLegend variant="label" className="text-white">
+        <FieldSet className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
+          <FieldLegend variant="label" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Status
           </FieldLegend>
 
           <RadioGroup
-            className="mt-2 flex flex-wrap items-center gap-6"
+            className="mt-2 flex flex-wrap h-20 overflow-auto bg-red-950/70 rounded p-2 items-center gap-6"
             value={formData.status}
             onValueChange={(val) => setField("status", val)}
           >
@@ -359,7 +359,7 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
                   value={opt}
                   id={`status-${opt}`}
                 />
-                <FieldLabel htmlFor={`status-${opt}`} className="text-white">
+                <FieldLabel htmlFor={`status-${opt}`} className="!text-base text-shadow-lg/30 !tracking-wide text-stone-50">
                   {opt === "wantToWatch"
                     ? "Want to Watch"
                     : opt.charAt(0).toUpperCase() + opt.slice(1)}
@@ -372,27 +372,27 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
 
             {/* Rewatch Count */}
       <div>
-        <label htmlFor="rereadCount" className="text-white">
+        <label htmlFor="rereadCount" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Rewatch Count
         </label>
         <Input
           id="rewatchCount"
           type="number"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.rewatchCount}
           onChange={handleChange}
-          required
+          
         />
       </div>
       {/* Date Added */}
       <div>
-        <label htmlFor="dateAdded" className="text-white">
+        <label htmlFor="dateAdded" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
           Date Added
         </label>
         <Input
           id="dateAdded"
           type="date"
-          className="bg-white text-black"
+          className="bg-stone-50/50 !text-base rounded-full text-stone-950"
           value={formData.dateAdded}
           onChange={handleChange}
         />
@@ -413,13 +413,13 @@ export const TVShowFields = ({ formData, handleChange, setField }) => {
       {/* Date Finished (only if Read) */}
       {formData.status === "watched" && (
         <div className="md:col-span-2">
-          <label htmlFor="dateFinished" className="text-white">
+          <label htmlFor="dateFinished" className="!text-2xl text-shadow-lg/30 !tracking-wide text-stone-50">
             Date Finished
           </label>
           <Input
             id="dateFinished"
             type="date"
-            className="bg-white text-black"
+            className="bg-stone-50/50 !text-base rounded-full text-stone-950"
             value={formData.dateFinished}
             onChange={handleChange}
           />

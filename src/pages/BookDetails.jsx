@@ -33,7 +33,7 @@ const BookDetails = () => {
     const fetchBookDetails = async () => {
       try {
         const token = await getAccessTokenSilently();
-        const response = await api.get(`library/books/${id}`, {
+        const response = await api.get(`/library/books/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = response.data;
@@ -42,10 +42,10 @@ const BookDetails = () => {
           setBookImage(
             `https://covers.openlibrary.org/b/isbn/${
               data.isbn13 || data.isbn10
-            }-M.jpg`,
+            }-M.jpg?default=false`,
           );
         } else {
-          setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg`);
+          setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg?default=false`);
         }
       } catch (err) {
         console.error(err);
@@ -73,7 +73,7 @@ const BookDetails = () => {
     <div className="h-screen bookKeeper-library-background text-stone-100">
       <NavBar />
       <div className="flex mt-10  place-content-center gap-2">
-        <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
+        <div className="flex-none m-5 shadow-lg/20 shadow-stone-950">
           <img src={bookImage} alt="Book Cover"></img>
         </div>
         <div className="flex-intial p-2 rounded bg-red-900/60">
@@ -92,6 +92,8 @@ const BookDetails = () => {
                   : book.author}
               </p>
               <hr />
+                            <div>{book.rating ? `My Rating: ${book.rating}` : " "}</div>
+
               <div>
                 <p className="text-base/10 font-medium capitalize">
                   <span className="text-lg">Genres</span> :{" "}
@@ -120,6 +122,7 @@ const BookDetails = () => {
                       book.status.slice(1)}
                 </p>
               </div>
+              <div><p>Reread Count: {book.rereadCount}</p></div>
               <div>
                 <p className="text-base/10 font-medium">
                   <span className="text-lg">Date Finished</span> :{" "}
@@ -151,7 +154,7 @@ const BookDetails = () => {
               <div className="flex p-2 gap-4">
                 <Button
                   className="text-xl"
-                  onClick={() => navigation(`/books/${book._id}/edit`)}
+                  onClick={() => navigation(`/library/books/${book._id}/edit`)}
                 >
                   Edit Book
                 </Button>

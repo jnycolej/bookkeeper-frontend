@@ -6,6 +6,9 @@ import { getVideoGames } from "@/services/gameService";
 import { Card, CardContent } from "@/components/ui/card";
 import api from "@/services/api";
 import { Ticker } from "./Ticker";
+import { Marquee } from "@/components/ui/marquee";
+let bookStandInBackground = "@/assets/book-standin";
+
 import { getMovies } from "@/services/movieService";
 import { getTVShows } from "@/services/tvShowService";
 
@@ -42,7 +45,7 @@ const FeatureBanner = () => {
           ? `https://images.amazon.com/images/P/${book.asin}.jpg`
           : `https://covers.openlibrary.org/b/isbn/${
               book.isbn13 || book.isbn10
-            }-M.jpg`;
+            }-M.jpg?default=false`;
         return { ...book, coverUrl };
       });
       setBooks(withCovers);
@@ -153,11 +156,16 @@ const FeatureBanner = () => {
   // derive featured subset whenever books load
   useEffect(() => {
     if (!books.length) return;
-    let featured = books.filter((b) => b.status === "currentlyReading");
+    let featuredCurrentlyReading = books.filter(
+      (b) => b.status === "currentlyReading",
+    );
+    let featuredRereading = books.filter((b) => b.status === "rereading");
+    let featured = featuredCurrentlyReading.concat(featuredRereading);
     setFeaturedBooks(featured);
   }, [books]);
 
   useEffect(() => {
+    let featuredCurrentlyWatching;
     setFeaturedTVShows(tvShows.filter((t) => t.status === "watching"));
   }, [tvShows]);
 
@@ -170,8 +178,76 @@ const FeatureBanner = () => {
   }, [videoGames]);
 
   return (
-    <div className="">
-      <div className="py-4">
+    <div className="py-2">
+      <Marquee pauseOnHover className="[--duration:120s]">
+        {featuredBooks.map((book) => (
+          (book.coverUrl) ?
+          <img
+            src={book.coverUrl}
+            onClick={() => navigate(`/library/books/${book._id}`)}
+            alt={book.title}
+            style={{
+              width: 200,
+              height: 300,
+              objectFit: "cover",
+              borderRadius: 14,
+              display: "block",
+            }}
+          /> : <div>{book.title}</div>
+        ))}
+      </Marquee>
+
+      <Marquee pauseOnHover reverse className="[--duration:50s]">
+        {featuredTVShows.map((t) => (
+          <img
+            src={t.posterUrl}
+            alt={t.title}
+            onClick={() => navigate(`/library/tvshows/${t._id}`)}
+            style={{
+              width: 200,
+              height: 300,
+              objectFit: "cover",
+              borderRadius: 14,
+              display: "block",
+            }}
+          />
+        ))}
+      </Marquee>
+
+      <Marquee pauseOnHover className="[--duration:50s]">
+        {featuredMovies.map((m) => (
+          <img
+            src={m.posterUrl}
+            alt={m.title}
+            onClick={() => navigate(`/library/movies/${m._id}`)}
+            style={{
+              width: 200,
+              height: 300,
+              objectFit: "cover",
+              borderRadius: 14,
+              display: "block",
+            }}
+          />
+        ))}
+      </Marquee>
+
+      <Marquee pauseOnHover reverse className="[--duration:50s]">
+        {featuredVideoGames.map((v) => (
+          <img
+            src={v.posterUrl}
+            alt={v.title}
+            onClick={() => navigate(`/library/videogames/${v._id}`)}
+            style={{
+              width: 200,
+              height: 300,
+              objectFit: "cover",
+              borderRadius: 14,
+              display: "block",
+            }}
+          />
+        ))}
+      </Marquee>
+      {/* <div className="py-4">
         <h1 className="text-4xl text-center">Currently Reading</h1>
         <div dir="rtl">
           <Ticker
@@ -219,9 +295,9 @@ const FeatureBanner = () => {
             )}
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="py-4">
+      {/* <div className="py-4">
         <h1 className="text-4xl text-center">Movies to Watch</h1>
         <div dir="rtl">
           <Ticker
@@ -244,9 +320,9 @@ const FeatureBanner = () => {
             )}
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="py-4">
+      {/* <div className="py-4">
         <h1 className="text-4xl text-center">Currently Playing</h1>
         <div dir="rtl">
           <Ticker
@@ -269,7 +345,7 @@ const FeatureBanner = () => {
             )}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

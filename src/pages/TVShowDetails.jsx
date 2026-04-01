@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-
+import { Accordion, AccordionItem } from "@heroui/accordion";
 import axios from "axios";
 import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
 import api from "../services/api";
@@ -50,7 +50,10 @@ const TVShowDetails = () => {
             posterPath = tmdbRes.data?.poster_path;
           } else {
             // fallback: search by title
-            console.log("TMDB call auth header:", token ? "HAS TOKEN" : "NO TOKEN");
+            console.log(
+              "TMDB call auth header:",
+              token ? "HAS TOKEN" : "NO TOKEN",
+            );
             const searchRes = await api.get(
               `/tmdb/search/tv?q=${encodeURIComponent(data.title)}`,
             );
@@ -91,15 +94,15 @@ const TVShowDetails = () => {
   }
 
   return (
-    <div className="h-screen bookKeeper-library-background text-stone-100">
+    <div className=" bookKeeper-library-background text-stone-100">
       <NavBar />
-      <div className="flex mt-10  place-content-center gap-2">
-        <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
+      <div className="flex mt-10 mx-5 place-content-center gap-2">
+        <div className="flex-1 p-2">
           {tvShowImage ? (
             <img
               src={tvShowImage}
               alt={`${tvShow.title} poster`}
-              className="w-[260px] rounded"
+              className="rounded"
             />
           ) : (
             <div className="w-[260px] h-[390px] grid place-items-center rounded bg-stone-900/40">
@@ -107,19 +110,22 @@ const TVShowDetails = () => {
             </div>
           )}
         </div>
-        <div className="flex-intial p-2 rounded bg-red-900/60">
+        <div className="flex-2 max-h-[70vh] my-2 p-2 overflow-auto rounded bg-red-900/60">
           <p className="text-3xl">{tvShow.title}</p>
 
           <div className="p-2">
             <div className="">
-              <p className="font-bold">
-                {Array.isArray(tvShow.director)
-                  ? tvShow.director.join(" | ")
-                  : tvShow.director}
+              <p className="">
+                Created By:{" "}
+                {Array.isArray(tvShow.creator)
+                  ? tvShow.creator.join(" | ")
+                  : tvShow.creator}
               </p>
               <hr />
+              <div>{tvShow.rating ? `My Rating: ${tvShow.rating}` : " "}</div>
+
               <div>
-                <p className="text-base/10 font-medium capitalize">
+                <p className=" capitalize">
                   <span className="text-lg">Genres</span> :{" "}
                   {Array.isArray(tvShow.genres)
                     ? tvShow.genres.join(" | ")
@@ -127,19 +133,94 @@ const TVShowDetails = () => {
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Release Date</span> :{" "}
-                  {tvShow.releaseDate}
+                <p className=" capitalize">
+                  <span className="">Show Runner</span> :{" "}
+                  {Array.isArray(tvShow.showRunner)
+                    ? tvShow.showRunner.join(" | ")
+                    : tvShow.showRunner}
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Seasons</span> : {tvShow.seasons}
+                <p>Based On: {tvShow.basedOn ? tvShow.basedOn : "Original"}</p>
+              </div>
+              <div>
+                <p className="capitalize">
+                  <Accordion isCompact>
+                    <AccordionItem
+                      className="justify-content-left"
+                      aria-label="Actor Accordion"
+                      title="Actors"
+                    >
+                      {Array.isArray(tvShow.actors)
+                        ? tvShow.actors.join(" | ")
+                        : tvShow.actors}
+                    </AccordionItem>
+                    <AccordionItem
+                      className="justify-content-left"
+                      aria-label="Writer Accordion"
+                      title="Writers"
+                    >
+                      {Array.isArray(tvShow.writers)
+                        ? tvShow.writers.join(" | ")
+                        : tvShow.writers}
+                    </AccordionItem>
+                    <AccordionItem
+                      className="justify-content-left"
+                      aria-label="Executive Producer Accordion"
+                      title="Executive Producer"
+                    >
+                      {Array.isArray(tvShow.execProducers)
+                        ? tvShow.execProducers.join(" | ")
+                        : tvShow.execProducers}
+                    </AccordionItem>
+                    <AccordionItem
+                      aria-label="Producers Accordion"
+                      title="Producers"
+                    >
+                      {Array.isArray(tvShow.producers)
+                        ? tvShow.producers.join(" | ")
+                        : tvShow.producers}
+                    </AccordionItem>
+                    <AccordionItem
+                      aria-label="Cinematography accordion"
+                      title="Cinematography"
+                    >
+                  {Array.isArray(tvShow.cinematography)
+                    ? tvShow.cinematography.join(" | ")
+                    : tvShow.cinematography}                      
+                    </AccordionItem>
+                  </Accordion>
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium capitalize">
-                  <span className="text-lg">Status</span> :{" "}
+                <p>Camera Setup: {tvShow.cameraSetup}</p>
+              </div>
+              <div>
+                <p>Music By: {tvShow.musicBy}</p>
+              </div>
+              <div>
+                <p className="">
+                  <span className="">Start Date - End Date</span> :{" "}
+                  {(tvShow.startDate).slice(0,10)} <span className="">to</span> {tvShow.endDate ? (tvShow.endDate).slice(0,10) : "Present"}
+                </p>
+              </div>
+              <div>
+                <p>Still Running: {tvShow.stillRunning ? "Yes" : "No"}</p>
+              </div>
+              <div>
+                <p className="">
+                  <span className="">Seasons</span> : {tvShow.seasons}
+                </p>
+              </div>
+              <div>
+                <p>Episodes: {tvShow.episodes}</p>
+              </div>
+              <div>
+                <p>Average Episode Runtime: {tvShow.avgRuntime}mins</p>
+              </div>
+              <div>
+                <p className="capitalize">
+                  <span className="">Status</span> :{" "}
                   {tvShow.status === "currentlyWatching"
                     ? "Currently Watching"
                     : tvShow.status.charAt(0).toUpperCase() +
@@ -147,14 +228,36 @@ const TVShowDetails = () => {
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Date Finished</span> :{" "}
-                  {formatDate(tvShow.dateFinished)}
+                <p>Network: {tvShow.network}</p>
+              </div>
+              <div>
+                <p className="capitalize">
+                  <span className="">Production Companies</span> :{" "}
+                  {Array.isArray(tvShow.productionCompanies)
+                    ? tvShow.productionCompanies.join(" | ")
+                    : tvShow.productionCompanies}
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Format</span> : {tvShow.format}
+                <p>Language: {tvShow.language}</p>
+              </div>
+              <div>
+                <p>Country: {tvShow.country}</p>
+              </div>
+              <div>
+                <p className="">
+                  <span className="">Date Finished</span> :{" "}
+                  {tvShow.dateFinished
+                    ? formatDate(tvShow.dateFinished)
+                    : "Not Finished/Still Watching"}
+                </p>
+              </div>
+              <div>
+                <p>Rewatch Count: {tvShow.rewatchCount}</p>
+              </div>
+              <div>
+                <p className="">
+                  <span className="">Format</span> : {tvShow.format}
                 </p>
               </div>
               <div></div>

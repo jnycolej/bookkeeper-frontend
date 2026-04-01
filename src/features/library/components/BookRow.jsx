@@ -16,8 +16,8 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
       onClick={() => onRowClick(book._id)}
       className={[
         "cursor-pointer border-t border-secondary/40",
-        idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
-        "hover:bg-body",
+        idx % 2 === 0 ? "bg-secondary/40" : "bg-red-900/65 text-stone-100",
+        "hover:bg-stone-100/70 text-stone-950",
       ].join(" ")}
     >
       <td className="px-3 py-2">
@@ -34,7 +34,7 @@ export const BookRow = ({ book, idx, searchQuery, onRowClick, onDelete }) => {
 
       <td className="px-3 py-2">
         <HighlightText
-          text={(book.author || []).join(", ")}
+          text={(book.author || []).join(" | ")}
           query={searchQuery}
         />
       </td>

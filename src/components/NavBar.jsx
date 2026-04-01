@@ -18,6 +18,16 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+
 export default function NavBar() {
   const navigate = useNavigate();
   const { logout } = useAuth0();
@@ -30,9 +40,9 @@ export default function NavBar() {
 
   return (
     <header className="w-full">
-      <nav className="flex flex-wrap items-center bg-red-900/40 gap-2 px-4 py-3">
+      <nav className="flex items-center bg-red-900/40 gap-4 px-4 py-3">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
-          {/* Brand */}
+          {/* Brand Logo */}
           <button
             type="button"
             onClick={() => handleNav("/home")}
@@ -61,60 +71,79 @@ export default function NavBar() {
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-4 md:flex">
+          <div className="hidden items-center md:flex">
             <div className="flex items-center gap-6">
-              <button
-                type="button"
-                onClick={() => handleNav("/library")}
-                className="text-white hover:text-primary"
-              >
-                Library
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => handleNav("/library/books/new")}
-                className="text-white hover:text-primary"
-              >
-                Add Book
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNav("/library/movies/new")}
-                className="text-stone-100 hover:text-primary"
-              >
-                Add Movie
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNav("/library/tvshows/new")}
-                className="text-stone-100 hover:text-primary"
-              >
-                Add TV Show
-              </button>
-              <button
-                type="button"
-                onClick={() => handleNav("/library/videogames/new")}
-                className="text-white hover:text-primary"
-              >Add Game</button>
-              <button
-                type="button"
-                onClick={() => handleNav("/profile")}
-                className="text-white hover:text-primary"
-              >
-                Profile
-              </button>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuItem
+                      asChild
+                      className="{navigationMenuTriggerStyle()}"
+                    >
+                      <a
+                        className="text-stone-50 mx-4 text-2xl font-semibold tracking-wide"
+                        href="/library"
+                      >
+                        Library
+                      </a>
+                    </NavigationMenuItem>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="bg-transparent text-xl text-stone-50">Add</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="w-50">
+                        <li>
+                          <a onClick={() => handleNav("/library/books/new")}>
+                            Book
+                          </a>
+                        </li>
+                        <li>
+                          <a onClick={() => handleNav("/library/movies/new")}>
+                            Movie
+                          </a>
+                        </li>
+                        <li>
+                          <a onClick={() => handleNav("/library/tvshows/new")}>
+                            TV Show
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            onClick={() => handleNav("/library/videogames/new")}
+                          >
+                            Video Game
+                          </a>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <button
+                      type="button"
+                      onClick={() => handleNav("/profile")}
+                      className="text-stone-50 text-xl px-3 py-2 rounded-xl mx-4 hover:text-stone-50 hover:bg-primary/60"
+                    >
+                      Profile
+                    </button>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <LoginButton />
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <button
+                      className="bg-red-900/70 font-bold text-stone-50 hover:bg-stone-50 hover:text-red-600 py-2 px-4 mx-4 rounded-xl"
+                      onClick={() =>
+                        logout({
+                          logoutParams: { returnTo: window.location.origin },
+                        })
+                      }
+                    >
+                      Log Out
+                    </button>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </div>
-
-            <LoginButton />
-            <button
-              className="bg-red-900 p-2 rounded"
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
-            >
-              Log Out
-            </button>
           </div>
         </div>
 
@@ -125,39 +154,58 @@ export default function NavBar() {
               <div className="flex flex-col gap-2">
                 <button
                   type="button"
-                  onClick={() => handleNav("/books")}
+                  onClick={() => handleNav("/library")}
                   className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
                 >
                   Library
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleNav("/bookform")}
+                  onClick={() => handleNav("/library/books/new")}
                   className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
                 >
                   Add Book
                 </button>
                 <button
                   type="button"
-                  onClick={() => handleNav("/profile")}
+                  onClick={() => handleNav("/library/movies/new")}
                   className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                >
+                  Add Movie
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleNav("/library/tvshows/new")}
+                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                >
+                  Add TV Show
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleNav("/library/videogames/new")}
+                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                >
+                  Add Video Game
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleNav("/profile")}
+                  className="rounded-md px-3 py-2 text-left !text-stone-950 hover:bg-body hover:text-primary"
                 >
                   Profile
                 </button>
 
-                <div className="mt-2 flex items-center gap-2">
-                  <LoginButton />
-                  <button
-                    className=" font-bold"
-                    onClick={() =>
-                      logout({
-                        logoutParams: { returnTo: window.location.origin },
-                      })
-                    }
-                  >
-                    Log Out
-                  </button>
-                </div>
+                <LoginButton />
+                <button
+                  className="!font-bold"
+                  onClick={() =>
+                    logout({
+                      logoutParams: { returnTo: window.location.origin },
+                    })
+                  }
+                >
+                  Log Out
+                </button>
               </div>
             </div>
           </div>

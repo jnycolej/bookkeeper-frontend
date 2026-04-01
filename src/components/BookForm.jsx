@@ -16,7 +16,7 @@ export default function BookForm() {
       <NavBar />
 
       <div className="mx-auto bookKeeper-library-background w-full max-w-6xl px-4 py-6">
-        <h1 className="mb-6 text-center text-4xl font-semibold">
+        <h1 className="mb-6 text-center text-6xl text-stone-50 text-shadow-lg/30 font-semibold">
           Add New Book
         </h1>
 
@@ -37,7 +37,7 @@ export default function BookForm() {
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               type="submit"
-              className="bg-red-900 p-3 m-1 font-medium rounded"
+              className="bg-red-900 p-3 m-1 rounded-full text-2xl font-medium rounded"
               disabled={!isValid}
             >
               Add Book
@@ -45,7 +45,7 @@ export default function BookForm() {
 
             <button
               type="button"
-              className="bg-red-900/40 p-3 m-1 font-medium rounded"
+              className="bg-red-900/40 p-3 m-1 !text-xl rounded-full font-medium rounded"
               disabled={!isValid}
               onClick={async () => {
                 await submit({ reset: true }); // add & reset
@@ -56,7 +56,7 @@ export default function BookForm() {
 
             <button
               type="button"
-              className="border-2 border-red-600 p-2 px-4 font-bold bg-stone-50/50 text-red-900 rounded"
+              className="border-2 border-red-600 rounded-full p-2 px-4 !text-lg font-bold bg-stone-50/50 text-red-900 rounded"
               onClick={() => navigate("/home")}
             >
               Cancel

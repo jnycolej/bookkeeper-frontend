@@ -84,9 +84,9 @@ const VideoGameDetails = () => {
   }
 
   return (
-    <div className="h-screen bookKeeper-library-background text-stone-100">
+    <div className="bookKeeper-library-background text-stone-100">
       <NavBar />
-      <div className="flex mt-10  place-content-center gap-2">
+      <div className="flex mt-10 p-5 place-content-center gap-2">
         <div className="flex-none p-2 mr-5 shadow-lg/20 shadow-stone-950">
           <img src={videoGameImage} alt="Video Game Cover"></img>
         </div>
@@ -101,13 +101,19 @@ const VideoGameDetails = () => {
 
           <div className="p-2">
             <div className="">
-              <p className="font-bold">
-                {Array.isArray(videoGame.director)
-                  ? videoGame.director.join(" | ")
-                  : videoGame.director}
+              <p className="">
+                {" "}
+                Developer:{" "}
+                {Array.isArray(videoGame.developer)
+                  ? videoGame.developer.join(" | ")
+                  : videoGame.developer}
               </p>
               <hr />
               <div>
+                <div>
+                  {videoGame.rating ? `My Rating: ${videoGame.rating}` : " "}
+                </div>
+
                 <p className="text-base/10 font-medium capitalize">
                   <span className="text-lg">Genres</span> :{" "}
                   {Array.isArray(videoGame.genres)
@@ -119,6 +125,77 @@ const VideoGameDetails = () => {
                 <p className="text-base/10 font-medium">
                   <span className="text-lg">Release Year</span> :{" "}
                   {videoGame.releaseYear}
+                </p>
+              </div>
+              <div>
+                Publisher:{" "}
+                {Array.isArray(videoGame.publisher)
+                  ? videoGame.publisher.join(" | ")
+                  : videoGame.publisher}
+              </div>
+              <div>
+                Designers:{" "}
+                {Array.isArray(videoGame.designer)
+                  ? videoGame.designer.join(" | ")
+                  : videoGame.designer}
+              </div>
+              <div>
+                Programmers:{" "}
+                {Array.isArray(videoGame.programmers)
+                  ? videoGame.programmers.join(" | ")
+                  : videoGame.programmers}
+              </div>
+
+              <div>
+                Artist:{" "}
+                {Array.isArray(videoGame.artist)
+                  ? videoGame.artist.join(" | ")
+                  : videoGame.artist}
+              </div>
+              <div>
+                Writers:{" "}
+                {Array.isArray(videoGame.writers)
+                  ? videoGame.writers.join(" | ")
+                  : videoGame.writers}
+              </div>
+              <div>
+                Composer:{" "}
+                {Array.isArray(videoGame.composer)
+                  ? videoGame.composer.join(" | ")
+                  : videoGame.composer}
+              </div>
+              <div>
+                <p>Engine: {videoGame.engine} </p>
+              </div>
+              <div>
+                Platforms:{" "}
+                {Array.isArray(videoGame.platforms)
+                  ? videoGame.platforms.join(" | ")
+                  : videoGame.platforms}
+              </div>
+              <div>
+                Actors:{" "}
+                {Array.isArray(videoGame.actors)
+                  ? videoGame.actors.join(" | ")
+                  : videoGame.actors}
+              </div>
+              <div>
+                <p>
+                  {" "}
+                  <div>
+                    Country:{" "}
+                    {Array.isArray(videoGame.country)
+                      ? videoGame.country.join(" | ")
+                      : videoGame.country}
+                  </div>
+                </p>
+              </div>
+              <div>
+                <p>
+                  Mode:{" "}
+                  {Array.isArray(videoGame.mode)
+                    ? videoGame.mode.join(" | ")
+                    : videoGame.mode}
                 </p>
               </div>
               <div>
@@ -134,9 +211,18 @@ const VideoGameDetails = () => {
               </div>
               <div>
                 <p className="text-base/10 font-medium">
-                  <span className="text-lg">Date Finished</span> :{" "}
-                  {formatDate(videoGame.dateFinished)}
+                  <span className="text-lg">Date Started</span> :{" "}
+                  {formatDate(videoGame.dateStarted)}
                 </p>
+              </div>
+              <div>
+                <p className="text-base/10 font-medium">
+                  <span className="text-lg">Date Finished</span> :{" "}
+                  {videoGame.dateFinished ? formatDate(videoGame.dateFinished): "Still Playing/Not Started"}
+                </p>
+              </div>
+              <div>
+                <p>Replay Count: {videoGame.replayCount}</p>
               </div>
               <div>
                 <p className="text-base/10 font-medium">
@@ -159,16 +245,16 @@ const VideoGameDetails = () => {
                   Edit Game
                 </Button>
 
-                                <button
-                                  type="button"
-                                  className="outline-stone-100"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteVideoGame();
-                                  }}
-                                >
-                                  Delete Game
-                                </button>
+                <button
+                  type="button"
+                  className="outline-stone-100"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteVideoGame();
+                  }}
+                >
+                  Delete Game
+                </button>
                 <Button
                   className="text-xl"
                   onClick={() => navigation("/library")}

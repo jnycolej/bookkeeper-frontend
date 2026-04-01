@@ -26,26 +26,26 @@ const BookList = ({
     usePagination(safeBooks, pageSize);
 
   return (
-    <div className="rounded-lg bg-secondary p-2 mx-auto w-5/6 overscroll-x-contain">
+    <div className="rounded-xl bg-red-950/30 p-2 mx-auto w-9/10 overscroll-x-contain">
       <div className="overflow-x-auto rounded-md bg-light">
         <table className="min-w-full">
-          <thead className="bg-secondary text-light">
+          <thead className="bg-red-900/80 text-stone-50 tracking-wide">
             <tr>
-              <th className="px-3 py-2 text-left font-semibold">Title</th>
-              <th className="px-3 py-2 text-left font-semibold">Series</th>
-              <th className="px-3 py-2 text-left font-semibold">#</th>
-              <th className="px-3 py-2 text-left font-semibold">Author</th>
-              <th className="px-3 py-2 text-left font-semibold">Genres</th>
-              <th className="px-3 py-2 text-left font-semibold">Year</th>
-              <th className="px-3 py-2 text-left font-semibold">Pages</th>
-              <th className="px-3 py-2 text-left font-semibold">Status</th>
-              <th className="px-3 py-2 text-left font-semibold">
+              <th className="px-3 py-2 text-center font-semibold">Title</th>
+              <th className="px-3 py-2 text-center font-semibold">Series</th>
+              <th className="px-3 py-2 text-center font-semibold">#</th>
+              <th className="px-3 py-2 text-center font-semibold">Author</th>
+              <th className="px-3 py-2 text-center font-semibold">Genres</th>
+              <th className="px-3 py-2 text-center font-semibold">Year</th>
+              <th className="px-3 py-2 text-center font-semibold">Pages</th>
+              <th className="px-3 py-2 text-center font-semibold">Status</th>
+              <th className="px-3 py-2 text-center font-semibold">
                 Date Finished
               </th>
-              <th className="px-3 py-2 text-left font-semibold">KU</th>
-              <th className="px-3 py-2 text-left font-semibold">Libby</th>
-              <th className="px-3 py-2 text-left font-semibold">Edit</th>
-              <th className="px-3 py-2 text-left font-semibold">Delete</th>
+              <th className="px-3 py-2 text-center font-semibold">KU</th>
+              <th className="px-3 py-2 text-center font-semibold">Libby</th>
+              <th className="px-3 py-2 text-center font-semibold">Edit</th>
+              <th className="px-3 py-2 text-center font-semibold">Delete</th>
             </tr>
           </thead>
 

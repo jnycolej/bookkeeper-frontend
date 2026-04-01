@@ -45,22 +45,36 @@ const LibraryPage = () => {
     sortKey,
     setSortKey,
     clearFilters,
-  } = useLibraryFilters({books, movies, tvShows, videoGames});
+  } = useLibraryFilters({ books, movies, tvShows, videoGames });
 
   return (
     <div className="bookKeeper-library-background mx-auto min-h-screen w-full overflow-x-hidden">
       <NavBar />
 
       <div className="mx-auto w-full max-w-7xl py-6">
-        <h1 className="mb-5 mx-auto text-center text-6xl font-semibold">My Library</h1>
+        <h1 className="mb-5 mx-auto text-center text-6xl font-semibold">
+          My Library
+        </h1>
 
         <div className="flex mx-auto w-full max-w-7xl flex-col gap-6">
-          <Tabs value={activeTab} className="mx-auto" onValueChange={setActiveTab}>
-            <TabsList className="flex w-fit mx-auto bg-red-900/40">
-              <TabsTrigger className="gap-2 text-2xl" value="books"><Book /> Books</TabsTrigger>
-              <TabsTrigger className="gap-2 text-2xl" value="movies"><Clapperboard /> Movies</TabsTrigger>
-              <TabsTrigger className="gap-2 text-2xl" value="tvshows"><Tv /> TV</TabsTrigger>
-              <TabsTrigger className="gap-2 text-2xl" value="videogames"><Gamepad2 /> Games</TabsTrigger>
+          <Tabs
+            value={activeTab}
+            className="mx-auto"
+            onValueChange={setActiveTab}
+          >
+            <TabsList className="mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto bg-red-900/40 px-2">
+              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="books">
+                <Book /> Books
+              </TabsTrigger>
+              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="movies">
+                <Clapperboard /> Movies
+              </TabsTrigger>
+              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="tvshows">
+                <Tv /> TV
+              </TabsTrigger>
+              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="videogames">
+                <Gamepad2 /> Games
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="books">
@@ -68,71 +82,73 @@ const LibraryPage = () => {
                 <CardContent className="p-0">
                   {/* Controls */}
                   <div className="mx-auto w-full max-w-6xl grid gap-6">
-                  <Controls
-                    mediaType="books"
-                    addLabel="Add Book"
-                    onAdd={() => navigate("/library/books/new")}
-                    clearFilters={clearFilters}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    sortKey={sortKey}
-                    setSortKey={setSortKey}
-                    selectedGenres={selectedGenres}
-                    setSelectedGenres={setSelectedGenres}
-                    selectedStatuses={selectedStatuses}
-                    setSelectedStatuses={setSelectedStatuses}
-                  />                    
+                    <Controls
+                      mediaType="books"
+                      addLabel="Add Book"
+                      onAdd={() => navigate("/library/books/new")}
+                      clearFilters={clearFilters}
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                      sortKey={sortKey}
+                      setSortKey={setSortKey}
+                      selectedGenres={selectedGenres}
+                      setSelectedGenres={setSelectedGenres}
+                      selectedStatuses={selectedStatuses}
+                      setSelectedStatuses={setSelectedStatuses}
+                    />
                   </div>
 
                   {/* Status Summary */}
-                  <StatusSummary
-                      mediaType="books"
-                  />
-                  <BookList
-                    books={filteredBooks}
-                    searchQuery={searchQuery}
-                    onRowClick={(id) => navigate(`/library/books/${id}`)}
-                    onDelete={deleteById}
-                  />
+                  <StatusSummary mediaType="books" />
+                  <div className="w-full overflow-x-auto">
+                    <BookList
+                      books={filteredBooks}
+                      searchQuery={searchQuery}
+                      onRowClick={(id) => navigate(`/library/books/${id}`)}
+                      onDelete={deleteById}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="movies">
               <Card className="bg-transparent border-transparent">
-                <CardContent className="grid gap-6">
-                  <Controls
-                    mediaType="movies"
-                    addLabel="Add Movie"
-                    onAdd={() => navigate("/library/movies/new")}
-                    clearFilters={clearFilters}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    sortKey={sortKey}
-                    setSortKey={setSortKey}
-                    selectedGenres={selectedGenres}
-                    setSelectedGenres={setSelectedGenres}
-                    selectedStatuses={selectedStatuses}
-                    setSelectedStatuses={setSelectedStatuses}
-                  />
+                <CardContent className="p-0">
+                  <div className="mx-auto w-full max-w-6xl grid gap-6">
+                    <Controls
+                      mediaType="movies"
+                      addLabel="Add Movie"
+                      onAdd={() => navigate("/library/movies/new")}
+                      clearFilters={clearFilters}
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                      sortKey={sortKey}
+                      setSortKey={setSortKey}
+                      selectedGenres={selectedGenres}
+                      setSelectedGenres={setSelectedGenres}
+                      selectedStatuses={selectedStatuses}
+                      setSelectedStatuses={setSelectedStatuses}
+                    />
 
-                  {/* Status Summary */}
-                  <StatusSummary
-                    mediaType="movies"
-                  />
-                  <MovieList
-                    movies={filteredMovies}
-                    searchQuery={searchQuery}
-                    onRowClick={(id) => navigate(`/library/movies/${id}`)}
-                    onDelete={movieDeleteById}
-                  />
+                    {/* Status Summary */}
+                    <StatusSummary mediaType="movies" />
+                  </div>
+                  <div className="w-full overflow-x-auto">
+                    <MovieList
+                      movies={filteredMovies}
+                      searchQuery={searchQuery}
+                      onRowClick={(id) => navigate(`/library/movies/${id}`)}
+                      onDelete={movieDeleteById}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="tvshows">
               <Card className="bg-transparent border-transparent">
-                <CardContent className="grid gap-6">
+                <CardContent className="mx-auto w-full max-w-6xl grid gap-6">
                   <Controls
                     mediaType="tvshows"
                     addLabel="Add TV Show"
@@ -149,22 +165,22 @@ const LibraryPage = () => {
                   />
 
                   {/* Status Summary */}
-                  <StatusSummary
-                    mediaType="tvshows"
-                  />
-                  <TVShowList
-                    tvShows={filteredTVShows}
-                    searchQuery={searchQuery}
-                    onRowClick={(id) => navigate(`/library/tvshows/${id}`)}
-                    onDelete={tvShowDeleteById}
-                  />
+                  <StatusSummary mediaType="tvshows" />
+                  <div className="w-full overflow-x-auto">
+                    <TVShowList
+                      tvShows={filteredTVShows}
+                      searchQuery={searchQuery}
+                      onRowClick={(id) => navigate(`/library/tvshows/${id}`)}
+                      onDelete={tvShowDeleteById}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="videogames">
               <Card className="bg-transparent border-transparent">
-                <CardContent className="grid gap-6">
+                <CardContent className="mx-auto w-full max-w-6xl grid gap-6">
                   <Controls
                     mediaType="videogames"
                     addLabel="Add Video Game"
@@ -181,15 +197,15 @@ const LibraryPage = () => {
                   />
 
                   {/* Status Summary */}
-                  <StatusSummary
-                    mediaType="videogames"
-                  />
-                  <VideoGameList
-                    videoGames={filteredVideoGames}
-                    searchQuery={searchQuery}
-                    onRowClick={(id) => navigate(`/library/videogames/${id}`)}
-                    onDelete={videoGameDeleteById}
-                  />
+                  <StatusSummary mediaType="videogames" />
+                  <div className="w-full overflow-x-auto">
+                    <VideoGameList
+                      videoGames={filteredVideoGames}
+                      searchQuery={searchQuery}
+                      onRowClick={(id) => navigate(`/library/videogames/${id}`)}
+                      onDelete={videoGameDeleteById}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
