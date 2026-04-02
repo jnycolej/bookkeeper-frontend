@@ -48,31 +48,43 @@ const LibraryPage = () => {
   } = useLibraryFilters({ books, movies, tvShows, videoGames });
 
   return (
-    <div className="bookKeeper-library-background mx-auto min-h-screen w-full overflow-x-hidden">
+    <div className="bookKeeper-library-background min-h-screen mx-auto">
       <NavBar />
 
-      <div className="mx-auto w-full max-w-7xl py-6">
-        <h1 className="mb-5 mx-auto text-center text-6xl font-semibold">
+      <div className="mx-auto w-full px-4 py-6 sm:px-6 lg:px-8">
+        {" "}
+        <h1 className="mx-auto mb-5 text-center text-4xl font-semibold sm:text-5xl lg:text-6xl">
           My Library
         </h1>
-
-        <div className="flex mx-auto w-full max-w-7xl flex-col gap-6">
+        <div className="flex mx-auto w-full flex-col gap-6">
           <Tabs
             value={activeTab}
-            className="mx-auto"
+            className="mx-auto w-full"
             onValueChange={setActiveTab}
           >
-            <TabsList className="mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto bg-red-900/40 px-2">
-              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="books">
+            <TabsList className="mx-auto flex w-full max-w-4xl sm:w-fit gap-2 overflow-x-auto bg-red-900/40 px-2">
+              <TabsTrigger
+                className="shrink-0 whitespace-nowrap gap-2 text-base sm:text-2xl"
+                value="books"
+              >
                 <Book /> Books
               </TabsTrigger>
-              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="movies">
+              <TabsTrigger
+                className="shrink-0 gap-2 text-base sm:text-2xl"
+                value="movies"
+              >
                 <Clapperboard /> Movies
               </TabsTrigger>
-              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="tvshows">
+              <TabsTrigger
+                className="shrink-0 gap-2 text-base sm:text-2xl"
+                value="tvshows"
+              >
                 <Tv /> TV
               </TabsTrigger>
-              <TabsTrigger className="shrink-0 gap-2 text-base sm:text-2xl" value="videogames">
+              <TabsTrigger
+                className="shrink-0 gap-2 text-base sm:text-2xl"
+                value="videogames"
+              >
                 <Gamepad2 /> Games
               </TabsTrigger>
             </TabsList>

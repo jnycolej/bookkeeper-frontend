@@ -18,29 +18,28 @@ export const Controls = ({
   setSelectedStatuses,
 }) => {
   return (
-    <div className="mb-4 mx-auto w-full max-w-5xl rounded-2xl bg-dark/70 p-4 text-light backdrop-blur-sm">
-      <div className="grid grid-cols-1 grid-rows-3 gap-4 sm:grid-cols-3">
-        <div className="col-span-3">
+    <div className="mb-4 mx-auto w-full max-w-6xl rounded-2xl bg-dark/50 p-4 text-light backdrop-blur-sm">
+      <div className="flex flex-wrap items-start gap-3">
           <button
             type="button"
-            className="bk-btn-primary w-full"
+            className="bg-primary p-2 rounded-xl text-xl font-semibold"
             onClick={onAdd}
           >
             {addLabel}
           </button>
-        </div>
+
           <SortButton
-            className=""
             mediaType={mediaType}
             value={sortKey}
             onChange={setSortKey}
           />
+
           <GenreFilter
-            className=""
             mediaType={mediaType}
             value={selectedGenres}
             onChange={setSelectedGenres}
           />
+
           <StatusFilter
             className=""
             mediaType={mediaType}
@@ -48,17 +47,16 @@ export const Controls = ({
             onChange={setSelectedStatuses}
           />
 
-        <div className="sm:col-span-2">
+        <div className="flex w-full flex-col gap-2 md:ml-auto md:w-auto md:flex-row md:items-center">
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
         </div>
-
-        <div className="sm-col-span-1">
+        <div>
           <button
             type="button"
-            className="bk-btn-outline text-light w-full"
+            className="text-stone-50 p-2 border rounded-lg font-semibold hover:bg-rose-900 border-2 tracking-wider"
             onClick={clearFilters}
           >
             Clear

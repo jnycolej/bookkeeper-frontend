@@ -40,35 +40,45 @@ export default function NavBar() {
 
   return (
     <header className="w-full">
-      <nav className="flex items-center bg-red-900/40 gap-4 px-4 py-3">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
-          {/* Brand Logo */}
-          <button
-            type="button"
-            onClick={() => handleNav("/home")}
-            className="flex items-center"
-            aria-label="Go to home"
-          >
-            <img
-              className="h-20 w-auto"
-              src={BookKeeperLogo}
-              alt="BookKeeper"
-            />
-          </button>
+      <nav className="bg-red-900/40 px-4 py-3">
+        <div className="mx-auto flex w-full max-w-6xl">
+          <div className="flex items-center justify-between gap-6">
+            {/* Brand Logo */}
+            <button
+              type="button"
+              onClick={() => handleNav("/home")}
+              className="flex items-center"
+              aria-label="Go to home"
+            >
+              <img
+                className="h-12 sm:h-16 md:h-20 w-auto"
+                src={BookKeeperLogo}
+                alt="BookKeeper"
+              />
+            </button>
 
-          {/* Mobile toggle */}
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md border border-secondary px-3 py-2 text-dark md:hidden"
-            aria-label="Toggle navigation"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            {/* simple hamburger */}
-            <span className="block h-0.5 w-5 bg-dark" />
-            <span className="mt-1 block h-0.5 w-5 bg-dark" />
-            <span className="mt-1 block h-0.5 w-5 bg-dark" />
-          </button>
+            {/* Mobile toggle */}
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="flex flex-col justify-center items-center gap-1.5 md:hidden"
+            >
+              <span
+                className={`h-0.5 w-6 bg-white transition ${
+                  open ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-6 bg-white transition ${
+                  open ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`h-0.5 w-6 bg-white transition ${
+                  open ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
+            </button>
+          </div>
 
           {/* Desktop nav */}
           <div className="hidden items-center md:flex">
@@ -89,7 +99,9 @@ export default function NavBar() {
                     </NavigationMenuItem>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="bg-transparent text-xl text-stone-50">Add</NavigationMenuTrigger>
+                    <NavigationMenuTrigger className="bg-transparent text-xl text-stone-50">
+                      Add
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="w-50">
                         <li>
@@ -145,71 +157,70 @@ export default function NavBar() {
               </NavigationMenu>
             </div>
           </div>
-        </div>
+          {/* Mobile menu */}
+          {open && (
+            <div className="mt-2 md:hidden">
+              <div className="mt-2 rounded-xl border border-secondary bg-light p-3">
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/library")}
+                    className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                  >
+                    Library
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/library/books/new")}
+                    className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                  >
+                    Add Book
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/library/movies/new")}
+                    className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                  >
+                    Add Movie
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/library/tvshows/new")}
+                    className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                  >
+                    Add TV Show
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/library/videogames/new")}
+                    className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
+                  >
+                    Add Video Game
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNav("/profile")}
+                    className="rounded-md px-3 py-2 text-left !text-stone-950 hover:bg-body hover:text-primary"
+                  >
+                    Profile
+                  </button>
 
-        {/* Mobile menu */}
-        {open && (
-          <div className="mx-auto w-full max-w-6xl md:hidden">
-            <div className="mt-2 rounded-xl border border-secondary bg-light p-3">
-              <div className="flex flex-col gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleNav("/library")}
-                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
-                >
-                  Library
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNav("/library/books/new")}
-                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
-                >
-                  Add Book
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNav("/library/movies/new")}
-                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
-                >
-                  Add Movie
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNav("/library/tvshows/new")}
-                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
-                >
-                  Add TV Show
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNav("/library/videogames/new")}
-                  className="rounded-md px-3 py-2 text-left text-dark hover:bg-body hover:text-primary"
-                >
-                  Add Video Game
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleNav("/profile")}
-                  className="rounded-md px-3 py-2 text-left !text-stone-950 hover:bg-body hover:text-primary"
-                >
-                  Profile
-                </button>
-
-                <LoginButton />
-                <button
-                  className="!font-bold"
-                  onClick={() =>
-                    logout({
-                      logoutParams: { returnTo: window.location.origin },
-                    })
-                  }
-                >
-                  Log Out
-                </button>
+                  <LoginButton />
+                  <button
+                    className="!font-bold"
+                    onClick={() =>
+                      logout({
+                        logoutParams: { returnTo: window.location.origin },
+                      })
+                    }
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </nav>
     </header>
   );

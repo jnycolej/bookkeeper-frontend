@@ -39,9 +39,9 @@ export const StatusSummary = ({ mediaType }) => {
   switch (mediaType) {
     case "books":
       return (
-        <div className="rounded-xl mx-auto w-4/5 my-4 bg-dark/70 p-4 text-light">
+        <div className="mx-auto my-4 w-full max-w-6xl rounded-xl bg-dark/70 p-4 text-light backdrop-blur-sm">
+          {" "}
           <div className="mb-2 text-lg font-semibold">Status Summary</div>
-
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <div className="rounded-md bg-light/10 p-2">
               <div className="opacity-80">Read</div>
@@ -92,9 +92,9 @@ export const StatusSummary = ({ mediaType }) => {
       break;
     case "movies":
       return (
-        <div className="mb-4 rounded-xl w-4/5 mx-auto my-4 bg-dark/70 p-4 text-light">
+        <div className="mx-auto my-4 w-full max-w-6xl rounded-xl bg-dark/70 p-4 text-light backdrop-blur-sm">
+          {" "}
           <div className="mb-2 text-lg font-semibold">Status Summary</div>
-
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <div className="rounded-md bg-light/10 px-3 py-2">
               <div className="text-xs opacity-80">Watched</div>
@@ -132,9 +132,9 @@ export const StatusSummary = ({ mediaType }) => {
       break;
     case "tvshows":
       return (
-        <div className="mb-4 rounded-xl mx-auto w-4/5 my-4 bg-dark/70 p-4 text-light">
+        <div className="mx-auto my-4 w-full max-w-6xl rounded-xl bg-dark/70 p-4 text-light backdrop-blur-sm">
+          {" "}
           <div className="mb-2 text-lg font-semibold">Status Summary</div>
-
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <div className="rounded-md bg-light/10 px-3 py-2">
               <div className="text-xs opacity-80">Watched</div>
@@ -172,9 +172,9 @@ export const StatusSummary = ({ mediaType }) => {
       break;
     case "videogames":
       return (
-        <div className="mb-4 rounded-xl mx-auto w-4/5 my-4 bg-dark/70 p-4 text-light">
+        <div className="mx-auto my-4 w-full max-w-6xl rounded-xl bg-dark/70 p-4 text-light backdrop-blur-sm">
+          {" "}
           <div className="mb-2 text-lg font-semibold">Status Summary</div>
-
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <div className="rounded-md bg-light/10 px-3 py-2">
               <div className=" opacity-80">Completed</div>
