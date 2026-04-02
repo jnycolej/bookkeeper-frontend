@@ -27,7 +27,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
     };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row sm:items-center w-full lg:w-auto lg:ml-auto gap-2">
       <label htmlFor="search" className="bk-label mb-0 text-white text-xl">
         Search:
       </label>
