@@ -105,23 +105,27 @@ export default function NavBar() {
                     <NavigationMenuContent>
                       <ul className="w-50">
                         <li>
-                          <a onClick={() => handleNav("/library/books/new")}>
+                          <a onClick={() => handleNav("/library/books/new")}
+                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
                             Book
                           </a>
                         </li>
                         <li>
-                          <a onClick={() => handleNav("/library/movies/new")}>
+                          <a onClick={() => handleNav("/library/movies/new")}
+                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
                             Movie
                           </a>
                         </li>
                         <li>
-                          <a onClick={() => handleNav("/library/tvshows/new")}>
+                          <a onClick={() => handleNav("/library/tvshows/new")}
+                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
                             TV Show
                           </a>
                         </li>
                         <li>
                           <a
                             onClick={() => handleNav("/library/videogames/new")}
+                            className="rounded-md text-left text-dark hover:bg-red-950 hover:text-stone-50"
                           >
                             Video Game
                           </a>

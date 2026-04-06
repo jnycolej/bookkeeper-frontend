@@ -64,7 +64,7 @@ const TVShowList = ({
   const { page, totalPages, pagedItems, pageItems, goTo, startItem, endItem } =
     usePagination(safeTVShows, pageSize);
   return (
-    <div className="rounded-lg w-3/4 overscroll-x-contain bg-secondary p-2">
+    <div className="rounded-xl bg-red-950/30 p-2 mx-auto w-9/10 overscroll-x-contain">
       <div className="overflow-x-auto rounded-md bg-light">
         <table className="min-w-full border-collapse text-sm">
           <thead className="bg-secondary text-light">

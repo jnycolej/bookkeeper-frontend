@@ -53,7 +53,7 @@ const LibraryPage = () => {
 
       <div className="mx-auto w-full px-4 py-6 sm:px-6 lg:px-8">
         {" "}
-        <h1 className="mx-auto mb-5 text-center text-4xl font-semibold sm:text-5xl lg:text-6xl">
+        <h1 className="mx-auto mb-5 text-center text-4xl font-semibold text-stone-900 text-shadow-lg sm:text-5xl lg:text-7xl">
           My Library
         </h1>
         <div className="flex mx-auto w-full flex-col gap-6">

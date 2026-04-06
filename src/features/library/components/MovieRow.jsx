@@ -25,8 +25,9 @@ export const MovieRow = ({ movie, idx, searchQuery, onRowClick, onDelete }) => {
       onClick={() => onRowClick(movie._id)}
       className={[
         "cursor-pointer border-t border-secondary/40",
-        idx % 2 === 0 ? "bg-secondary/5" : "bg-dark/5",
-        "hover:bg-body",
+        idx % 2 === 0 ? "bg-secondary/40" : "bg-red-900/65 text-stone-100",
+        "hover:bg-stone-100/70 text-stone-950",
+        ""
       ].join(" ")}
     >
       <td className="px-3 py-2">
