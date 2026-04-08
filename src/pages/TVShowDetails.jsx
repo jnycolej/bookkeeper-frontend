@@ -10,6 +10,7 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteTVShow } from "../services/tvShowService";
+import { Rating } from "@/components/Rating";
 
 const POSTER_SIZE = "w500";
 const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
@@ -111,7 +112,14 @@ const TVShowDetails = () => {
           )}
         </div>
         <div className="flex-2 max-h-[70vh] my-2 p-2 overflow-auto rounded bg-red-900/60">
-          <p className="text-3xl">{tvShow.title}</p>
+          <p className="text-3xl">{tvShow.title}             <span className="ml-2">
+                        {tvShow.rating != null ? (
+                          <span>
+                            {" | "}
+                            <Rating ratingNum={Number(tvShow.rating)} />{" "}
+                          </span>
+                        ) : null}
+                      </span></p>
 
           <div className="p-2">
             <div className="">

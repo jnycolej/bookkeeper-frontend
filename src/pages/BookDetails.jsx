@@ -10,6 +10,7 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteBook } from "../services/bookService";
+import { Rating } from "@/components/Rating";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -23,9 +24,7 @@ const BookDetails = () => {
 
   const navigation = useNavigate();
 
-  const handleDelete = () => {
-
-  };
+  const handleDelete = () => {};
 
   useEffect(() => {
     //Fetch book details from the backend API
@@ -45,7 +44,9 @@ const BookDetails = () => {
             }-M.jpg?default=false`,
           );
         } else {
-          setBookImage(`https://images.amazon.com/images/P/${data.asin}.jpg?default=false`);
+          setBookImage(
+            `https://images.amazon.com/images/P/${data.asin}.jpg?default=false`,
+          );
         }
       } catch (err) {
         console.error(err);
@@ -69,6 +70,7 @@ const BookDetails = () => {
     return <div className="text-centeer text-danger mt-5">Book not found</div>;
   }
 
+  console.log("book.rating:", book.rating, typeof book.rating);
   return (
     <div className="h-screen bookKeeper-library-background text-stone-100">
       <NavBar />
@@ -82,6 +84,14 @@ const BookDetails = () => {
             <span className="font-light text-xl">
               {book.series} {book.seriesNum ? `# ${book.seriesNum}` : ""}
             </span>
+            <span className="ml-2">
+              {book.rating != null ? (
+                <span>
+                  {" | "}
+                  <Rating ratingNum={Number(book.rating)} />{" "}
+                </span>
+              ) : null}
+            </span>
           </p>
 
           <div className="p-2">
@@ -92,7 +102,6 @@ const BookDetails = () => {
                   : book.author}
               </p>
               <hr />
-                            <div>{book.rating ? `My Rating: ${book.rating}` : " "}</div>
 
               <div>
                 <p className="text-base/10 font-medium capitalize">
@@ -122,7 +131,9 @@ const BookDetails = () => {
                       book.status.slice(1)}
                 </p>
               </div>
-              <div><p>Reread Count: {book.rereadCount}</p></div>
+              <div>
+                <p>Reread Count: {book.rereadCount}</p>
+              </div>
               <div>
                 <p className="text-base/10 font-medium">
                   <span className="text-lg">Date Finished</span> :{" "}

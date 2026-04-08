@@ -10,6 +10,7 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteVideoGame } from "@/services/gameService";
+import { Rating } from "@/components/Rating";
 
 const VideoGameDetails = () => {
   const { id } = useParams();
@@ -97,6 +98,14 @@ const VideoGameDetails = () => {
               {videoGame.series}{" "}
               {videoGame.seriesNum ? `# ${videoGame.seriesNum}` : ""}
             </span>
+                        <span className="ml-2">
+                          {videoGame.rating != null ? (
+                            <span>
+                              {" | "}
+                              <Rating ratingNum={Number(videoGame.rating)} />{" "}
+                            </span>
+                          ) : null}
+                        </span>
           </p>
 
           <div className="p-2">

@@ -10,6 +10,7 @@ import api from "../services/api";
 import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteMovie } from "../services/movieService";
+import { Rating } from "@/components/Rating";
 
 const POSTER_SIZE = "w500";
 const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
@@ -110,6 +111,14 @@ const MovieDetails = () => {
             <span className="font-light text-xl">
               {movie.series} {movie.seriesNum ? `# ${movie.seriesNum}` : ""}
             </span>
+                        <span className="ml-2">
+                          {movie.rating != null ? (
+                            <span>
+                              {" | "}
+                              <Rating ratingNum={Number(movie.rating)} />{" "}
+                            </span>
+                          ) : null}
+                        </span>
           </p>
 
           <div className="p-2">
