@@ -2,7 +2,7 @@ import axios from "axios";
 
 const rawBase =
   import.meta.env.VITE_API_URL ||
-  "http://localhost:5000/api";
+  "http://localhost:5050/api";
 
 const BASE_URL = rawBase.endsWith("/api") ? rawBase : `${rawBase.replace(/\/$/, "")}/api`;
 
