@@ -54,7 +54,12 @@
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "^1.4.0",
     "@vitejs/plugin-react": "^5.1.2",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+        "@tailwindcss/vite": "^4.1.18",
+    "autoprefixer": "^10.4.23",
+    "daisyui": "^5.5.19",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
   },
   "keywords": [],
   "author": "",
@@ -72,12 +77,5 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "@vitejs/plugin-react": "^5.1.2",
-    "autoprefixer": "^10.4.23",
-    "daisyui": "^5.5.19",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "vite": "^7.3.1"
   }
 }
