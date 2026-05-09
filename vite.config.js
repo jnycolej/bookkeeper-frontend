@@ -23,13 +23,14 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
-    preview: {
-      host: "0.0.0.0",
-      port: Number(process.env.PORT) || 3000,
-      allowedHosts: [
-        ".herokuapp.com",
-        "bookkeeperapp-frontend-21bdde81eaa9.herokuapp.com"
-      ],
-    },
+  },
+
+  preview: {
+    host: "0.0.0.0",
+    port: Number(process.env.PORT) || 3000,
+    allowedHosts: [
+      ".herokuapp.com",
+      "bookkeeperapp-frontend-21bdde81eaa9.herokuapp.com",
+    ],
   },
 });
