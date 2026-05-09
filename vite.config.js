@@ -17,11 +17,16 @@ export default defineConfig({
 
     proxy: {
       "/api": {
-        target: "http://backend:5000",
+        target: "http://backend:5050",
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+    },
+    preview: {
+      host: "0.0.0.0",
+      port: process.env.PORT || 3000,
+      allowedHosts: ["bookkeeperapp-frontend-21bdde81eaa9.herokuapp.com"],
     },
   },
 });
