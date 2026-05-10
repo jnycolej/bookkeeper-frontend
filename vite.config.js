@@ -31,6 +31,8 @@ export default defineConfig({
     allowedHosts: [
       ".herokuapp.com",
       "bookkeeperapp-frontend-21bdde81eaa9.herokuapp.com",
+      "bookkeeper-app.com",
+      "www.bookkeeper-app.com"
     ],
   },
 });
