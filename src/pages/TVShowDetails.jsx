@@ -95,7 +95,7 @@ const TVShowDetails = () => {
   }
 
   return (
-    <div className=" bookKeeper-library-background text-stone-100">
+    <div className="bookKeeper-library-background text-stone-100">
       <NavBar />
       <div className="flex mt-10 mx-5 place-content-center gap-2">
         <div className="flex-1 p-2">
@@ -112,14 +112,17 @@ const TVShowDetails = () => {
           )}
         </div>
         <div className="flex-2 max-h-[70vh] my-2 p-2 overflow-auto rounded bg-red-900/60">
-          <p className="text-3xl">{tvShow.title}             <span className="ml-2">
-                        {tvShow.rating != null ? (
-                          <span>
-                            {" | "}
-                            <Rating ratingNum={Number(tvShow.rating)} />{" "}
-                          </span>
-                        ) : null}
-                      </span></p>
+          <p className="text-3xl">
+            {tvShow.title}{" "}
+            <span className="ml-2">
+              {tvShow.rating != null ? (
+                <span>
+                  {" | "}
+                  <Rating ratingNum={Number(tvShow.rating)} />{" "}
+                </span>
+              ) : null}
+            </span>
+          </p>
 
           <div className="p-2">
             <div className="">
@@ -193,9 +196,9 @@ const TVShowDetails = () => {
                       aria-label="Cinematography accordion"
                       title="Cinematography"
                     >
-                  {Array.isArray(tvShow.cinematography)
-                    ? tvShow.cinematography.join(" | ")
-                    : tvShow.cinematography}                      
+                      {Array.isArray(tvShow.cinematography)
+                        ? tvShow.cinematography.join(" | ")
+                        : tvShow.cinematography}
                     </AccordionItem>
                   </Accordion>
                 </p>
@@ -209,7 +212,8 @@ const TVShowDetails = () => {
               <div>
                 <p className="">
                   <span className="">Start Date - End Date</span> :{" "}
-                  {(tvShow.startDate).slice(0,10)} <span className="">to</span> {tvShow.endDate ? (tvShow.endDate).slice(0,10) : "Present"}
+                  {tvShow.startDate.slice(0, 10)} <span className="">to</span>{" "}
+                  {tvShow.endDate ? tvShow.endDate.slice(0, 10) : "Present"}
                 </p>
               </div>
               <div>
@@ -309,3 +313,4 @@ const TVShowDetails = () => {
 export default withAuthenticationRequired(TVShowDetails, {
   onRedirecting: () => <div>Loading...</div>,
 });
+

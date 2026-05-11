@@ -1,12 +1,19 @@
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { addBook } from "../services/bookService";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
-
+import {React} from "react";
 import { useBookForm } from "@/features/library/hooks/useBookForm";
 import { BookFields } from "@/features/library/components/BookFields";
+import AddMediaSearchBar from "@/components/AddMediaSearchBar";
+
+import {mapGoogleBookToBookForm} from "@/features/library/utils/mediaMappers";
 
 export default function BookForm() {
   const navigate = useNavigate();
+
+  const { getAccessTokenSilently } = useAuth0();
 
   const { formData, setField, handleChange, isValid, submit } =
     useBookForm(addBook);
@@ -20,6 +27,18 @@ export default function BookForm() {
           Add New Book
         </h1>
 
+        <AddMediaSearchBar
+          mediaType="book"
+          getAccessTokenSilently={getAccessTokenSilently}
+          onSelect={(selected) => {
+            const mapped = mapGoogleBookToBookForm(selected);
+
+            Object.entries(mapped).forEach(([key, value]) => {
+              setField(key, value);
+            });
+          }}
+          />
+          
         <form
           className="bk-form p-5"
           onSubmit={async (e) => {

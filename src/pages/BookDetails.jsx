@@ -72,13 +72,13 @@ const BookDetails = () => {
 
   console.log("book.rating:", book.rating, typeof book.rating);
   return (
-    <div className="h-screen bookKeeper-library-background text-stone-100">
+    <div className="bookKeeper-library-background text-stone-100">
       <NavBar />
-      <div className="flex mt-10  place-content-center gap-2">
+      <div className="flex py-10  place-content-center gap-2">
         <div className="flex-none m-5 shadow-lg/20 shadow-stone-950">
           <img src={bookImage} alt="Book Cover"></img>
         </div>
-        <div className="flex-intial p-2 rounded bg-red-900/60">
+        <div className="flex-intial p-2 mr-4 overflow-y-scroll rounded bg-red-900/60">
           <p className="text-3xl">
             {book.title} -{" "}
             <span className="font-light text-xl">
@@ -96,7 +96,7 @@ const BookDetails = () => {
 
           <div className="p-2">
             <div className="">
-              <p className="font-bold">
+              <p className="font-bold text-stone-300">
                 {Array.isArray(book.author)
                   ? book.author.join(" | ")
                   : book.author}
@@ -104,27 +104,27 @@ const BookDetails = () => {
               <hr />
 
               <div>
-                <p className="text-base/10 font-medium capitalize">
-                  <span className="text-lg">Genres</span> :{" "}
+                <p className="text-sm  font-semithin capitalize">
+                  <span className="text-xl font-medium">Genres</span> :{" "}
                   {Array.isArray(book.genres)
                     ? book.genres.join(" | ")
                     : book.genre}
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Publication Year</span> :{" "}
+                <p className="text-sm  font-semithin">
+                  <span className="text-xl font-medium">Publication Year</span> :{" "}
                   {book.publicationYear}
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium">
-                  <span className="text-lg">Page Count</span> : {book.pageCount}
+                <p className="text-base font-semithin">
+                  <span className="text-lg">Page Count</span> : {book.pageCount} pages
                 </p>
               </div>
               <div>
-                <p className="text-base/10 font-medium capitalize">
-                  <span className="text-lg">Status</span> :{" "}
+                <p className="text-base font-semithin capitalize">
+                  <span className="text-lg font-semibold tracking-wide">Status</span> :{" "}
                   {book.status === "currentlyReading"
                     ? "Currently Reading"
                     : book.status.charAt(0).toUpperCase() +
@@ -132,7 +132,7 @@ const BookDetails = () => {
                 </p>
               </div>
               <div>
-                <p>Reread Count: {book.rereadCount}</p>
+                <p className="text-base font-semithin"><span className="font-semibold tracking-wide text-lg">Reread Count:</span> {book.rereadCount}</p>
               </div>
               <div>
                 <p className="text-base/10 font-medium">

@@ -11,6 +11,7 @@ import NavBar from "../components/NavBar";
 import { formatDate } from "@/utils/date";
 import { deleteMovie } from "../services/movieService";
 import { Rating } from "@/components/Rating";
+import { Accordion, AccordionItem } from "@heroui/accordion";
 
 const POSTER_SIZE = "w500";
 const TMDB_IMG_BASE = "https://image.tmdb.org/t/p";
@@ -111,14 +112,14 @@ const MovieDetails = () => {
             <span className="font-light text-xl">
               {movie.series} {movie.seriesNum ? `# ${movie.seriesNum}` : ""}
             </span>
-                        <span className="ml-2">
-                          {movie.rating != null ? (
-                            <span>
-                              {" | "}
-                              <Rating ratingNum={Number(movie.rating)} />{" "}
-                            </span>
-                          ) : null}
-                        </span>
+            <span className="ml-2">
+              {movie.rating != null ? (
+                <span>
+                  {" | "}
+                  <Rating ratingNum={Number(movie.rating)} />{" "}
+                </span>
+              ) : null}
+            </span>
           </p>
 
           <div className="p-2">
@@ -151,13 +152,19 @@ const MovieDetails = () => {
                   min
                 </p>
               </div>
-                            <div>
-                <p>
-                  Actors:{" "}
-                  {Array.isArray(movie.actors)
-                    ? movie.actors.join(" | ")
-                    : movie.actors}
-                </p>
+              <div>
+                <Accordion isCompact>
+                    <AccordionItem
+                      className="justify-content-left"
+                      aria-label="Actor Accordion"
+                      title="Actors"
+                    >
+                      {Array.isArray(movie.actors)
+                        ? movie.actors.join(" | ")
+                        : movie.actors}
+                    </AccordionItem>                  
+                </Accordion>
+
               </div>
               <div>
                 <p>
@@ -167,7 +174,7 @@ const MovieDetails = () => {
                     : movie.screenwriter}
                 </p>
               </div>
-                            <div>
+              <div>
                 <p>
                   Cinematography:{" "}
                   {Array.isArray(movie.screenwriter)
@@ -186,7 +193,7 @@ const MovieDetails = () => {
               <div>
                 <p>Studio: {movie.studio}</p>
               </div>
-                            <div>
+              <div>
                 <p>
                   Composer:{" "}
                   {Array.isArray(movie.musicBy)
@@ -210,7 +217,14 @@ const MovieDetails = () => {
                     : movie.productionCompany}
                 </p>
               </div>
-              <div><p>Country: {Array.isArray(movie.country) ? movie.country.join(" | ") : movie.country}</p></div>
+              <div>
+                <p>
+                  Country:{" "}
+                  {Array.isArray(movie.country)
+                    ? movie.country.join(" | ")
+                    : movie.country}
+                </p>
+              </div>
               <p className="text-base/10 font-medium capitalize">
                 <span className="text-lg">Status</span> :{" "}
                 {movie.status === "wantToWatch"
@@ -229,7 +243,9 @@ const MovieDetails = () => {
                   <span className="text-lg">Format</span> : {movie.format}
                 </p>
               </div>
-              <div><p>Rewatch Count: {movie.rewatchCount}</p></div>
+              <div>
+                <p>Rewatch Count: {movie.rewatchCount}</p>
+              </div>
 
               <div className="flex p-2 gap-4">
                 <Button

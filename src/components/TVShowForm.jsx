@@ -1,12 +1,17 @@
 import { addTVShow } from "../services/tvShowService";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
 import { useTVShowForm } from "@/features/library/hooks/useTVShowForm";
 import { TVShowFields } from "@/features/library/components/TVShowFields";
 
+import  AddMediaSearchBar from "@/components/AddMediaSearchBar";
+import { mapTmdbTvToTvForm } from "@/features/library/utils/mediaMappers";
 export default function TVShowForm() {
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
 
   const { formData, setField, handleChange, isValid, submit } =
     useTVShowForm(addTVShow);
@@ -20,6 +25,16 @@ export default function TVShowForm() {
           Add New TV Show
         </h1>
 
+        <AddMediaSearchBar
+          mediaType="tv"
+          getAccessTokenSilently={getAccessTokenSilently}
+          onSelect={(selected) => {
+            const mapped = mapTmdbTvToTvForm(selected);
+            Object.entries(mapped).forEach(([key, value]) =>
+              setField(key, value),
+            );
+          }}
+        />
         <form
           className="bk-form p-5"
           onSubmit={async (e) => {

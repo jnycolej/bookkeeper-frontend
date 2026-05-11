@@ -165,8 +165,10 @@ const FeatureBanner = () => {
   }, [books]);
 
   useEffect(() => {
-    let featuredCurrentlyWatching;
-    setFeaturedTVShows(tvShows.filter((t) => t.status === "watching"));
+    let featuredCurrentlyWatching = tvShows.filter((t) => t.status === "watching");
+    let featuredReWatching = tvShows.filter((t) => t.status === "rewatching");
+    let featured = featuredCurrentlyWatching.concat(featuredReWatching);
+    setFeaturedTVShows(featured);
   }, [tvShows]);
 
   useEffect(() => {
@@ -247,105 +249,6 @@ const FeatureBanner = () => {
           />
         ))}
       </Marquee>
-      {/* <div className="py-4">
-        <h1 className="text-4xl text-center">Currently Reading</h1>
-        <div dir="rtl">
-          <Ticker
-            items={featuredBooks}
-            speed={50}
-            gap={20}
-            renderItem={(b) => (
-              <img
-                src={b.coverUrl}
-                onClick={() => navigate(`/library/books/${b._id}`)}
-                alt={b.title}
-                style={{
-                  width: 200,
-                  height: 300,
-                  objectFit: "cover",
-                  borderRadius: 14,
-                  display: "block",
-                }}
-              />
-            )}
-          />
-        </div>
-      </div>
-
-      <div className="py-4">
-        <h1 className="text-4xl text-center">Currently Watching</h1>
-        <div dir="rtl">
-          <Ticker
-            items={featuredTVShows}
-            speed={50}
-            gap={20}
-            renderItem={(t) => (
-              <img
-                src={t.posterUrl}
-                alt={t.title}
-                onClick={() => navigate(`/library/tvshows/${t._id}`)}
-                style={{
-                  width: 200,
-                  height: 300,
-                  objectFit: "cover",
-                  borderRadius: 14,
-                  display: "block",
-                }}
-              />
-            )}
-          />
-        </div>
-      </div> */}
-
-      {/* <div className="py-4">
-        <h1 className="text-4xl text-center">Movies to Watch</h1>
-        <div dir="rtl">
-          <Ticker
-            items={featuredMovies}
-            speed={50}
-            gap={20}
-            renderItem={(m) => (
-              <img
-                src={m.posterUrl}
-                onClick={() => navigate(`/library/movies/${m._id}`)}
-                alt={m.title}
-                style={{
-                  width: 200,
-                  height: 300,
-                  objectFit: "cover",
-                  borderRadius: 14,
-                  display: "block",
-                }}
-              />
-            )}
-          />
-        </div>
-      </div> */}
-
-      {/* <div className="py-4">
-        <h1 className="text-4xl text-center">Currently Playing</h1>
-        <div dir="rtl">
-          <Ticker
-            items={featuredVideoGames}
-            speed={50}
-            gap={20}
-            renderItem={(v) => (
-              <img
-                src={v.posterUrl}
-                alt={v.title}
-                onClick={() => navigate(`/library/videogames/${v._id}`)}
-                style={{
-                  width: 200,
-                  height: 300,
-                  objectFit: "cover",
-                  borderRadius: 14,
-                  display: "block",
-                }}
-              />
-            )}
-          />
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -1,12 +1,15 @@
 import { addVideoGame } from "@/services/gameService";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
 import { useVideoGameForm } from "@/features/library/hooks/useVideoGameForm";
 import { VideoGameFields } from "@/features/library/components/VideoGameFields";
-
+import  AddMediaSearchBar from "@/components/AddMediaSearchBar";
 export default function VideoGameForm() {
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
 
   const { formData, setField, handleChange, isValid, submit } =
     useVideoGameForm(addVideoGame);
@@ -20,6 +23,16 @@ export default function VideoGameForm() {
           Add New Game
         </h1>
 
+        <AddMediaSearchBar
+          mediaType="videogame"
+          getAccessTokenSilently={getAccessTokenSilently}
+          onSelect={(selected) => {
+            const mapped = mapIgdbGameToVideoGameForm(selected);
+            Object.entries(mapped).forEach(([key, value]) =>
+              setField(key, value),
+            );
+          }}
+        />
         <form
           className="bk-form p-5"
           onSubmit={async (e) => {

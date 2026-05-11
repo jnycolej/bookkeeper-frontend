@@ -1,12 +1,18 @@
 import { addMovie } from "../services/movieService";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
 import { useMovieForm } from "@/features/library/hooks/useMovieForm";
 import { MovieFields } from "@/features/library/components/MovieFields";
 
+import AddMediaSearchBar from "@/components/AddMediaSearchBar";
+import { mapTmdbMovietoMovieForm } from "@/features/library/utils/mediaMappers";
+
 export default function MovieForm() {
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
 
   const { formData, setField, handleChange, isValid, submit } =
     useMovieForm(addMovie);
@@ -19,6 +25,15 @@ export default function MovieForm() {
         <h1 className="mb-6 text-center text-6xl text-stone-50 text-shadow-lg/30 font-semibold">
           Add New Movie
         </h1>
+
+        <AddMediaSearchBar
+          mediaType="movie"
+          getAccessTokenSilently={getAccessTokenSilently}
+          onSelect={(selected) => {
+            const mapped = mapTmdbMovietoMovieForm(selected);
+            Object.entries(mapped).forEach(([key, value]) => setField(key, value));
+          }}
+        />
 
         <form
           className="bk-form p-5"

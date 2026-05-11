@@ -3,29 +3,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router";
 import LoginButton from "./LoginButton";
 import BookKeeperLogo from "../assets/BookKeeperLogo.png";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 export default function NavBar() {
@@ -103,29 +86,29 @@ export default function NavBar() {
                       Add
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <ul className="w-50">
+                      <ul className="w-50 text-lg pl-4 font-semibold text-stone-950">
                         <li>
                           <a onClick={() => handleNav("/library/books/new")}
-                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
+                            className="rounded-md text-left hover:bg-red-950 hover:text-stone-50">
                             Book
                           </a>
                         </li>
                         <li>
                           <a onClick={() => handleNav("/library/movies/new")}
-                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
+                            className="rounded-md text-left hover:bg-red-950 hover:text-stone-50">
                             Movie
                           </a>
                         </li>
                         <li>
                           <a onClick={() => handleNav("/library/tvshows/new")}
-                            className="rounded-md text-left text-dark hover:bg-body hover:text-primary">
+                            className="rounded-md text-left hover:bg-red-950 hover:text-stone-50">
                             TV Show
                           </a>
                         </li>
                         <li>
                           <a
                             onClick={() => handleNav("/library/videogames/new")}
-                            className="rounded-md text-left text-dark hover:bg-red-950 hover:text-stone-50"
+                            className="rounded-md text-left hover:bg-red-950 hover:text-stone-50"
                           >
                             Video Game
                           </a>
