@@ -8,7 +8,7 @@ import { useMovieForm } from "@/features/library/hooks/useMovieForm";
 import { MovieFields } from "@/features/library/components/MovieFields";
 
 import AddMediaSearchBar from "@/components/AddMediaSearchBar";
-import { mapTmdbMovietoMovieForm } from "@/features/library/utils/mediaMappers";
+import { mapTmdbMovieToMovieForm } from "@/features/library/utils/mediaMappers";
 
 export default function MovieForm() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function MovieForm() {
           mediaType="movie"
           getAccessTokenSilently={getAccessTokenSilently}
           onSelect={(selected) => {
-            const mapped = mapTmdbMovietoMovieForm(selected);
+            const mapped = mapTmdbMovieToMovieForm(selected);
             Object.entries(mapped).forEach(([key, value]) => setField(key, value));
           }}
         />
